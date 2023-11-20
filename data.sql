@@ -78,32 +78,32 @@ primary key (id)
 );
 
 CREATE table hotels_events(
+id int auto_increment,
 id_hotels int,
 id_events int,
 foreign key (id_hotels) REFERENCES hotels (id)
 ON UPDATE CASCADE ON DELETE CASCADE,
 foreign key (id_events) REFERENCES events (id)
-ON UPDATE CASCADE ON DELETE CASCADE,
-primary key (id_hotels, id_events)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE table add_favourites(
+id int auto_increment,
 id_hotels int,
 id_users int,
 star_rating VARCHAR (100),
 foreign key (id_hotels) REFERENCES hotels (id)
 ON UPDATE CASCADE ON DELETE CASCADE,
 foreign key (id_users) REFERENCES users (id)
-ON UPDATE CASCADE ON DELETE CASCADE,
-primary key (id_hotels, id_users)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE table hotel_services(
+id int auto_increment,
 id_services int,
 id_hotels int,
 foreign key (id_services) REFERENCES services (id)
 ON UPDATE CASCADE ON DELETE CASCADE,
 foreign key (id_hotels) REFERENCES hotels (id)
-ON UPDATE CASCADE ON DELETE CASCADE,
-primary key (id_services, id_hotels)
+ON UPDATE CASCADE ON DELETE CASCADE
 );
