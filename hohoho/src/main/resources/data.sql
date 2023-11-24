@@ -164,13 +164,20 @@ INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry
 INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('PortAventura Hotel Christmas Gala', 'Experience the magic of Christmas at our festive gala with live music, a gourmet dinner, and holiday decorations.', 'portaventura_hotel_christmas_gala.jpg', '2023-12-24', '2023-12-24', 120.00, 41.0876, 1.1668, 11);
 INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('PortAventura Hotel Christmas Day Brunch', 'Celebrate Christmas Day with a special brunch at PortAventura Hotel, featuring a delicious spread of festive treats.', 'portaventura_hotel_christmas_brunch.jpg', '2023-12-25', '2023-12-25', 80.00, 41.0876, 1.1668, 11);
 INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('PortAventura Hotel New Year\'s Eve Celebration', 'Ring in the New Year with an exclusive celebration at PortAventura Hotel, featuring fireworks, live performances, and a festive atmosphere.', 'portaventura_hotel_new_years_eve.jpg', '2023-12-31', '2023-12-31', 150.00, 41.0876, 1.1668, 11);
--- Insertions for the hotels_events table
+-- Insertions for public events in hotels_events table
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (1, 1, true);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (2, 2, true);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (3, 3, true);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (4, 4, true);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (5, 5, true);
 INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (1, 6, true);
-INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (3, 7, true);
-INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (5, 8, true);
-INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (6, 9, true);
+-- Insertions for private events in hotels_events table
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (1, 7, false);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (3, 8, false);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (5, 9, false);
 INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (6, 10, false);
 INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (6, 11, false);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (6, 12, false);
 
 CREATE table add_favourites(
 id INT AUTO_INCREMENT,
