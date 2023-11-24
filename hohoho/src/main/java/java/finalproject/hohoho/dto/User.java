@@ -37,12 +37,16 @@ public class User {
 	@OneToMany
 	@JoinColumn(name = "id_user")
 	private List<Hotel> hotel;
+	
+	@OneToMany
+	@JoinColumn(name = "id_user")
+	private List<AddFavourite> addFavourite;
 
 	public User() {
 	}
 
 	public User(int id, String name, String surnames, String phone, String prof_img_url, String email, String password,
-			Date registration_date, List<Hotel> hotel, Role role) {
+			Date registration_date, List<Hotel> hotel, Role role, List<AddFavourite> addFavourite) {
 		this.id = id;
 		this.name = name;
 		this.surnames = surnames;
@@ -53,6 +57,7 @@ public class User {
 		this.registration_date = registration_date;
 		this.hotel = hotel;
 		this.role = role;
+		this.addFavourite = addFavourite;
 	}
 
 	public int getId() {
@@ -118,17 +123,7 @@ public class User {
 	public void setRegistration_date(Date registration_date) {
 		this.registration_date = registration_date;
 	}
-	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Hotel")
-	public List<Hotel> getHotels() {
-		return hotel;
-	}
 
-	public void setHotels(List<Hotel> hotel) {
-		this.hotel = hotel;
-	}
-	
 	public Role getRole() {
 		return role;
 	}
@@ -136,5 +131,27 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Hotel")
+	public List<Hotel> getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(List<Hotel> hotel) {
+		this.hotel = hotel;
+	}
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "AddFavourite")
+	public List<AddFavourite> getAddFavourite() {
+		return addFavourite;
+	}
+
+	public void setAddFavourite(List<AddFavourite> addFavourite) {
+		this.addFavourite = addFavourite;
+	}
+	
+	
 
 }
