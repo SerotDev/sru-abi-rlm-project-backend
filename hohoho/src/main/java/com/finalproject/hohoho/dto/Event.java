@@ -33,7 +33,7 @@ public class Event {
 	private Double longitude;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_town")
+	@JoinColumn(name = "id_towns")
 	private Town town;
 
 	@OneToMany
