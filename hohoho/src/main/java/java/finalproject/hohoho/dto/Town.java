@@ -42,6 +42,10 @@ public class Town {
 		this.id = id;
 	}
 
+	public String Latitude() {
+		return name;
+	}
+
 	public String getName() {
 		return name;
 	}
