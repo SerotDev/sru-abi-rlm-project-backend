@@ -8,15 +8,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "events")
 public class Event {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@Column(name = "name")
-	private String name;
 	@Column(name = "title")
 	private String title;
 	@Column(name = "description")
@@ -47,18 +45,16 @@ public class Event {
 	public Event() {
 	}
 
-	public Event(int id, String name, String title, String description, String img_url, Date start_date, Date end_date,
-			Double entry_price, Boolean is_public, Double latitude, Double longitude, Town town, List<User> user) {
+	public Event(int id, String title, String description, String img_url, Date start_date, Date end_date,
+			Double entry_price, Double latitude, Double longitude, Town town, List<User> user) {
 		super();
 		this.id = id;
-		this.name = name;
 		this.title = title;
 		this.description = description;
 		this.img_url = img_url;
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.entry_price = entry_price;
-		this.is_public = is_public;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.town = town;
@@ -73,15 +69,7 @@ public class Event {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
 	public String getTitle() {
 		return title;
 	}
@@ -161,7 +149,7 @@ public class Event {
 	public void setTown(Town town) {
 		this.town = town;
 	}
-	
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "User")
 	public List<User> getUser() {
