@@ -27,8 +27,6 @@ public class Event {
 	private Date end_date;
 	@Column(name = "entry_price")
 	private Double entry_price;
-	@Column(name = "is_public")
-	private Boolean is_public;
 	@Column(name = "latitude")
 	private Double latitude;
 	@Column(name = "longitude")
@@ -39,15 +37,14 @@ public class Event {
 	private Town town;
 
 	@OneToMany
-	@JoinColumn(name = "id_role")
-	private List<User> user;
+	@JoinColumn(name = "id_events")
+	private List<HotelEvent> hotelEvent;
 
 	public Event() {
 	}
 
 	public Event(int id, String title, String description, String img_url, Date start_date, Date end_date,
-			Double entry_price, Double latitude, Double longitude, Town town, List<User> user) {
-		super();
+			Double entry_price, Double latitude, Double longitude, Town town, List<HotelEvent> hotelEvent) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -58,7 +55,7 @@ public class Event {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.town = town;
-		this.user = user;
+		this.hotelEvent = hotelEvent;
 	}
 
 
@@ -118,14 +115,6 @@ public class Event {
 		this.entry_price = entry_price;
 	}
 
-	public Boolean getIs_public() {
-		return is_public;
-	}
-
-	public void setIs_public(Boolean is_public) {
-		this.is_public = is_public;
-	}
-
 	public Double getLatitude() {
 		return latitude;
 	}
@@ -149,14 +138,15 @@ public class Event {
 	public void setTown(Town town) {
 		this.town = town;
 	}
-
+	
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "User")
-	public List<User> getUser() {
-		return user;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "HotelEvent")
+	public List<HotelEvent> getHotelEvent() {
+		return hotelEvent;
 	}
 
-	public void setUser(List<User> user) {
-		this.user = user;
+	public void setHotelEvent(List<HotelEvent> hotelEvent) {
+		this.hotelEvent = hotelEvent;
 	}
+	
 }

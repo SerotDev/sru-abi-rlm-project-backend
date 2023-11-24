@@ -17,8 +17,8 @@ public class User {
 	
 	@Column(name = "name")
 	private String name;
-	@Column(name = "surnames")
-	private String surnames;
+	@Column(name = "surname")
+	private String surname;
 	@Column(name = "phone")
 	private String phone;
 	@Column(name = "prof_img_url")
@@ -31,21 +31,25 @@ public class User {
 	private Date registration_date;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_role")
+	@JoinColumn(name = "roles_id")
 	private Role role;
 
 	@OneToMany
 	@JoinColumn(name = "id_user")
 	private List<Hotel> hotel;
+	
+	@OneToMany
+	@JoinColumn(name = "id_user")
+	private List<AddFavourite> addFavourite;
 
 	public User() {
 	}
 
-	public User(int id, String name, String surnames, String phone, String prof_img_url, String email, String password,
-			Date registration_date, List<Hotel> hotel, Role role) {
+	public User(int id, String name, String surname, String phone, String prof_img_url, String email, String password,
+			Date registration_date, List<Hotel> hotel, Role role, List<AddFavourite> addFavourite) {
 		this.id = id;
 		this.name = name;
-		this.surnames = surnames;
+		this.surname = surname;
 		this.phone = phone;
 		this.prof_img_url = prof_img_url;
 		this.email = email;
@@ -53,6 +57,7 @@ public class User {
 		this.registration_date = registration_date;
 		this.hotel = hotel;
 		this.role = role;
+		this.addFavourite = addFavourite;
 	}
 
 	public int getId() {
@@ -71,12 +76,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getSurnames() {
-		return surnames;
+	public String getSurname() {
+		return surname;
 	}
 
-	public void setSurnames(String surnames) {
-		this.surnames = surnames;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 	public String getPhone() {
@@ -119,16 +124,6 @@ public class User {
 		this.registration_date = registration_date;
 	}
 	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Hotel")
-	public List<Hotel> getHotels() {
-		return hotel;
-	}
-
-	public void setHotels(List<Hotel> hotel) {
-		this.hotel = hotel;
-	}
-	
 	public Role getRole() {
 		return role;
 	}
@@ -136,5 +131,27 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Hotel")
+	public List<Hotel> getHotel() {
+		return hotel;
+	}
+
+	public void setHotel(List<Hotel> hotel) {
+		this.hotel = hotel;
+	}
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "AddFavourite")
+	public List<AddFavourite> getAddFavourite() {
+		return addFavourite;
+	}
+
+	public void setAddFavourite(List<AddFavourite> addFavourite) {
+		this.addFavourite = addFavourite;
+	}
+
+	
 
 }

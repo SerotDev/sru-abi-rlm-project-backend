@@ -24,14 +24,19 @@ public class Town {
 	private Double longitude;
 
 	@OneToMany
-	@JoinColumn(name = "id_town")
+	@JoinColumn(name = "id_towns")
 	private List<Hotel> hotel;
-	
-	@OneToMany
-	@JoinColumn(name = "id_town")
-	private List<Event> event;
 
 	public Town() {
+	}
+
+	public Town(int id, String name, String postal_code, Double latitude, Double longitude, List<Hotel> hotel) {
+		this.id = id;
+		this.name = name;
+		this.postal_code = postal_code;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.hotel = hotel;
 	}
 
 	public int getId() {
@@ -87,14 +92,5 @@ public class Town {
 	public void setHotel(List<Hotel> hotel) {
 		this.hotel = hotel;
 	}
-	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Event")
-	public List<Event> getEvent() {
-		return event;
-	}
 
-	public void setEvent(List<Event> event) {
-		this.event = event;
-	}
 }

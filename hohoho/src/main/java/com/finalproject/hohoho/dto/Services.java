@@ -24,6 +24,12 @@ public class Services {
 	public Services() {
 	}
 
+	public Services(int id, String name, List<HotelService> hotelService) {
+		this.id = id;
+		this.name = name;
+		this.hotelService = hotelService;
+	}
+
 	public int getId() {
 		return id;
 	}
