@@ -1,11 +1,10 @@
 package java.finalproject.hohoho.controllers;
 
 import java.finalproject.hohoho.dto.Event;
+import java.finalproject.hohoho.services.EventServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-//Falta implementar el service
 
 @RestController
 @RequestMapping("/api")

@@ -1,11 +1,10 @@
 package java.finalproject.hohoho.controllers;
 
 import java.finalproject.hohoho.dto.HotelService;
+import java.finalproject.hohoho.services.HotelServiceServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-//Falta implementar el service
 
 @RestController
 @RequestMapping("/api")
@@ -20,12 +19,12 @@ public class HotelServiceController {
 	}
 
 	@GetMapping("/hotel_service/{id}")
-	public Event porIdentificador(@PathVariable(name = "id") Integer id) {
+	public HotelService porIdentificador(@PathVariable(name = "id") Integer id) {
 		return hotelServiceServiceImpl.porIdentificador(id);
 	}
 
 	@PostMapping("/hotel_service/add")
-	public Event guardar(@RequestBody HotelService hotelService) {
+	public HotelService guardar(@RequestBody HotelService hotelService) {
 		return hotelServiceServiceImpl.guardar(hotelService);
 	}
 

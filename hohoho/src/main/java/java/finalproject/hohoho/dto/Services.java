@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "services")
-public class Service {
+public class Services {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +21,7 @@ public class Service {
 	@JoinColumn(name = "id_services")
 	private List<HotelService> hotelService;
 
-	public Service() {
+	public Services() {
 	}
 
 	public int getId() {
