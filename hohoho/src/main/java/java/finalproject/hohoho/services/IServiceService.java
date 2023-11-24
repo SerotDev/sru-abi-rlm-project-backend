@@ -1,17 +1,17 @@
 package java.finalproject.hohoho.services;
 
-import java.finalproject.hohoho.dto.Service;
+import java.finalproject.hohoho.dto.Services;
 import java.util.List;
 
 public interface IServiceService {
 	// CRUD models
-	public List<Service> listar(); // List All
+	public List<Services> listar(); // List All
 
-	public Service guardar(Service service); // (CREATE)
+	public Services guardar(Services service); // (CREATE)
 
-	public Service porIdentificador(int id); // (READ)
+	public Services porIdentificador(int id); // (READ)
 
-	public Service actualizar(Service service); // (UPDATE)
+	public Services actualizar(Services service); // (UPDATE)
 
 	public void eliminar(int id);// (DELETE)
 }

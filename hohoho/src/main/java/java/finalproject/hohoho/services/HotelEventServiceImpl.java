@@ -43,6 +43,3 @@ public class HotelEventServiceImpl implements IHotelEventService {
 	}
 	
 }
-
-
-}
