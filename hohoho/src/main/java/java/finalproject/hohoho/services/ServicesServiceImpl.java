@@ -1,37 +1,38 @@
 package java.finalproject.hohoho.services;
 
 import java.finalproject.hohoho.dao.IServiceDAO;
+import java.finalproject.hohoho.dto.Services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ServiceServiceImpl implements IServiceService {
+public class ServicesServiceImpl implements IServiceService {
 	@Autowired
 	IServiceDAO iServiceDAO;
 
 	@Override
-	public List<Service> listar() {
+	public List<Services> listar() {
 		return iServiceDAO.findAll();
 
 	}
 
 	@Override
-	public Service guardar(Service service) {
-		return iServiceDAO.save(service);
+	public Services guardar(Services services) {
+		return iServiceDAO.save(services);
 
 	}
 
 	@Override
-	public Service porIdentificador(int id) {
+	public Services porIdentificador(int id) {
 		return iServiceDAO.findById(id).get();
 
 	}
 
 	@Override
-	public Service actualizar(Service service) {
-		return iServiceDAO.save(service);
+	public Services actualizar(Services services) {
+		return iServiceDAO.save(services);
 
 	}
 

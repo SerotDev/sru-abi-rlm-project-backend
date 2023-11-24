@@ -1,18 +1,17 @@
 package java.finalproject.hohoho.controllers;
 
 import java.finalproject.hohoho.dto.HotelEvent;
+import java.finalproject.hohoho.services.HotelEventServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-//Falta implementar el service
 
 @RestController
 @RequestMapping("/api")
 public class HotelEventController {
 
 	@Autowired
-	HotelEventService hotelEventServiceImpl;
+	HotelEventServiceImpl hotelEventServiceImpl;
 
 	@GetMapping("/hotels_events")
 	public List<HotelEvent> listar() {

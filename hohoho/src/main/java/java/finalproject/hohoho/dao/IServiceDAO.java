@@ -1,9 +1,9 @@
 package java.finalproject.hohoho.dao;
 
-import java.finalproject.hohoho.dto.Service;
+import java.finalproject.hohoho.dto.Services;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface IServiceDAO extends JpaRepository <Service, Integer>{
+public interface IServiceDAO extends JpaRepository <Services, Integer>{
 
 }

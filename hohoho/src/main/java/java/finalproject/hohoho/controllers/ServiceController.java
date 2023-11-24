@@ -1,51 +1,50 @@
 package java.finalproject.hohoho.controllers;
 
-import java.finalproject.hohoho.dto.Service;
+import java.finalproject.hohoho.dto.Services;
+import java.finalproject.hohoho.services.ServicesServiceImpl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-//Falta implementar el service
 
 @RestController
 @RequestMapping("/api")
 public class ServiceController {
 
 	@Autowired
-	ServiceServiceImpl serviceServiceImpl;
+	ServicesServiceImpl servicesServiceImpl;
 
 	@GetMapping("/services")
-	public List<Service> listar() {
-		return serviceServiceImpl.listar();
+	public List<Services> listar() {
+		return servicesServiceImpl.listar();
 	}
 
 	@GetMapping("/service/{id}")
-	public Service porIdentificador(@PathVariable(name = "id") Integer id) {
-		return serviceServiceImpl.porIdentificador(id);
+	public Services porIdentificador(@PathVariable(name = "id") Integer id) {
+		return servicesServiceImpl.porIdentificador(id);
 	}
 
 	@PostMapping("/service/add")
-	public Service guardar(@RequestBody Service service) {
-		return serviceServiceImpl.guardar(service);
+	public Services guardar(@RequestBody Services services) {
+		return servicesServiceImpl.guardar(services);
 	}
 
 	@PutMapping("/service/update/{id}")
-	public Service actualizar(@PathVariable(name = "id") Integer id, @RequestBody Service service) {
+	public Services actualizar(@PathVariable(name = "id") Integer id, @RequestBody Services services) {
 
-		Service service_selected = new Service();
-		Service service_updated = new Service();
+		Services service_selected = new Services();
+		Services service_updated = new Services();
 
-		service_selected = serviceServiceImpl.porIdentificador(id);
+		service_selected = servicesServiceImpl.porIdentificador(id);
 		service_selected.setId(id);
-		service_selected.setName(service.getName());
-		service_updated = serviceServiceImpl.actualizar(service_selected);
+		service_selected.setName(services.getName());
+		service_updated = servicesServiceImpl.actualizar(service_selected);
 
 		return service_updated;
 	}
 
 	@DeleteMapping("/service/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
-		serviceServiceImpl.eliminar(id);
+		servicesServiceImpl.eliminar(id);
 	}
 }
 
