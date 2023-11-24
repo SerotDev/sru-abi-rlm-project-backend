@@ -37,7 +37,7 @@ public class UserController {
 		user_selected = userServiceImpl.porIdentificador(id);
 		user_selected.setId(id);
 		user_selected.setName(user.getName());
-		user_selected.setSurnames(user.getSurnames());
+		user_selected.setSurname(user.getSurname());
 		user_selected.setPhone(user.getPhone());
 		user_selected.setProf_img_url(user.getProf_img_url());
 		user_selected.setEmail(user.getEmail());

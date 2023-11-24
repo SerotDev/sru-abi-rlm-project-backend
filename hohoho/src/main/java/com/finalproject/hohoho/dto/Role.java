@@ -18,7 +18,7 @@ public class Role {
 	private String name;
 
 	@OneToMany
-	@JoinColumn(name = "id_role")
+	@JoinColumn(name = "roles_id")
 	private List<User> user;
 
 	public Role() {
@@ -45,15 +45,15 @@ public class Role {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "User")
-	public List<User> getUsers() {
+	
+	public List<User> getUser() {
 		return user;
 	}
 
-	public void setUsers(List<User> users) {
-		this.user = users;
+	public void setUser(List<User> user) {
+		this.user = user;
 	}
-
 }

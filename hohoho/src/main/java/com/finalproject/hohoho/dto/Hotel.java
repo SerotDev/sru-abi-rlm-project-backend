@@ -52,6 +52,26 @@ public class Hotel {
 	public Hotel() {
 	}
 
+	public Hotel(int id, String name, String description, String phone, String address, String email, String web,
+			Integer number_rooms, String imgs_url, Double price, Double latitude, Double longitude,
+			List<HotelService> hotelService, Town town, User user) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.phone = phone;
+		this.address = address;
+		this.email = email;
+		this.web = web;
+		this.number_rooms = number_rooms;
+		this.imgs_url = imgs_url;
+		this.price = price;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.hotelService = hotelService;
+		this.town = town;
+		this.user = user;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -149,7 +169,7 @@ public class Hotel {
 	}
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Users")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "HotelService")
 	public List<HotelService> getHotelService() {
 		return hotelService;
 	}

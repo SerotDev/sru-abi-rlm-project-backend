@@ -25,7 +25,6 @@ public class AddFavourite {
 	}
 
 	public AddFavourite(int id, Hotel hotel, User user, String star_rating) {
-		super();
 		this.id = id;
 		this.hotel = hotel;
 		this.user = user;
