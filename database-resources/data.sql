@@ -104,7 +104,6 @@ img_url VARCHAR (500),
 start_date DATE DEFAULT (CURRENT_DATE),
 end_date DATE DEFAULT (CURRENT_DATE),
 entry_price DOUBLE,
-is_public BOOLEAN,
 latitude DOUBLE,
 longitude DOUBLE,
 id_towns INT,
@@ -114,12 +113,12 @@ CHECK (end_date >= start_date)
 );
 
 -- Insertions for the events table
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Christmas Market in Tarragona', 'Explore the festive market with various stalls and holiday decorations.', 'img/christmas_market_tarragona.jpg', '2023-12-15', '2023-12-23', 0.00, true, 41.1189, 1.2445, 1);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Reus Winter Festival', 'Join the winter festivities in Reus with live music, food, and entertainment.', 'img/winter_festival_reus.jpg', '2023-12-10', '2023-12-20', 5.00, true, 41.1544, 1.1063, 2);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Salou Christmas Parade', 'Enjoy the magical Christmas parade featuring Santa Claus and colorful floats.', 'img/christmas_parade_salou.jpg', '2023-12-18', '2023-12-18', 0.00, true, 41.0762, 1.1316, 3);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Cambrils Ice Skating Extravaganza', 'Experience the joy of ice skating in Cambrils with a beautiful winter setup.', 'img/ice_skating_cambrils.jpg', '2023-12-12', '2023-12-26', 8.00, true, 41.0746, 1.0620, 4);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Valls Christmas Choir Concert', 'Immerse yourself in the melodious Christmas choir concert in Valls.', 'img/choir_concert_valls.jpg', '2023-12-22', '2023-12-22', 10.00, true, 41.2880, 1.2445, 5);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Three Wise Men Parade in Tarragona', 'Experience the magical parade welcoming the Three Wise Men with colorful floats and celebrations.', 'img/wise_men_parade_tarragona.jpg', '2023-01-05', '2023-01-05', 0.00, true, 41.1189, 1.2445, 1);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Christmas Market in Tarragona', 'Explore the festive market with various stalls and holiday decorations.', 'img/christmas_market_tarragona.jpg', '2023-12-15', '2023-12-23', 0.00, 41.1189, 1.2445, 1);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Reus Winter Festival', 'Join the winter festivities in Reus with live music, food, and entertainment.', 'img/winter_festival_reus.jpg', '2023-12-10', '2023-12-20', 5.00, 41.1544, 1.1063, 2);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Salou Christmas Parade', 'Enjoy the magical Christmas parade featuring Santa Claus and colorful floats.', 'img/christmas_parade_salou.jpg', '2023-12-18', '2023-12-18', 0.00, 41.0762, 1.1316, 3);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Cambrils Ice Skating Extravaganza', 'Experience the joy of ice skating in Cambrils with a beautiful winter setup.', 'img/ice_skating_cambrils.jpg', '2023-12-12', '2023-12-26', 8.00, 41.0746, 1.0620, 4);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Valls Christmas Choir Concert', 'Immerse yourself in the melodious Christmas choir concert in Valls.', 'img/choir_concert_valls.jpg', '2023-12-22', '2023-12-22', 10.00, 41.2880, 1.2445, 5);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Three Wise Men Parade in Tarragona', 'Experience the magical parade welcoming the Three Wise Men with colorful floats and celebrations.', 'img/wise_men_parade_tarragona.jpg', '2023-01-05', '2023-01-05', 0.00, 41.1189, 1.2445, 1);
 
 CREATE TABLE hotels(
 id INT AUTO_INCREMENT,
@@ -152,25 +151,26 @@ CREATE table hotels_events(
 id INT AUTO_INCREMENT,
 id_hotels INT,
 id_events INT,
+is_public BOOLEAN,
 PRIMARY KEY(id),
-UNIQUE KEY hotels_events_uk (id_hotels, id_events),
+UNIQUE KEY hotels_events_uk (id_hotels, id_events, is_public),
 FOREIGN KEY (id_hotels) REFERENCES hotels (id) ON UPDATE CASCADE ON DELETE CASCADE,
 FOREIGN KEY (id_events) REFERENCES `events` (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 -- Insertions for the private events of hotels
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Tarragona Beach Hotel Christmas Gala', 'Join us for a festive gala by the beach with live music and a special Christmas dinner.', 'tarragona_beach_hotel_gala.jpg', '2023-12-24', '2023-12-24', 75.00, true, 41.1189, 1.2445, 1);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Salou Resort & Spa New Year\'s Spa Retreat', 'Indulge in a luxurious New Year\'s spa retreat at our resort in Salou.', 'salou_resort_spa_new_years_retreat.jpg', '2023-12-31', '2023-12-31', 120.00, true, 41.0762, 1.1316, 3);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('Valls Historic Inn Masquerade Ball', 'Join us for an elegant masquerade ball at our historic inn in Valls.', 'valls_historic_inn_masquerade_ball.jpg', '2023-12-31', '2023-12-31', 60.00, true, 41.2880, 1.2445, 5);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('PortAventura Hotel Christmas Gala', 'Experience the magic of Christmas at our festive gala with live music, a gourmet dinner, and holiday decorations.', 'portaventura_hotel_christmas_gala.jpg', '2023-12-24', '2023-12-24', 120.00, false, 41.0876, 1.1668, 11);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('PortAventura Hotel Christmas Day Brunch', 'Celebrate Christmas Day with a special brunch at PortAventura Hotel, featuring a delicious spread of festive treats.', 'portaventura_hotel_christmas_brunch.jpg', '2023-12-25', '2023-12-25', 80.00, false, 41.0876, 1.1668, 11);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, is_public, latitude, longitude, id_towns) VALUES ('PortAventura Hotel New Year\'s Eve Celebration', 'Ring in the New Year with an exclusive celebration at PortAventura Hotel, featuring fireworks, live performances, and a festive atmosphere.', 'portaventura_hotel_new_years_eve.jpg', '2023-12-31', '2023-12-31', 150.00, false, 41.0876, 1.1668, 11);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Tarragona Beach Hotel Christmas Gala', 'Join us for a festive gala by the beach with live music and a special Christmas dinner.', 'tarragona_beach_hotel_gala.jpg', '2023-12-24', '2023-12-24', 75.00, 41.1189, 1.2445, 1);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Salou Resort & Spa New Year\'s Spa Retreat', 'Indulge in a luxurious New Year\'s spa retreat at our resort in Salou.', 'salou_resort_spa_new_years_retreat.jpg', '2023-12-31', '2023-12-31', 120.00, 41.0762, 1.1316, 3);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Valls Historic Inn Masquerade Ball', 'Join us for an elegant masquerade ball at our historic inn in Valls.', 'valls_historic_inn_masquerade_ball.jpg', '2023-12-31', '2023-12-31', 60.00, 41.2880, 1.2445, 5);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('PortAventura Hotel Christmas Gala', 'Experience the magic of Christmas at our festive gala with live music, a gourmet dinner, and holiday decorations.', 'portaventura_hotel_christmas_gala.jpg', '2023-12-24', '2023-12-24', 120.00, 41.0876, 1.1668, 11);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('PortAventura Hotel Christmas Day Brunch', 'Celebrate Christmas Day with a special brunch at PortAventura Hotel, featuring a delicious spread of festive treats.', 'portaventura_hotel_christmas_brunch.jpg', '2023-12-25', '2023-12-25', 80.00, 41.0876, 1.1668, 11);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('PortAventura Hotel New Year\'s Eve Celebration', 'Ring in the New Year with an exclusive celebration at PortAventura Hotel, featuring fireworks, live performances, and a festive atmosphere.', 'portaventura_hotel_new_years_eve.jpg', '2023-12-31', '2023-12-31', 150.00, 41.0876, 1.1668, 11);
 -- Insertions for the hotels_events table
-INSERT INTO hotels_events (id_hotels, id_events) VALUES (1, 6);
-INSERT INTO hotels_events (id_hotels, id_events) VALUES (3, 7);
-INSERT INTO hotels_events (id_hotels, id_events) VALUES (5, 8);
-INSERT INTO hotels_events (id_hotels, id_events) VALUES (6, 9);
-INSERT INTO hotels_events (id_hotels, id_events) VALUES (6, 10);
-INSERT INTO hotels_events (id_hotels, id_events) VALUES (6, 11);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (1, 6, true);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (3, 7, true);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (5, 8, true);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (6, 9, true);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (6, 10, false);
+INSERT INTO hotels_events (id_hotels, id_events, is_public) VALUES (6, 11, false);
 
 CREATE table add_favourites(
 id INT AUTO_INCREMENT,
