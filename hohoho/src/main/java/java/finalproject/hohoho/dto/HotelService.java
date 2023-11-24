@@ -12,7 +12,7 @@ public class HotelService {
 
 	@ManyToOne
 	@JoinColumn(name = "id_services")
-	private Service service;
+	private Services services;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_towns")
@@ -21,9 +21,9 @@ public class HotelService {
 	public HotelService() {
 	}
 
-	public HotelService(int id, Service service, Hotel hotel) {
+	public HotelService(int id, Services services, Hotel hotel) {
 		this.id = id;
-		this.service = service;
+		this.services = services;
 		this.hotel = hotel;
 	}
 
@@ -35,12 +35,12 @@ public class HotelService {
 		this.id = id;
 	}
 
-	public Service getService() {
-		return service;
+	public Services getService() {
+		return services;
 	}
 
-	public void setService(Service service) {
-		this.service = service;
+	public void setService(Services services) {
+		this.services = services;
 	}
 
 	public Hotel getHotel() {

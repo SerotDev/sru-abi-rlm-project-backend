@@ -59,7 +59,7 @@ public class Hotel {
 	public void setId(int id) {
 		this.id = id;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -147,7 +147,7 @@ public class Hotel {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "Users")
 	public List<HotelService> getHotelService() {
