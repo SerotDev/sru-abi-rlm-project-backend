@@ -38,15 +38,15 @@ public class Hotel {
 	private Double longitude;
 
 	@OneToMany
-	@JoinColumn(name = "id_hotel")
+	@JoinColumn(name = "id_hotels")
 	private List<HotelService> hotelService;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_town")
+	@JoinColumn(name = "id_towns")
 	private Town town;
 
 	@ManyToOne
-	@JoinColumn(name="id_user")
+	@JoinColumn(name="id_users")
 	private User user;
 
 	public Hotel() {
