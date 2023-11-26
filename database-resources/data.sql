@@ -107,9 +107,7 @@ entry_price DOUBLE,
 is_public BOOLEAN,
 latitude DOUBLE,
 longitude DOUBLE,
-id_towns INT,
 PRIMARY KEY(id),
-FOREIGN KEY (id_towns) REFERENCES towns (id) ON UPDATE CASCADE ON DELETE CASCADE,
 CHECK (end_date >= start_date)
 );
 
@@ -126,7 +124,7 @@ id INT AUTO_INCREMENT,
 `name` VARCHAR (100) NOT NULL,
 `description` VARCHAR (3000),
 phone VARCHAR (20),
-adress VARCHAR (200),
+address VARCHAR (200),
 email VARCHAR(200),
 web VARCHAR (500),
 number_rooms INT,
