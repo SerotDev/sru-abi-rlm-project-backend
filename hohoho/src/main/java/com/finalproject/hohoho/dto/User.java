@@ -35,11 +35,11 @@ public class User {
 	private Role role;
 
 	@OneToMany
-	@JoinColumn(name = "id_user")
+	@JoinColumn(name = "id_users")
 	private List<Hotel> hotel;
 	
 	@OneToMany
-	@JoinColumn(name = "id_user")
+	@JoinColumn(name = "id_users")
 	private List<AddFavourite> addFavourite;
 
 	public User() {

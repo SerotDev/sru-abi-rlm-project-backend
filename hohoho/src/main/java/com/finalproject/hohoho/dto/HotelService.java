@@ -15,8 +15,9 @@ public class HotelService {
 	private Services services;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_towns")
+	@JoinColumn(name = "id_hotels")
 	private Hotel hotel;
+	
 
 	public HotelService() {
 	}
