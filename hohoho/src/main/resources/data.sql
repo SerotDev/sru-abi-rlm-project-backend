@@ -112,7 +112,7 @@ CHECK (end_date >= start_date)
 );
 
 -- Insertions for the events table
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Christmas Market in Tarragona', 'Explore the festive market with various stalls and holiday decorations.', 'img/christmas_market_tarragona.jpg', '2023-12-15', '2023-12-23', 0.00, 41.1189, 1.2445, 1);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude) VALUES ('Christmas Market in Tarragona', 'Explore the festive market with various stalls and holiday decorations.', 'img/christmas_market_tarragona.jpg', '2023-12-15', '2023-12-23', 0.00, 41.1189, 1.2445, 1);
 INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Reus Winter Festival', 'Join the winter festivities in Reus with live music, food, and entertainment.', 'img/winter_festival_reus.jpg', '2023-12-10', '2023-12-20', 5.00, 41.1544, 1.1063, 2);
 INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Salou Christmas Parade', 'Enjoy the magical Christmas parade featuring Santa Claus and colorful floats.', 'img/christmas_parade_salou.jpg', '2023-12-18', '2023-12-18', 0.00, 41.0762, 1.1316, 3);
 INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Cambrils Ice Skating Extravaganza', 'Experience the joy of ice skating in Cambrils with a beautiful winter setup.', 'img/ice_skating_cambrils.jpg', '2023-12-12', '2023-12-26', 8.00, 41.0746, 1.0620, 4);
