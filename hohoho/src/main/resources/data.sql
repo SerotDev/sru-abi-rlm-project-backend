@@ -104,28 +104,27 @@ img_url VARCHAR (500),
 start_date DATE DEFAULT (CURRENT_DATE),
 end_date DATE DEFAULT (CURRENT_DATE),
 entry_price DOUBLE,
+is_public BOOLEAN,
 latitude DOUBLE,
 longitude DOUBLE,
-id_towns INT,
 PRIMARY KEY(id),
-FOREIGN KEY (id_towns) REFERENCES towns (id) ON UPDATE CASCADE ON DELETE CASCADE,
 CHECK (end_date >= start_date)
 );
 
 -- Insertions for the events table
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Christmas Market in Tarragona', 'Explore the festive market with various stalls and holiday decorations.', 'img/christmas_market_tarragona.jpg', '2023-12-15', '2023-12-23', 0.00, 41.1189, 1.2445, 1);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Reus Winter Festival', 'Join the winter festivities in Reus with live music, food, and entertainment.', 'img/winter_festival_reus.jpg', '2023-12-10', '2023-12-20', 5.00, 41.1544, 1.1063, 2);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Salou Christmas Parade', 'Enjoy the magical Christmas parade featuring Santa Claus and colorful floats.', 'img/christmas_parade_salou.jpg', '2023-12-18', '2023-12-18', 0.00, 41.0762, 1.1316, 3);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Cambrils Ice Skating Extravaganza', 'Experience the joy of ice skating in Cambrils with a beautiful winter setup.', 'img/ice_skating_cambrils.jpg', '2023-12-12', '2023-12-26', 8.00, 41.0746, 1.0620, 4);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Valls Christmas Choir Concert', 'Immerse yourself in the melodious Christmas choir concert in Valls.', 'img/choir_concert_valls.jpg', '2023-12-22', '2023-12-22', 10.00, 41.2880, 1.2445, 5);
-INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude, id_towns) VALUES ('Three Wise Men Parade in Tarragona', 'Experience the magical parade welcoming the Three Wise Men with colorful floats and celebrations.', 'img/wise_men_parade_tarragona.jpg', '2023-01-05', '2023-01-05', 0.00, 41.1189, 1.2445, 1);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude) VALUES ('Christmas Market in Tarragona', 'Explore the festive market with various stalls and holiday decorations.', 'img/christmas_market_tarragona.jpg', '2023-12-15', '2023-12-23', 0.00, 41.1189, 1.2445);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude) VALUES ('Reus Winter Festival', 'Join the winter festivities in Reus with live music, food, and entertainment.', 'img/winter_festival_reus.jpg', '2023-12-10', '2023-12-20', 5.00, 41.1544, 1.1063);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude) VALUES ('Salou Christmas Parade', 'Enjoy the magical Christmas parade featuring Santa Claus and colorful floats.', 'img/christmas_parade_salou.jpg', '2023-12-18', '2023-12-18', 0.00, 41.0762, 1.1316);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude) VALUES ('Cambrils Ice Skating Extravaganza', 'Experience the joy of ice skating in Cambrils with a beautiful winter setup.', 'img/ice_skating_cambrils.jpg', '2023-12-12', '2023-12-26', 8.00, 41.0746, 1.0620);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude) VALUES ('Valls Christmas Choir Concert', 'Immerse yourself in the melodious Christmas choir concert in Valls.', 'img/choir_concert_valls.jpg', '2023-12-22', '2023-12-22', 10.00, 41.2880, 1.2445);
+INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry_price, latitude, longitude) VALUES ('Three Wise Men Parade in Tarragona', 'Experience the magical parade welcoming the Three Wise Men with colorful floats and celebrations.', 'img/wise_men_parade_tarragona.jpg', '2023-01-05', '2023-01-05', 0.00, 41.1189, 1.2445);
 
 CREATE TABLE hotels(
 id INT AUTO_INCREMENT,
 `name` VARCHAR (100) NOT NULL,
 `description` VARCHAR (3000),
 phone VARCHAR (20),
-adress VARCHAR (200),
+address VARCHAR (200),
 email VARCHAR(200),
 web VARCHAR (500),
 number_rooms INT,
@@ -140,12 +139,12 @@ FOREIGN KEY (id_users) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE
 FOREIGN KEY (id_towns) REFERENCES towns (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 -- Insertions for the hotels table
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users, id_towns) VALUES ('Tarragona Beach Hotel', 'A beachfront hotel with stunning views of the Mediterranean.', '123456789', 'Passeig Marítim 1', 'info@tarragonabeachhotel.com', 'www.tarragonabeachhotel.com', 80, 'tarragona_beach_hotel1.jpg,tarragona_beach_hotel2.jpg', 150.00, 41.1189, 1.2445, 20, 1);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users, id_towns) VALUES ('Reus Boutique Hotel', 'An intimate boutique hotel in the heart of Reus.', '987654321', 'Carrer Major 15', 'reservations@reusboutiquehotel.com', 'www.reusboutiquehotel.com', 30, 'reus_boutique_hotel1.jpg,reus_boutique_hotel2.jpg', 120.00, 41.1544, 1.1063, 21, 2);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users, id_towns) VALUES ('Salou Resort & Spa', 'A luxurious resort and spa experience in Salou.', '555123456', 'Avinguda de la Costa 123', 'reservations@salouresort.com', 'www.salouresort.com', 150, 'salou_resort_spa1.jpg,salou_resort_spa2.jpg', 200.00, 41.0762, 1.1316, 22, 3);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users, id_towns) VALUES ('Cambrils Golf & Spa Hotel', 'Experience a golf and spa retreat in Cambrils.', '999876543', 'Carrer del Golf 567', 'info@cambrilsgolfspa.com', 'www.cambrilsgolfspa.com', 120, 'cambrils_golf_spa1.jpg,cambrils_golf_spa2.jpg', 180.00, 41.0746, 1.0620, 23, 4);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users, id_towns) VALUES ('Valls Historic Inn', 'Stay in a charming historic inn in the heart of Valls.', '111222333', 'Plaça del Blat 8', 'reservations@vallshistoricinn.com', 'www.vallshistoricinn.com', 15, 'valls_historic_inn1.jpg,valls_historic_inn2.jpg', 80.00, 41.2880, 1.2445, 24, 5);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users, id_towns) VALUES ('PortAventura Hotel', 'A magical hotel within the PortAventura resort in Vila-seca.', '987654321', 'Avenida Alcalde Pere Molas, s/n', 'info@portaventurahotel.com', 'www.portaventurahotel.com', 200, 'portaventura_hotel1.jpg,portaventura_hotel2.jpg', 250.00, 41.0876, 1.1668, 25, 11);
+INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users) VALUES ('Tarragona Beach Hotel', 'A beachfront hotel with stunning views of the Mediterranean.', '123456789', 'Passeig Marítim 1', 'info@tarragonabeachhotel.com', 'www.tarragonabeachhotel.com', 80, 'tarragona_beach_hotel1.jpg,tarragona_beach_hotel2.jpg', 150.00, 41.1189, 1.2445, 20);
+INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users) VALUES ('Reus Boutique Hotel', 'An intimate boutique hotel in the heart of Reus.', '987654321', 'Carrer Major 15', 'reservations@reusboutiquehotel.com', 'www.reusboutiquehotel.com', 30, 'reus_boutique_hotel1.jpg,reus_boutique_hotel2.jpg', 120.00, 41.1544, 1.1063, 21);
+INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users) VALUES ('Salou Resort & Spa', 'A luxurious resort and spa experience in Salou.', '555123456', 'Avinguda de la Costa 123', 'reservations@salouresort.com', 'www.salouresort.com', 150, 'salou_resort_spa1.jpg,salou_resort_spa2.jpg', 200.00, 41.0762, 1.1316, 22);
+INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users) VALUES ('Cambrils Golf & Spa Hotel', 'Experience a golf and spa retreat in Cambrils.', '999876543', 'Carrer del Golf 567', 'info@cambrilsgolfspa.com', 'www.cambrilsgolfspa.com', 120, 'cambrils_golf_spa1.jpg,cambrils_golf_spa2.jpg', 180.00, 41.0746, 1.0620, 23);
+INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users) VALUES ('Valls Historic Inn', 'Stay in a charming historic inn in the heart of Valls.', '111222333', 'Plaça del Blat 8', 'reservations@vallshistoricinn.com', 'www.vallshistoricinn.com', 15, 'valls_historic_inn1.jpg,valls_historic_inn2.jpg', 80.00, 41.2880, 1.2445, 24);
+INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_users) VALUES ('PortAventura Hotel', 'A magical hotel within the PortAventura resort in Vila-seca.', '987654321', 'Avenida Alcalde Pere Molas, s/n', 'info@portaventurahotel.com', 'www.portaventurahotel.com', 200, 'portaventura_hotel1.jpg,portaventura_hotel2.jpg', 250.00, 41.0876, 1.1668, 25);
 
 CREATE table hotels_events(
 id INT AUTO_INCREMENT,

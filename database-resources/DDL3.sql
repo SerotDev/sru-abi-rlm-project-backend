@@ -1,98 +1,161 @@
 -- -----------------------------------
--- ----------- TABLE TOWNS -----------
+-- ----------- TABLE ROLES -----------
 -- -----------------------------------
 
--- Select all towns
-SELECT * FROM towns;
+-- Select all roles ordered alphabetically:
+SELECT * FROM roles ORDER BY `name`;
 
--- Select towns with latitude greater than 41.15
-SELECT * FROM towns WHERE latitude > 41.15;
+-- Count the number of users for each role:
+SELECT r.`name` AS `role`, COUNT(u.id) AS user_count
+FROM roles r
+LEFT JOIN users u ON r.id = u.id_role
+GROUP BY r.`name`;
 
--- Select towns ordered by postal code in descending order
-SELECT * FROM towns ORDER BY postal_code DESC;
+-- Find the role with the most users:
+SELECT r.`name` AS `role`, COUNT(u.id) AS user_count
+FROM roles r
+LEFT JOIN users u ON r.id = u.id_role
+GROUP BY r.`name`
+ORDER BY user_count DESC
+LIMIT 1;
+
+-- List roles with at least one user and their corresponding usernames:
+SELECT r.`name` AS `role`, u.`name`
+FROM roles r
+JOIN users u ON r.id = u.id_role
+WHERE u.id IS NOT NULL;
+
+
+-- -----------------------------------
+-- ----------- TABLE USERS -----------
+-- -----------------------------------
+
+-- Get all users with their corresponding roles:
+SELECT u.`name`, u.email, r.`name` AS `role`
+FROM users u
+JOIN roles r ON u.id_role = r.id;
+
+-- Find users who have a specific role (e.g., 'ADMIN'):
+SELECT u.`name`, u.email, r.`name` AS `role`
+FROM users u
+JOIN roles r ON u.id_role = r.id
+WHERE r.`name` = 'ADMIN';
+
+-- Count the number of users registered per year:
+SELECT YEAR(registration_date) AS registration_year, COUNT(id) AS user_count
+FROM users
+GROUP BY registration_year;
+
+-- List users who registered in the last 30 days:
+SELECT `name`, email, registration_date
+FROM users
+WHERE registration_date >= CURDATE() - INTERVAL 30 DAY;
+
+
+-- ------------------------------------
+-- ---------- TABLE SERVICES ----------
+-- ------------------------------------
+
+-- Select services for a specific hotel (Reus Boutique Hotel)
+SELECT s.`name` AS service_name
+FROM hotel_services hs
+JOIN services s ON hs.id_service = s.id
+WHERE hs.id_hotel = (SELECT id FROM hotels WHERE `name` = 'Tarragona Beach Hotel');
+
+-- Show all services with the number of hotels offering them:
+SELECT s.`name` AS service_name, COUNT(hs.id_hotel) AS hotel_count
+FROM services s
+LEFT JOIN hotel_services hs ON s.id = hs.id_service
+GROUP BY s.`name`;
+
+
+-- ------------------------------------
+-- ----------- TABLE TOWNS ------------
+-- ------------------------------------
+
+-- List all towns ordered by postal code:
+SELECT * FROM towns ORDER BY postal_code;
+
+-- Find the closest town to a specific location (e.g., latitude 40.5, longitude -3.7):
+SELECT *, SQRT(POW(latitude - 40.5, 2) + POW(longitude + 3.7, 2)) AS distance
+FROM towns
+ORDER BY distance
+LIMIT 1;
+
+-- Show towns with at least one hotel and the number of hotels in each town:
+SELECT t.`name` AS town, COUNT(h.id) AS hotel_count
+FROM towns t
+LEFT JOIN hotels h ON t.id = h.id_town
+GROUP BY t.`name`
+HAVING hotel_count > 0;
+
+-- Find towns with no associated hotels:
+SELECT t.`name` AS town
+FROM towns t
+LEFT JOIN hotels h ON t.id = h.id_town
+WHERE h.id IS NULL;
+
+-- Calculate the average hotel prices per town:
+SELECT t.`name` AS town, AVG(h.price) AS avg_hotel_price
+FROM towns t
+JOIN hotels h ON t.id = h.id_town
+GROUP BY t.`name`;
+
 
 -- ------------------------------------
 -- ----------- TABLE HOTELS -----------
 -- ------------------------------------
 
--- Select all hotels
-SELECT * FROM hotels;
-
--- Select hotels in Tarragona
-SELECT * FROM hotels WHERE id_towns = 1;
-
 -- Select hotels with a price less than 150.00
 SELECT * FROM hotels WHERE price < 150.00;
+
+-- Show all hotels with their corresponding services:
+SELECT h.`name` AS hotel, s.`name` AS service
+FROM hotels h
+LEFT JOIN hotel_services hs ON h.id = hs.id_hotel
+LEFT JOIN services s ON hs.id_service = s.id;
+
+-- List hotels with more than 100 rooms and their room counts:
+SELECT `name`, number_rooms
+FROM hotels
+WHERE number_rooms > 100;
+
+-- Show all hotels in the city of 'Tarragona'
+SELECT * 
+FROM hotels
+WHERE id_town = (SELECT id FROM towns WHERE `name` = 'Tarragona');
+
 
 -- ------------------------------------
 -- ----------- TABLE EVENTS -----------
 -- ------------------------------------
 
--- Select all events
-SELECT * FROM events;
-
 -- Select public events in Tarragona
-SELECT * FROM events WHERE is_public = true AND id_towns = 1;
+SELECT * 
+FROM `events`
+WHERE is_public = true AND id_hotel IN (
+	SELECT id 
+	FROM hotels 
+	WHERE id_town = (
+		SELECT id 
+		FROM towns 
+		WHERE `name` = 'Tarragona'));
 
--- Select events with an entry price greater than 5.00€
-SELECT * FROM events WHERE entry_price > 5.00;
+-- Select events with an entry price greater than 20.00€
+SELECT * FROM `events` WHERE entry_price > 20.00;
 
--- ------------------------------------
--- ------- TABLE HOTEL_SERVICES -------
--- ------------------------------------
+-- Retrieve all events that are ocurring after some date ordered by the events end date in ascending order:
+SELECT title AS event_name, start_date, end_date, `description`
+FROM `events`
+WHERE end_date > '2023-12-18'
+ORDER BY end_date ASC;
 
--- Select all of hotel_services table
-SELECT * FROM hotel_services;
+-- Get all events associated with a hotel by id_hotel:
+SELECT *
+FROM `events`
+WHERE id_hotel = 3;
 
--- Select services for a specific hotel (Tarragona Beach Hotel)
-SELECT * FROM hotel_services WHERE id_hotels = 1;
-
--- Select hotels offering the 'Free Wi-Fi' service
-SELECT h.* FROM hotels h
-	JOIN hotel_services hs ON h.id = hs.id_hotels
-	JOIN services s ON hs.id_services = s.id
-	WHERE s.name = 'Free Wi-Fi';
-
--- Select services for a specific hotel (Reus Boutique Hotel)
-SELECT s.* FROM services s
-	JOIN hotel_services hs ON s.id = hs.id_services
-	JOIN hotels h ON hs.id_hotels = h.id
-	WHERE h.name = 'Reus Boutique Hotel';
-
--- ------------------------------------
--- -------- TABLE HOTEL_EVENTS --------
--- ------------------------------------
-
--- Select all of hotels_events table
-SELECT * FROM hotels_events;
-
--- Select events associated with a specific hotel (Tarragona Beach Hotel)
-SELECT e.* FROM `events` e
-	JOIN hotels_events he ON e.id = he.id_events
-	JOIN hotels h ON he.id_hotels = h.id
-	WHERE h.name = 'Tarragona Beach Hotel';
-
--- Select hotels hosting the 'PortAventura Hotel Christmas Gala' event
-SELECT h.* FROM hotels h
-	JOIN hotels_events he ON h.id = he.id_hotels
-	JOIN `events` e ON he.id_events = e.id
-	WHERE e.title = 'PortAventura Hotel Christmas Gala';
-
--- ------------------------------------
--- ------- TABLE ADD_FAVOURITES -------
--- ------------------------------------
-
--- Select all of add_favourites table
-SELECT * FROM add_favourites;
-
--- Select hotels favorited and the star_rating by a specific user (User with id 2)
-SELECT af.star_rating, h.* FROM hotels h
-	JOIN add_favourites af ON h.id = af.id_hotels
-	JOIN users u ON af.id_users = u.id
-	WHERE u.id = 2;
-
--- Select users who favorited the 'Salou Resort & Spa'
-SELECT u.* FROM users u
-	JOIN add_favourites af ON u.id = af.id_users
-	JOIN hotels h ON af.id_hotels = h.id
-	WHERE h.name = 'Salou Resort & Spa';
+-- Get private events of a hotel by id:
+SELECT *
+FROM `events`
+WHERE id_hotel = 6 AND is_public = false;
