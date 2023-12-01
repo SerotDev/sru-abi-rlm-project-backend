@@ -25,6 +25,8 @@ public class Event {
 	private Date start_date;
 	@Column(name = "end_date")
 	private Date end_date;
+	@Column(name = "is_public")
+	private Boolean is_public;
 	@Column(name = "entry_price")
 	private Double entry_price;
 	@Column(name = "latitude")
@@ -33,18 +35,15 @@ public class Event {
 	private Double longitude;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_towns")
-	private Town town;
+	@JoinColumn(name = "id_hotel")
+	private Hotel hotel;
 
-	@OneToMany
-	@JoinColumn(name = "id_events")
-	private List<HotelEvent> hotelEvent;
 
 	public Event() {
 	}
 
 	public Event(int id, String title, String description, String img_url, Date start_date, Date end_date,
-			Double entry_price, Double latitude, Double longitude, Town town, List<HotelEvent> hotelEvent) {
+			Double entry_price, Boolean is_public, Double latitude, Double longitude, Hotel hotel) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -52,10 +51,10 @@ public class Event {
 		this.start_date = start_date;
 		this.end_date = end_date;
 		this.entry_price = entry_price;
+		this.is_public = is_public;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.town = town;
-		this.hotelEvent = hotelEvent;
+		this.hotel = hotel;
 	}
 
 
@@ -114,6 +113,14 @@ public class Event {
 	public void setEntry_price(Double entry_price) {
 		this.entry_price = entry_price;
 	}
+	
+	public Boolean getIs_public() {
+		return is_public;
+	}
+
+	public void setIs_public(Boolean is_public) {
+		this.is_public = is_public;
+	}
 
 	public Double getLatitude() {
 		return latitude;
@@ -130,23 +137,13 @@ public class Event {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-
-	public Town getTown() {
-		return town;
-	}
-
-	public void setTown(Town town) {
-		this.town = town;
-	}
 	
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "HotelEvent")
-	public List<HotelEvent> getHotelEvent() {
-		return hotelEvent;
+	public Hotel getHotel() {
+		return hotel;
 	}
 
-	public void setHotelEvent(List<HotelEvent> hotelEvent) {
-		this.hotelEvent = hotelEvent;
+	public void setHotel(Hotel hotel) {
+		this.hotel = hotel;
 	}
 	
 }

@@ -11,11 +11,11 @@ public class AddFavourite {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "id_hotels")
+	@JoinColumn(name = "id_hotel")
 	private Hotel hotel;
 
 	@ManyToOne
-	@JoinColumn(name = "id_users")
+	@JoinColumn(name = "id_user")
 	private User user;
 	
 	@Column(name = "star_rating")

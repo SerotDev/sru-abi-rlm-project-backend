@@ -11,11 +11,11 @@ public class HotelService {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "id_services")
+	@JoinColumn(name = "id_service")
 	private Services services;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_hotels")
+	@JoinColumn(name = "id_hotel")
 	private Hotel hotel;
 	
 
