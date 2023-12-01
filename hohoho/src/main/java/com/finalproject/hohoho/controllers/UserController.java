@@ -49,7 +49,7 @@ public class UserController {
 		userSelected.setProf_img_url(user.getProf_img_url());
 		userSelected.setEmail(user.getEmail());
 		userSelected.setPassword(user.getPassword());
-		// registration date nod added to update because is not editable
+		userSelected.setRegistration_date(user.getRegistration_date());
 		userSelected.setRole(user.getRole());
 		userUpdated = userServiceImpl.actualizar(userSelected);
 
