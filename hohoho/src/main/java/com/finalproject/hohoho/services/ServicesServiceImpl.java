@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.finalproject.hohoho.dao.IServiceDAO;
+import com.finalproject.hohoho.dao.IServicesDAO;
 import com.finalproject.hohoho.dto.Services;
 
 @Service
-public class ServicesServiceImpl implements IServiceService {
+public class ServicesServiceImpl implements IServicesService {
 	@Autowired
-	IServiceDAO iServiceDAO;
+	IServicesDAO iServiceDAO;
 
 	@Override
 	public List<Services> listar() {
