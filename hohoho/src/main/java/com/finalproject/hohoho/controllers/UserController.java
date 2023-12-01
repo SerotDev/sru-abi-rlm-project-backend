@@ -1,4 +1,5 @@
 package com.finalproject.hohoho.controllers;
+
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -13,47 +14,52 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userServiceImpl;
 
+	// Get all users
 	@GetMapping("/users")
 	public List<User> listar() {
 		return userServiceImpl.listar();
 	}
-
-	@GetMapping("/user/{id}")
-	public User porIdentificador(@PathVariable(name = "id") Integer id) {
-		return userServiceImpl.porIdentificador(id);
-	}
-
+	
+	// Add new user
 	@PostMapping("/user/add")
 	public User guardar(@RequestBody User user) {
 		return userServiceImpl.guardar(user);
 	}
-
+	
+	// Get user by id
+	@GetMapping("/user/{id}")
+	public User porIdentificador(@PathVariable(name = "id") Integer id) {
+		User userByID = new User();
+		userByID = userServiceImpl.porIdentificador(id);
+		return userByID;
+	}
+	
+	// Update user by id
 	@PutMapping("/user/update/{id}")
 	public User actualizar(@PathVariable(name = "id") Integer id, @RequestBody User user) {
 
-		User user_selected = new User();
-		User user_updated = new User();
+		User userSelected = new User();
+		User userUpdated = new User();
 
-		user_selected = userServiceImpl.porIdentificador(id);
-		user_selected.setId(id);
-		user_selected.setName(user.getName());
-		user_selected.setSurname(user.getSurname());
-		user_selected.setPhone(user.getPhone());
-		user_selected.setProf_img_url(user.getProf_img_url());
-		user_selected.setEmail(user.getEmail());
-		user_selected.setPassword(user.getPassword());
-		user_selected.setRegistration_date(user.getRegistration_date());
-		user_selected.setRole(user.getRole());
-		
-		user_updated = userServiceImpl.actualizar(user_selected);
+		userSelected = userServiceImpl.porIdentificador(id);
+		userSelected.setId(id);
+		userSelected.setName(user.getName());
+		userSelected.setSurname(user.getSurname());
+		userSelected.setPhone(user.getPhone());
+		userSelected.setProf_img_url(user.getProf_img_url());
+		userSelected.setEmail(user.getEmail());
+		userSelected.setPassword(user.getPassword());
+		// registration date nod added to update because is not editable
+		userSelected.setRole(user.getRole());
+		userUpdated = userServiceImpl.actualizar(userSelected);
 
-		return user_updated;
+		return userUpdated;
 	}
-
+	
+	// Delete user by id
 	@DeleteMapping("/user/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
 		userServiceImpl.eliminar(id);
 	}
 }
-
 

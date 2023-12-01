@@ -14,35 +14,42 @@ public class RoleController {
 	@Autowired
 	RoleServiceImpl roleServiceImpl;
 
+	// Get all roles
 	@GetMapping("/roles")
 	public List<Role> listar() {
 		return roleServiceImpl.listar();
 	}
-
-	@GetMapping("/role/{id}")
-	public Role porIdentificador(@PathVariable(name = "id") Integer id) {
-		return roleServiceImpl.porIdentificador(id);
-	}
-
+	
+	// Add new role
 	@PostMapping("/role/add")
 	public Role guardar(@RequestBody Role role) {
 		return roleServiceImpl.guardar(role);
 	}
-
+	
+	// Get role by id
+	@GetMapping("/role/{id}")
+	public Role porIdentificador(@PathVariable(name = "id") Integer id) {
+		Role roleByID = new Role();
+		roleByID = roleServiceImpl.porIdentificador(id);
+		return roleByID;
+	}
+	
+	// Update role by id
 	@PutMapping("/role/update/{id}")
 	public Role actualizar(@PathVariable(name = "id") Integer id, @RequestBody Role role) {
 
-		Role role_selected = new Role();
-		Role role_updated = new Role();
+		Role roleSelected = new Role();
+		Role roleUpdated = new Role();
 
-		role_selected = roleServiceImpl.porIdentificador(id);
-		role_selected.setId(id);
-		role_selected.setName(role.getName());
-		role_updated = roleServiceImpl.actualizar(role_selected);
+		roleSelected = roleServiceImpl.porIdentificador(id);
+		roleSelected.setId(id);
+		roleSelected.setName(role.getName());
+		roleUpdated = roleServiceImpl.actualizar(roleSelected);
 
-		return role_updated;
+		return roleUpdated;
 	}
-
+	
+	// Delete role by id
 	@DeleteMapping("/role/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
 		roleServiceImpl.eliminar(id);

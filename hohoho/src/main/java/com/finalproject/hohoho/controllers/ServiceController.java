@@ -12,40 +12,46 @@ import com.finalproject.hohoho.services.ServicesServiceImpl;
 public class ServiceController {
 
 	@Autowired
-	ServicesServiceImpl servicesServiceImpl;
+	ServicesServiceImpl serviceServiceImpl;
 
+	// Get all services
 	@GetMapping("/services")
 	public List<Services> listar() {
-		return servicesServiceImpl.listar();
+		return serviceServiceImpl.listar();
 	}
-
+	
+	// Add new service
+	@PostMapping("/service/add")
+	public Services guardar(@RequestBody Services service) {
+		return serviceServiceImpl.guardar(service);
+	}
+	
+	// Get service by id
 	@GetMapping("/service/{id}")
 	public Services porIdentificador(@PathVariable(name = "id") Integer id) {
-		return servicesServiceImpl.porIdentificador(id);
+		Services serviceByID = new Services();
+		serviceByID = serviceServiceImpl.porIdentificador(id);
+		return serviceByID;
 	}
-
-	@PostMapping("/service/add")
-	public Services guardar(@RequestBody Services services) {
-		return servicesServiceImpl.guardar(services);
-	}
-
+	
+	// Update service by id
 	@PutMapping("/service/update/{id}")
-	public Services actualizar(@PathVariable(name = "id") Integer id, @RequestBody Services services) {
+	public Services actualizar(@PathVariable(name = "id") Integer id, @RequestBody Services service) {
+		Services serviceSelected = new Services();
+		Services serviceUpdated = new Services();
 
-		Services service_selected = new Services();
-		Services service_updated = new Services();
+		serviceSelected = serviceServiceImpl.porIdentificador(id);
+		serviceSelected.setId(id);
+		serviceSelected.setName(service.getName());
+		serviceUpdated = serviceServiceImpl.actualizar(serviceSelected);
 
-		service_selected = servicesServiceImpl.porIdentificador(id);
-		service_selected.setId(id);
-		service_selected.setName(services.getName());
-		service_updated = servicesServiceImpl.actualizar(service_selected);
-
-		return service_updated;
+		return serviceUpdated;
 	}
-
+	
+	// Delete service by id
 	@DeleteMapping("/service/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
-		servicesServiceImpl.eliminar(id);
+		serviceServiceImpl.eliminar(id);
 	}
 }
 
