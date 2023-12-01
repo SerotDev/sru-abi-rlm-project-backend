@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.finalproject.hohoho.dto.Services;
 
-public interface IServiceService {
+public interface IServicesService {
 	// CRUD models
 	public List<Services> listar(); // List All
 
