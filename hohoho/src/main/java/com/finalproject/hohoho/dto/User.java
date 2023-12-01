@@ -31,22 +31,22 @@ public class User {
 	private Date registration_date;
 	
 	@ManyToOne
-	@JoinColumn(name = "roles_id")
+	@JoinColumn(name = "id_role")
 	private Role role;
 
 	@OneToMany
-	@JoinColumn(name = "id_users")
+	@JoinColumn(name = "id_user")
 	private List<Hotel> hotel;
 	
 	@OneToMany
-	@JoinColumn(name = "id_users")
+	@JoinColumn(name = "id_user")
 	private List<AddFavourite> addFavourite;
 
 	public User() {
 	}
 
 	public User(int id, String name, String surname, String phone, String prof_img_url, String email, String password,
-			Date registration_date, List<Hotel> hotel, Role role, List<AddFavourite> addFavourite) {
+			Date registration_date, Role role, List<Hotel> hotel, List<AddFavourite> addFavourite) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -55,8 +55,8 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.registration_date = registration_date;
-		this.hotel = hotel;
 		this.role = role;
+		this.hotel = hotel;
 		this.addFavourite = addFavourite;
 	}
 
