@@ -44,6 +44,9 @@ public class TownController {
 		townSelected = townServiceImpl.porIdentificador(id);
 		townSelected.setId(id);
 		townSelected.setName(town.getName());
+		townSelected.setPostal_code(town.getPostal_code());
+		townSelected.setLatitude(town.getLatitude());
+		townSelected.setLongitude(town.getLongitude());
 		townUpdated = townServiceImpl.actualizar(townSelected);
 
 		return townUpdated;

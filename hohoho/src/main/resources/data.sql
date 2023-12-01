@@ -23,7 +23,8 @@ email VARCHAR(200),
 registration_date DATETIME DEFAULT CURRENT_TIMESTAMP,
 id_role INT DEFAULT 1, -- By default it is a visitor user
 PRIMARY KEY(id),
-FOREIGN KEY (id_role) REFERENCES roles (id) ON UPDATE CASCADE ON DELETE CASCADE
+FOREIGN KEY (id_role) REFERENCES roles (id) ON UPDATE CASCADE ON DELETE CASCADE,
+CHECK (id_role BETWEEN 1 AND 3)
 );
 -- Insertions of visitant users to the users table
 INSERT INTO users (`name`, surname, phone, email, `password`) VALUES ('Kerwinn', 'McKernan', 34642084879, 'kmckernan0@jigsy.com', '$2a$04$1/9ATrB.fbR.Rr6J9IeTTejbUh1Cl4P4unCtIwifSpZnfCZ6vd/Ta');
@@ -77,7 +78,7 @@ INSERT INTO services (`name`) VALUES ('Own activities');
 CREATE table towns(
 id INT AUTO_INCREMENT,
 `name` VARCHAR (100) NOT NULL,
-postal_code VARCHAR(50) NOT NULL,
+postal_code INT(5) NOT NULL,
 latitude DOUBLE NOT NULL,
 longitude DOUBLE NOT NULL,
 PRIMARY KEY(id)
@@ -101,7 +102,7 @@ id INT AUTO_INCREMENT,
 `name` VARCHAR (100) NOT NULL,
 `description` VARCHAR (3000),
 phone VARCHAR (20),
-adress VARCHAR (200),
+address VARCHAR (200),
 email VARCHAR(200),
 web VARCHAR (500),
 number_rooms INT,
@@ -116,12 +117,12 @@ FOREIGN KEY (id_user) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
 FOREIGN KEY (id_town) REFERENCES towns (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 -- Insertions for the hotels table
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Tarragona Beach Hotel', 'A beachfront hotel with stunning views of the Mediterranean.', '123456789', 'Passeig Marítim 1', 'info@tarragonabeachhotel.com', 'www.tarragonabeachhotel.com', 80, 'tarragona_beach_hotel1.jpg,tarragona_beach_hotel2.jpg', 150.00, 41.1189, 1.2445, 20, 1);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Reus Boutique Hotel', 'An intimate boutique hotel in the heart of Reus.', '987654321', 'Carrer Major 15', 'reservations@reusboutiquehotel.com', 'www.reusboutiquehotel.com', 30, 'reus_boutique_hotel1.jpg,reus_boutique_hotel2.jpg', 120.00, 41.1544, 1.1063, 21, 2);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Salou Resort & Spa', 'A luxurious resort and spa experience in Salou.', '555123456', 'Avinguda de la Costa 123', 'reservations@salouresort.com', 'www.salouresort.com', 150, 'salou_resort_spa1.jpg,salou_resort_spa2.jpg', 200.00, 41.0762, 1.1316, 22, 3);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Cambrils Golf & Spa Hotel', 'Experience a golf and spa retreat in Cambrils.', '999876543', 'Carrer del Golf 567', 'info@cambrilsgolfspa.com', 'www.cambrilsgolfspa.com', 120, 'cambrils_golf_spa1.jpg,cambrils_golf_spa2.jpg', 180.00, 41.0746, 1.0620, 23, 4);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Valls Historic Inn', 'Stay in a charming historic inn in the heart of Valls.', '111222333', 'Plaça del Blat 8', 'reservations@vallshistoricinn.com', 'www.vallshistoricinn.com', 15, 'valls_historic_inn1.jpg,valls_historic_inn2.jpg', 80.00, 41.2880, 1.2445, 24, 5);
-INSERT INTO hotels (`name`, `description`, phone, adress, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('PortAventura Hotel', 'A magical hotel within the PortAventura resort in Vila-seca.', '987654321', 'Avenida Alcalde Pere Molas, s/n', 'info@portaventurahotel.com', 'www.portaventurahotel.com', 200, 'portaventura_hotel1.jpg,portaventura_hotel2.jpg', 250.00, 41.0876, 1.1668, 25, 11);
+INSERT INTO hotels (`name`, `description`, phone, address, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Tarragona Beach Hotel', 'A beachfront hotel with stunning views of the Mediterranean.', '123456789', 'Passeig Marítim 1', 'info@tarragonabeachhotel.com', 'www.tarragonabeachhotel.com', 80, 'tarragona_beach_hotel1.jpg,tarragona_beach_hotel2.jpg', 150.00, 41.1189, 1.2445, 20, 1);
+INSERT INTO hotels (`name`, `description`, phone, address, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Reus Boutique Hotel', 'An intimate boutique hotel in the heart of Reus.', '987654321', 'Carrer Major 15', 'reservations@reusboutiquehotel.com', 'www.reusboutiquehotel.com', 30, 'reus_boutique_hotel1.jpg,reus_boutique_hotel2.jpg', 120.00, 41.1544, 1.1063, 21, 2);
+INSERT INTO hotels (`name`, `description`, phone, address, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Salou Resort & Spa', 'A luxurious resort and spa experience in Salou.', '555123456', 'Avinguda de la Costa 123', 'reservations@salouresort.com', 'www.salouresort.com', 150, 'salou_resort_spa1.jpg,salou_resort_spa2.jpg', 200.00, 41.0762, 1.1316, 22, 3);
+INSERT INTO hotels (`name`, `description`, phone, address, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Cambrils Golf & Spa Hotel', 'Experience a golf and spa retreat in Cambrils.', '999876543', 'Carrer del Golf 567', 'info@cambrilsgolfspa.com', 'www.cambrilsgolfspa.com', 120, 'cambrils_golf_spa1.jpg,cambrils_golf_spa2.jpg', 180.00, 41.0746, 1.0620, 23, 4);
+INSERT INTO hotels (`name`, `description`, phone, address, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('Valls Historic Inn', 'Stay in a charming historic inn in the heart of Valls.', '111222333', 'Plaça del Blat 8', 'reservations@vallshistoricinn.com', 'www.vallshistoricinn.com', 15, 'valls_historic_inn1.jpg,valls_historic_inn2.jpg', 80.00, 41.2880, 1.2445, 24, 5);
+INSERT INTO hotels (`name`, `description`, phone, address, email, web, number_rooms, imgs_url, price, latitude, longitude, id_user, id_town) VALUES ('PortAventura Hotel', 'A magical hotel within the PortAventura resort in Vila-seca.', '987654321', 'Avenida Alcalde Pere Molas, s/n', 'info@portaventurahotel.com', 'www.portaventurahotel.com', 200, 'portaventura_hotel1.jpg,portaventura_hotel2.jpg', 250.00, 41.0876, 1.1668, 25, 11);
 
 CREATE table `events`(
 id INT AUTO_INCREMENT,
@@ -157,13 +158,13 @@ INSERT INTO `events` (title, `description`, img_url, start_date, end_date, entry
 
 CREATE table add_favourites(
 id INT AUTO_INCREMENT,
-id_hotel INT,
 id_user INT,
+id_hotel INT,
 star_rating TINYINT UNSIGNED,
 PRIMARY KEY(id),
 UNIQUE KEY add_favourites_uk (id_hotel, id_user),
-FOREIGN KEY (id_hotel) REFERENCES hotels (id) ON UPDATE CASCADE ON DELETE CASCADE,
 FOREIGN KEY (id_user) REFERENCES users (id) ON UPDATE CASCADE ON DELETE CASCADE,
+FOREIGN KEY (id_hotel) REFERENCES hotels (id) ON UPDATE CASCADE ON DELETE CASCADE,
 CHECK (star_rating <= 5)
 );
 -- Insertions for the add_favourites table
