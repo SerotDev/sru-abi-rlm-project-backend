@@ -24,7 +24,7 @@ public class Town {
 	private Double longitude;
 
 	@OneToMany
-	@JoinColumn(name = "id_towns")
+	@JoinColumn(name = "id_town")
 	private List<Hotel> hotel;
 
 	public Town() {
@@ -45,10 +45,6 @@ public class Town {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String Latitude() {
-		return name;
 	}
 
 	public String getName() {
