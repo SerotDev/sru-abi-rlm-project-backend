@@ -18,13 +18,12 @@ id INT AUTO_INCREMENT,
 surname VARCHAR(100),
 phone VARCHAR(20),
 prof_img_url VARCHAR(500),
-email VARCHAR(200),
+email VARCHAR(200) UNIQUE,
 `password` VARCHAR(255) NOT NULL,
 registration_date DATETIME DEFAULT CURRENT_TIMESTAMP,
-id_role INT DEFAULT 1, -- By default it is a visitor user
+id_role INT DEFAULT 1 NOT NULL, -- By default it is a visitor user
 PRIMARY KEY(id),
-FOREIGN KEY (id_role) REFERENCES roles (id) ON UPDATE CASCADE ON DELETE CASCADE,
-CHECK (id_role BETWEEN 1 AND 3)
+FOREIGN KEY (id_role) REFERENCES roles (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 -- Insertions of visitant users to the users table
 INSERT INTO users (`name`, surname, phone, email, `password`) VALUES ('Kerwinn', 'McKernan', 34642084879, 'kmckernan0@jigsy.com', '$2a$04$1/9ATrB.fbR.Rr6J9IeTTejbUh1Cl4P4unCtIwifSpZnfCZ6vd/Ta');
@@ -62,7 +61,7 @@ INSERT INTO users (`name`, surname, phone, email, `password`, id_role) VALUES ('
 
 CREATE table services(
 id INT AUTO_INCREMENT,
-`name` VARCHAR (200) NOT NULL,
+`name` VARCHAR (200) UNIQUE NOT NULL,
 PRIMARY KEY(id)
 );
 -- Insertions to the services table
@@ -77,8 +76,8 @@ INSERT INTO services (`name`) VALUES ('Own activities');
 
 CREATE table towns(
 id INT AUTO_INCREMENT,
-`name` VARCHAR (100) NOT NULL,
-postal_code INT(5) NOT NULL,
+`name` VARCHAR (100) UNIQUE NOT NULL,
+postal_code INT UNIQUE NOT NULL,
 latitude DOUBLE NOT NULL,
 longitude DOUBLE NOT NULL,
 PRIMARY KEY(id)
