@@ -37,7 +37,6 @@ public class RoleController {
 	// Update role by id
 	@PutMapping("/role/update/{id}")
 	public Role actualizar(@PathVariable(name = "id") Integer id, @RequestBody Role role) {
-
 		Role roleSelected = new Role();
 		Role roleUpdated = new Role();
 
