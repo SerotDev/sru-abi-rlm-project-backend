@@ -16,32 +16,32 @@ public class UserController {
 
 	// Get all users
 	@GetMapping("/users")
-	public List<User> listar() {
-		return userServiceImpl.listar();
+	public List<User> list() {
+		return userServiceImpl.list();
 	}
 	
 	// Add new user
 	@PostMapping("/user/add")
-	public User guardar(@RequestBody User user) {
-		return userServiceImpl.guardar(user);
+	public User save(@RequestBody User user) {
+		return userServiceImpl.save(user);
 	}
 	
 	// Get user by id
 	@GetMapping("/user/{id}")
-	public User porIdentificador(@PathVariable(name = "id") Integer id) {
+	public User byId(@PathVariable(name = "id") Integer id) {
 		User userByID = new User();
-		userByID = userServiceImpl.porIdentificador(id);
+		userByID = userServiceImpl.byId(id);
 		return userByID;
 	}
 	
 	// Update user by id
 	@PutMapping("/user/update/{id}")
-	public User actualizar(@PathVariable(name = "id") Integer id, @RequestBody User user) {
+	public User update(@PathVariable(name = "id") Integer id, @RequestBody User user) {
 
 		User userSelected = new User();
 		User userUpdated = new User();
 
-		userSelected = userServiceImpl.porIdentificador(id);
+		userSelected = userServiceImpl.byId(id);
 		userSelected.setId(id);
 		userSelected.setName(user.getName());
 		userSelected.setSurname(user.getSurname());
@@ -51,15 +51,15 @@ public class UserController {
 		userSelected.setPassword(user.getPassword());
 		userSelected.setRegistration_date(user.getRegistration_date());
 		userSelected.setRole(user.getRole());
-		userUpdated = userServiceImpl.actualizar(userSelected);
+		userUpdated = userServiceImpl.update(userSelected);
 
 		return userUpdated;
 	}
 	
 	// Delete user by id
 	@DeleteMapping("/user/delete/{id}")
-	public void eliminar(@PathVariable Integer id) {
-		userServiceImpl.eliminar(id);
+	public void delete(@PathVariable Integer id) {
+		userServiceImpl.delete(id);
 	}
 }
 

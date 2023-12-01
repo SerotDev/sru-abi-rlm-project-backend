@@ -14,31 +14,31 @@ public class ServicesServiceImpl implements IServicesService {
 	IServicesDAO iServiceDAO;
 
 	@Override
-	public List<Services> listar() {
+	public List<Services> list() {
 		return iServiceDAO.findAll();
 
 	}
 
 	@Override
-	public Services guardar(Services services) {
+	public Services save(Services services) {
 		return iServiceDAO.save(services);
 
 	}
 
 	@Override
-	public Services porIdentificador(int id) {
+	public Services byId(int id) {
 		return iServiceDAO.findById(id).get();
 
 	}
 
 	@Override
-	public Services actualizar(Services services) {
+	public Services update(Services services) {
 		return iServiceDAO.save(services);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
+	public void delete(int id) {
 		iServiceDAO.deleteById(id);				
 		
 	}

@@ -14,31 +14,31 @@ public class TownServiceImpl implements ITownService{
 	ITownDAO iTownDAO;
 
 	@Override
-	public List<Town> listar() {
+	public List<Town> list() {
 		return iTownDAO.findAll();
 
 	}
 
 	@Override
-	public Town guardar(Town town) {
+	public Town save(Town town) {
 		return iTownDAO.save(town);
 
 	}
 
 	@Override
-	public Town porIdentificador(int id) {
+	public Town byId(int id) {
 		return iTownDAO.findById(id).get();
 
 	}
 
 	@Override
-	public Town actualizar(Town town) {
+	public Town update(Town town) {
 		return iTownDAO.save(town);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
+	public void delete(int id) {
 		iTownDAO.deleteById(id);				
 		
 	}

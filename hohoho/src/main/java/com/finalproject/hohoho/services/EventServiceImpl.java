@@ -14,31 +14,31 @@ public class EventServiceImpl implements IEventService{
 	IEventDAO iEventDAO;
 
 	@Override
-	public List<Event> listar() {
+	public List<Event> list() {
 		return iEventDAO.findAll();
 
 	}
 
 	@Override
-	public Event guardar(Event event) {
+	public Event save(Event event) {
 		return iEventDAO.save(event);
 
 	}
 
 	@Override
-	public Event porIdentificador(int id) {
+	public Event byId(int id) {
 		return iEventDAO.findById(id).get();
 
 	}
 
 	@Override
-	public Event actualizar(Event event) {
+	public Event update(Event event) {
 		return iEventDAO.save(event);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
+	public void delete(int id) {
 		iEventDAO.deleteById(id);				
 		
 	}

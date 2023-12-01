@@ -6,13 +6,13 @@ import com.finalproject.hohoho.dto.User;
 
 public interface IUserService {
 	// CRUD models
-	public List<User> listar(); // List All
+	public List<User> list(); // List All
 
-	public User guardar(User user); // (CREATE)
+	public User save(User user); // (CREATE)
 
-	public User porIdentificador(int id); // (READ)
+	public User byId(int id); // (READ)
 
-	public User actualizar(User user); // (UPDATE)
+	public User update(User user); // (UPDATE)
 
-	public void eliminar(int id);// (DELETE)
+	public void delete(int id);// (DELETE)
 }

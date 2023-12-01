@@ -16,43 +16,43 @@ public class RoleController {
 
 	// Get all roles
 	@GetMapping("/roles")
-	public List<Role> listar() {
-		return roleServiceImpl.listar();
+	public List<Role> list() {
+		return roleServiceImpl.list();
 	}
 	
 	// Add new role
 	@PostMapping("/role/add")
-	public Role guardar(@RequestBody Role role) {
-		return roleServiceImpl.guardar(role);
+	public Role save(@RequestBody Role role) {
+		return roleServiceImpl.save(role);
 	}
 	
 	// Get role by id
 	@GetMapping("/role/{id}")
-	public Role porIdentificador(@PathVariable(name = "id") Integer id) {
+	public Role byId(@PathVariable(name = "id") Integer id) {
 		Role roleByID = new Role();
-		roleByID = roleServiceImpl.porIdentificador(id);
+		roleByID = roleServiceImpl.byId(id);
 		return roleByID;
 	}
 	
 	// Update role by id
 	@PutMapping("/role/update/{id}")
-	public Role actualizar(@PathVariable(name = "id") Integer id, @RequestBody Role role) {
+	public Role update(@PathVariable(name = "id") Integer id, @RequestBody Role role) {
 
 		Role roleSelected = new Role();
 		Role roleUpdated = new Role();
 
-		roleSelected = roleServiceImpl.porIdentificador(id);
+		roleSelected = roleServiceImpl.byId(id);
 		roleSelected.setId(id);
 		roleSelected.setName(role.getName());
-		roleUpdated = roleServiceImpl.actualizar(roleSelected);
+		roleUpdated = roleServiceImpl.update(roleSelected);
 
 		return roleUpdated;
 	}
 	
 	// Delete role by id
 	@DeleteMapping("/role/delete/{id}")
-	public void eliminar(@PathVariable Integer id) {
-		roleServiceImpl.eliminar(id);
+	public void delete(@PathVariable Integer id) {
+		roleServiceImpl.delete(id);
 	}
 }
 

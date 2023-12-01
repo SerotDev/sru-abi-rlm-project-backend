@@ -16,45 +16,45 @@ public class TownController {
 
 	// Get all towns
 	@GetMapping("/towns")
-	public List<Town> listar() {
-		return townServiceImpl.listar();
+	public List<Town> list() {
+		return townServiceImpl.list();
 	}
 	
 	// Add new town
 	@PostMapping("/town/add")
-	public Town guardar(@RequestBody Town town) {
-		return townServiceImpl.guardar(town);
+	public Town save(@RequestBody Town town) {
+		return townServiceImpl.save(town);
 	}
 	
 	// Get town by id
 	@GetMapping("/town/{id}")
-	public Town porIdentificador(@PathVariable(name = "id") Integer id) {
+	public Town byId(@PathVariable(name = "id") Integer id) {
 		Town townByID = new Town();
-		townByID = townServiceImpl.porIdentificador(id);
+		townByID = townServiceImpl.byId(id);
 		return townByID;
 	}
 	
 	// Update town by id
 	@PutMapping("/town/update/{id}")
-	public Town actualizar(@PathVariable(name = "id") Integer id, @RequestBody Town town) {
+	public Town update(@PathVariable(name = "id") Integer id, @RequestBody Town town) {
 
 		Town townSelected = new Town();
 		Town townUpdated = new Town();
 
-		townSelected = townServiceImpl.porIdentificador(id);
+		townSelected = townServiceImpl.byId(id);
 		townSelected.setId(id);
 		townSelected.setName(town.getName());
 		townSelected.setPostal_code(town.getPostal_code());
 		townSelected.setLatitude(town.getLatitude());
 		townSelected.setLongitude(town.getLongitude());
-		townUpdated = townServiceImpl.actualizar(townSelected);
+		townUpdated = townServiceImpl.update(townSelected);
 
 		return townUpdated;
 	}
 	
 	// Delete town by id
 	@DeleteMapping("/town/delete/{id}")
-	public void eliminar(@PathVariable Integer id) {
-		townServiceImpl.eliminar(id);
+	public void delete(@PathVariable Integer id) {
+		townServiceImpl.delete(id);
 	}
 }

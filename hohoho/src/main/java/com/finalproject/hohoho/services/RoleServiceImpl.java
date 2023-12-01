@@ -14,31 +14,31 @@ public class RoleServiceImpl implements IRoleService {
 		IRoleDAO iRoleDAO;
 
 		@Override
-		public List<Role> listar() {
+		public List<Role> list() {
 			return iRoleDAO.findAll();
 
 		}
 
 		@Override
-		public Role guardar(Role role) {
+		public Role save(Role role) {
 			return iRoleDAO.save(role);
 
 		}
 
 		@Override
-		public Role porIdentificador(int id) {
+		public Role byId(int id) {
 			return iRoleDAO.findById(id).get();
 
 		}
 
 		@Override
-		public Role actualizar(Role role) {
+		public Role update(Role role) {
 			return iRoleDAO.save(role);
 
 		}
 
 		@Override
-		public void eliminar(int id) {
+		public void delete(int id) {
 			iRoleDAO.deleteById(id);				
 			
 		}

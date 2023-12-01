@@ -16,32 +16,32 @@ public class HotelController {
 
 	// Get all hotels
 	@GetMapping("/hotels")
-	public List<Hotel> listar() {
-		return hotelServiceImpl.listar();
+	public List<Hotel> list() {
+		return hotelServiceImpl.list();
 	}
 	
 	// Add new hotel
 	@PostMapping("/hotel/add")
-	public Hotel guardar(@RequestBody Hotel hotel) {
-		return hotelServiceImpl.guardar(hotel);
+	public Hotel save(@RequestBody Hotel hotel) {
+		return hotelServiceImpl.save(hotel);
 	}
 	
 	// Get hotel by id
 	@GetMapping("/hotel/{id}")
-	public Hotel porIdentificador(@PathVariable(name = "id") Integer id) {
+	public Hotel byId(@PathVariable(name = "id") Integer id) {
 		Hotel hotelByID = new Hotel();
-		hotelByID = hotelServiceImpl.porIdentificador(id);
+		hotelByID = hotelServiceImpl.byId(id);
 		return hotelByID;
 	}
 	
 	// Update hotel by id
 	@PutMapping("/hotel/update/{id}")
-	public Hotel actualizar(@PathVariable(name = "id") Integer id, @RequestBody Hotel hotel) {
+	public Hotel update(@PathVariable(name = "id") Integer id, @RequestBody Hotel hotel) {
 
 		Hotel hotelSelected = new Hotel();
 		Hotel hotelUpdated = new Hotel();
 
-		hotelSelected = hotelServiceImpl.porIdentificador(id);
+		hotelSelected = hotelServiceImpl.byId(id);
 		hotelSelected.setId(id);
 		hotelSelected.setDescription(hotel.getDescription());
 		hotelSelected.setPhone(hotel.getPhone());
@@ -55,14 +55,14 @@ public class HotelController {
 		hotelSelected.setLongitude(hotel.getLongitude());
 		hotelSelected.setUser(hotel.getUser());
 		hotelSelected.setTown(hotel.getTown());
-		hotelUpdated = hotelServiceImpl.actualizar(hotelSelected);
+		hotelUpdated = hotelServiceImpl.update(hotelSelected);
 
 		return hotelUpdated;
 	}
 	
 	// Delete hotel by id
 	@DeleteMapping("/hotel/delete/{id}")
-	public void eliminar(@PathVariable Integer id) {
-		hotelServiceImpl.eliminar(id);
+	public void delete(@PathVariable Integer id) {
+		hotelServiceImpl.delete(id);
 	}
 }
