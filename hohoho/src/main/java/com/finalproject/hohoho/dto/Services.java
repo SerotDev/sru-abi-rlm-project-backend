@@ -18,7 +18,7 @@ public class Services {
 	private String name;
 
 	@OneToMany
-	@JoinColumn(name = "id_services")
+	@JoinColumn(name = "id_service")
 	private List<HotelService> hotelService;
 
 	public Services() {
