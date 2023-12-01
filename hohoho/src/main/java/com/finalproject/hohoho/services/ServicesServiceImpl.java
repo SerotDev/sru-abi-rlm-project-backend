@@ -9,7 +9,7 @@ import com.finalproject.hohoho.dao.IServiceDAO;
 import com.finalproject.hohoho.dto.Services;
 
 @Service
-public class ServicesServiceImpl implements IServiceService {
+public class ServicesServiceImpl implements IServicesService {
 	@Autowired
 	IServiceDAO iServiceDAO;
 
