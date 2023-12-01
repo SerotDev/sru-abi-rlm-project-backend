@@ -14,42 +14,47 @@ public class TownController {
 	@Autowired
 	TownServiceImpl townServiceImpl;
 
+	// Get all towns
 	@GetMapping("/towns")
 	public List<Town> listar() {
 		return townServiceImpl.listar();
 	}
-
-	@GetMapping("/town/{id}")
-	public Town porIdentificador(@PathVariable(name = "id") Integer id) {
-		return townServiceImpl.porIdentificador(id);
-	}
-
+	
+	// Add new town
 	@PostMapping("/town/add")
 	public Town guardar(@RequestBody Town town) {
 		return townServiceImpl.guardar(town);
 	}
-
+	
+	// Get town by id
+	@GetMapping("/town/{id}")
+	public Town porIdentificador(@PathVariable(name = "id") Integer id) {
+		Town townByID = new Town();
+		townByID = townServiceImpl.porIdentificador(id);
+		return townByID;
+	}
+	
+	// Update town by id
 	@PutMapping("/town/update/{id}")
 	public Town actualizar(@PathVariable(name = "id") Integer id, @RequestBody Town town) {
 
-		Town town_selected = new Town();
-		Town town_updated = new Town();
+		Town townSelected = new Town();
+		Town townUpdated = new Town();
 
-		town_selected = townServiceImpl.porIdentificador(id);
-		town_selected.setId(id);
-		town_selected.setName(town.getName());
-		town_selected.setPostal_code(town.getPostal_code());
-		town_selected.setLatitude(town.getLatitude());
-		town_selected.setLongitude(town.getLongitude());
-		
-		town_updated = townServiceImpl.actualizar(town_selected);
+		townSelected = townServiceImpl.porIdentificador(id);
+		townSelected.setId(id);
+		townSelected.setName(town.getName());
+		townSelected.setPostal_code(town.getPostal_code());
+		townSelected.setLatitude(town.getLatitude());
+		townSelected.setLongitude(town.getLongitude());
+		townUpdated = townServiceImpl.actualizar(townSelected);
 
-		return town_updated;
+		return townUpdated;
 	}
-
+	
+	// Delete town by id
 	@DeleteMapping("/town/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
 		townServiceImpl.eliminar(id);
 	}
 }
-

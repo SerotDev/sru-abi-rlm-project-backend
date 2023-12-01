@@ -14,44 +14,50 @@ public class EventController {
 	@Autowired
 	EventServiceImpl eventServiceImpl;
 
+	// Get all events
 	@GetMapping("/events")
 	public List<Event> listar() {
 		return eventServiceImpl.listar();
 	}
-
-	@GetMapping("/event/{id}")
-	public Event porIdentificador(@PathVariable(name = "id") Integer id) {
-		return eventServiceImpl.porIdentificador(id);
-	}
-
+	
+	// Add new event
 	@PostMapping("/event/add")
 	public Event guardar(@RequestBody Event event) {
 		return eventServiceImpl.guardar(event);
 	}
-
+	
+	// Get event by id
+	@GetMapping("/event/{id}")
+	public Event porIdentificador(@PathVariable(name = "id") Integer id) {
+		Event eventByID = new Event();
+		eventByID = eventServiceImpl.porIdentificador(id);
+		return eventByID;
+	}
+	
+	// Update event by id
 	@PutMapping("/event/update/{id}")
 	public Event actualizar(@PathVariable(name = "id") Integer id, @RequestBody Event event) {
 
-		Event event_selected = new Event();
-		Event event_updated = new Event();
+		Event eventSelected = new Event();
+		Event eventUpdated = new Event();
 
-		event_selected = eventServiceImpl.porIdentificador(id);
-		event_selected.setId(id);
-		event_selected.setTitle(event.getTitle());
-		event_selected.setDescription(event.getDescription());
-		event_selected.setImg_url(event.getImg_url());
-		event_selected.setStart_date(event.getStart_date());
-		event_selected.setEnd_date(event.getEnd_date());
-		event_selected.setEntry_price(event.getEntry_price());
-		event_selected.setLatitude(event.getLatitude());
-		event_selected.setLongitude(event.getLongitude());
-		event_selected.setTown(event.getTown());
-		
-		event_updated = eventServiceImpl.actualizar(event_selected);
+		eventSelected = eventServiceImpl.porIdentificador(id);
+		eventSelected.setId(id);
+		eventSelected.setTitle(event.getTitle());
+		eventSelected.setDescription(event.getDescription());
+		eventSelected.setImg_url(event.getImg_url());
+		eventSelected.setStart_date(event.getStart_date());
+		eventSelected.setEntry_price(event.getEntry_price());
+		eventSelected.setIs_public(event.getIs_public());
+		eventSelected.setLatitude(event.getLatitude());
+		eventSelected.setLongitude(event.getLongitude());
+		eventSelected.setHotel(event.getHotel());
+		eventUpdated = eventServiceImpl.actualizar(eventSelected);
 
-		return event_updated;
+		return eventUpdated;
 	}
-
+	
+	// Delete event by id
 	@DeleteMapping("/event/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
 		eventServiceImpl.eliminar(id);

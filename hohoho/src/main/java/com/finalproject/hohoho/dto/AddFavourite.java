@@ -9,22 +9,22 @@ public class AddFavourite {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_user")
+	private User user;
 
 	@ManyToOne
 	@JoinColumn(name = "id_hotel")
 	private Hotel hotel;
-
-	@ManyToOne
-	@JoinColumn(name = "id_user")
-	private User user;
 	
 	@Column(name = "star_rating")
-	private String star_rating;
+	private int star_rating;
 
 	public AddFavourite() {
 	}
 
-	public AddFavourite(int id, Hotel hotel, User user, String star_rating) {
+	public AddFavourite(int id, Hotel hotel, User user, int star_rating) {
 		this.id = id;
 		this.hotel = hotel;
 		this.user = user;
@@ -55,11 +55,11 @@ public class AddFavourite {
 		this.user = user;
 	}
 
-	public String getStar_rating() {
+	public int getStar_rating() {
 		return star_rating;
 	}
 
-	public void setStar_rating(String star_rating) {
+	public void setStar_rating(int star_rating) {
 		this.star_rating = star_rating;
 	}
 

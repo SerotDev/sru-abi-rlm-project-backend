@@ -14,40 +14,46 @@ public class AddFavouriteController {
 	@Autowired
 	AddFavouriteServiceImpl addFavouriteServiceImpl;
 
-	@GetMapping("/add_favourites")
+	// Get all addFavourites
+	@GetMapping("/addFavourites")
 	public List<AddFavourite> listar() {
 		return addFavouriteServiceImpl.listar();
 	}
-
-	@GetMapping("/add_favourite/{id}")
-	public AddFavourite porIdentificador(@PathVariable(name = "id") Integer id) {
-		return addFavouriteServiceImpl.porIdentificador(id);
-	}
-
-	@PostMapping("/add_favourite/add")
+	
+	// Add new favourite
+	@PostMapping("/addFavourite/add")
 	public AddFavourite guardar(@RequestBody AddFavourite addFavourite) {
 		return addFavouriteServiceImpl.guardar(addFavourite);
 	}
-
-	@PutMapping("/add_favourite/update/{id}")
+	
+	// Get favourite relation by id
+	@GetMapping("/addFavourite/{id}")
+	public AddFavourite porIdentificador(@PathVariable(name = "id") Integer id) {
+		AddFavourite addFavouriteByID = new AddFavourite();
+		addFavouriteByID = addFavouriteServiceImpl.porIdentificador(id);
+		return addFavouriteByID;
+	}
+	
+	// Update favourite by id
+	@PutMapping("/addFavourite/update/{id}")
 	public AddFavourite actualizar(@PathVariable(name = "id") Integer id, @RequestBody AddFavourite addFavourite) {
 
-		AddFavourite add_favourite_selected = new AddFavourite();
-		AddFavourite add_favourite_updated = new AddFavourite();
+		AddFavourite addFavouriteSelected = new AddFavourite();
+		AddFavourite addFavouriteUpdated = new AddFavourite();
 
-		add_favourite_selected = addFavouriteServiceImpl.porIdentificador(id);
-		add_favourite_selected.setId(id);
-		add_favourite_selected.setHotel(addFavourite.getHotel());
-		add_favourite_selected.setUser(addFavourite.getUser());
-		add_favourite_selected.setStar_rating(addFavourite.getStar_rating());
-		add_favourite_updated = addFavouriteServiceImpl.actualizar(add_favourite_selected);
+		addFavouriteSelected = addFavouriteServiceImpl.porIdentificador(id);
+		addFavouriteSelected.setId(id);
+		addFavouriteSelected.setUser(addFavourite.getUser());
+		addFavouriteSelected.setHotel(addFavourite.getHotel());
+		addFavouriteSelected.setStar_rating(addFavourite.getStar_rating());
+		addFavouriteUpdated = addFavouriteServiceImpl.actualizar(addFavouriteSelected);
 
-		return add_favourite_updated;
+		return addFavouriteUpdated;
 	}
-
-	@DeleteMapping("/add_favourite/delete/{id}")
+	
+	// Delete favourite by id
+	@DeleteMapping("/addFavourite/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
 		addFavouriteServiceImpl.eliminar(id);
 	}
 }
-

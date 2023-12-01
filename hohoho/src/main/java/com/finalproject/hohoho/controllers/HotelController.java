@@ -14,51 +14,55 @@ public class HotelController {
 	@Autowired
 	HotelServiceImpl hotelServiceImpl;
 
+	// Get all hotels
 	@GetMapping("/hotels")
 	public List<Hotel> listar() {
 		return hotelServiceImpl.listar();
 	}
-
-	@GetMapping("/hotel/{id}")
-	public Hotel porIdentificador(@PathVariable(name = "id") Integer id) {
-		return hotelServiceImpl.porIdentificador(id);
-	}
-
+	
+	// Add new hotel
 	@PostMapping("/hotel/add")
 	public Hotel guardar(@RequestBody Hotel hotel) {
 		return hotelServiceImpl.guardar(hotel);
 	}
-
+	
+	// Get hotel by id
+	@GetMapping("/hotel/{id}")
+	public Hotel porIdentificador(@PathVariable(name = "id") Integer id) {
+		Hotel hotelByID = new Hotel();
+		hotelByID = hotelServiceImpl.porIdentificador(id);
+		return hotelByID;
+	}
+	
+	// Update hotel by id
 	@PutMapping("/hotel/update/{id}")
 	public Hotel actualizar(@PathVariable(name = "id") Integer id, @RequestBody Hotel hotel) {
 
-		Hotel hotel_selected = new Hotel();
-		Hotel hotel_updated = new Hotel();
+		Hotel hotelSelected = new Hotel();
+		Hotel hotelUpdated = new Hotel();
 
-		hotel_selected = hotelServiceImpl.porIdentificador(id);
-		hotel_selected.setId(id);
-		hotel_selected.setName(hotel.getName());
-		hotel_selected.setDescription(hotel.getDescription());
-		hotel_selected.setPhone(hotel.getPhone());
-		hotel_selected.setAddress(hotel.getAddress());
-		hotel_selected.setEmail(hotel.getEmail());
-		hotel_selected.setWeb(hotel.getWeb());
-		hotel_selected.setNumber_rooms(hotel.getNumber_rooms());
-		hotel_selected.setImgs_url(hotel.getImgs_url());
-		hotel_selected.setPrice(hotel.getPrice());
-		hotel_selected.setLatitude(hotel.getLatitude());
-		hotel_selected.setLongitude(hotel.getLongitude());
-		hotel_selected.setTown(hotel.getTown());
-		hotel_selected.setUser(hotel.getUser());
-		
-		hotel_updated = hotelServiceImpl.actualizar(hotel_selected);
+		hotelSelected = hotelServiceImpl.porIdentificador(id);
+		hotelSelected.setId(id);
+		hotelSelected.setDescription(hotel.getDescription());
+		hotelSelected.setPhone(hotel.getPhone());
+		hotelSelected.setAddress(hotel.getAddress());
+		hotelSelected.setEmail(hotel.getEmail());
+		hotelSelected.setWeb(hotel.getWeb());
+		hotelSelected.setNumber_rooms(hotel.getNumber_rooms());
+		hotelSelected.setImgs_url(hotel.getImgs_url());
+		hotelSelected.setPrice(hotel.getPrice());
+		hotelSelected.setLatitude(hotel.getLatitude());
+		hotelSelected.setLongitude(hotel.getLongitude());
+		hotelSelected.setUser(hotel.getUser());
+		hotelSelected.setTown(hotel.getTown());
+		hotelUpdated = hotelServiceImpl.actualizar(hotelSelected);
 
-		return hotel_updated;
+		return hotelUpdated;
 	}
-
+	
+	// Delete hotel by id
 	@DeleteMapping("/hotel/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
 		hotelServiceImpl.eliminar(id);
 	}
 }
-

@@ -14,37 +14,44 @@ public class HotelServiceController {
 	@Autowired
 	HotelServiceServiceImpl hotelServiceServiceImpl;
 
-	@GetMapping("/hotel_services")
+	// Get all hotelServices
+	@GetMapping("/hotelServices")
 	public List<HotelService> listar() {
 		return hotelServiceServiceImpl.listar();
 	}
-
-	@GetMapping("/hotel_service/{id}")
-	public HotelService porIdentificador(@PathVariable(name = "id") Integer id) {
-		return hotelServiceServiceImpl.porIdentificador(id);
-	}
-
-	@PostMapping("/hotel_service/add")
+	
+	// Add new hotelService
+	@PostMapping("/hotelService/add")
 	public HotelService guardar(@RequestBody HotelService hotelService) {
 		return hotelServiceServiceImpl.guardar(hotelService);
 	}
-
-	@PutMapping("/hotel_service/update/{id}")
+	
+	// Get hotelService by id
+	@GetMapping("/hotelService/{id}")
+	public HotelService porIdentificador(@PathVariable(name = "id") Integer id) {
+		HotelService hotelServiceByID = new HotelService();
+		hotelServiceByID = hotelServiceServiceImpl.porIdentificador(id);
+		return hotelServiceByID;
+	}
+	
+	// Update hotelService by id
+	@PutMapping("/hotelService/update/{id}")
 	public HotelService actualizar(@PathVariable(name = "id") Integer id, @RequestBody HotelService hotelService) {
 
-		HotelService hotel_service_selected = new HotelService();
-		HotelService hotel_service_updated = new HotelService();
+		HotelService hotelServiceSelected = new HotelService();
+		HotelService hotelServiceUpdated = new HotelService();
 
-		hotel_service_selected = hotelServiceServiceImpl.porIdentificador(id);
-		hotel_service_selected.setId(id);
-		hotel_service_selected.setHotel(hotelService.getHotel());
-		hotel_service_selected.setService(hotelService.getService());
-		hotel_service_updated = hotelServiceServiceImpl.actualizar(hotel_service_selected);
-		
-		return hotel_service_updated;
+		hotelServiceSelected = hotelServiceServiceImpl.porIdentificador(id);
+		hotelServiceSelected.setId(id);
+		hotelServiceSelected.setHotel(hotelService.getHotel());
+		hotelServiceSelected.setService(hotelService.getService());
+		hotelServiceUpdated = hotelServiceServiceImpl.actualizar(hotelServiceSelected);
+
+		return hotelServiceUpdated;
 	}
-
-	@DeleteMapping("/hotel_service/delete/{id}")
+	
+	// Delete hotelService by id
+	@DeleteMapping("/hotelService/delete/{id}")
 	public void eliminar(@PathVariable Integer id) {
 		hotelServiceServiceImpl.eliminar(id);
 	}
