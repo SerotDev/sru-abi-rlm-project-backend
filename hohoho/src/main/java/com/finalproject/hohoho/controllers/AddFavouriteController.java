@@ -16,44 +16,44 @@ public class AddFavouriteController {
 
 	// Get all addFavourites
 	@GetMapping("/addFavourites")
-	public List<AddFavourite> listar() {
-		return addFavouriteServiceImpl.listar();
+	public List<AddFavourite> list() {
+		return addFavouriteServiceImpl.list();
 	}
 	
 	// Add new favourite
 	@PostMapping("/addFavourite/add")
-	public AddFavourite guardar(@RequestBody AddFavourite addFavourite) {
-		return addFavouriteServiceImpl.guardar(addFavourite);
+	public AddFavourite save(@RequestBody AddFavourite addFavourite) {
+		return addFavouriteServiceImpl.save(addFavourite);
 	}
 	
 	// Get favourite relation by id
 	@GetMapping("/addFavourite/{id}")
-	public AddFavourite porIdentificador(@PathVariable(name = "id") Integer id) {
+	public AddFavourite byId(@PathVariable(name = "id") Integer id) {
 		AddFavourite addFavouriteByID = new AddFavourite();
-		addFavouriteByID = addFavouriteServiceImpl.porIdentificador(id);
+		addFavouriteByID = addFavouriteServiceImpl.byId(id);
 		return addFavouriteByID;
 	}
 	
 	// Update favourite by id
 	@PutMapping("/addFavourite/update/{id}")
-	public AddFavourite actualizar(@PathVariable(name = "id") Integer id, @RequestBody AddFavourite addFavourite) {
+	public AddFavourite update(@PathVariable(name = "id") Integer id, @RequestBody AddFavourite addFavourite) {
 
 		AddFavourite addFavouriteSelected = new AddFavourite();
 		AddFavourite addFavouriteUpdated = new AddFavourite();
 
-		addFavouriteSelected = addFavouriteServiceImpl.porIdentificador(id);
+		addFavouriteSelected = addFavouriteServiceImpl.byId(id);
 		addFavouriteSelected.setId(id);
 		addFavouriteSelected.setUser(addFavourite.getUser());
 		addFavouriteSelected.setHotel(addFavourite.getHotel());
 		addFavouriteSelected.setStar_rating(addFavourite.getStar_rating());
-		addFavouriteUpdated = addFavouriteServiceImpl.actualizar(addFavouriteSelected);
+		addFavouriteUpdated = addFavouriteServiceImpl.update(addFavouriteSelected);
 
 		return addFavouriteUpdated;
 	}
 	
 	// Delete favourite by id
 	@DeleteMapping("/addFavourite/delete/{id}")
-	public void eliminar(@PathVariable Integer id) {
-		addFavouriteServiceImpl.eliminar(id);
+	public void delete(@PathVariable Integer id) {
+		addFavouriteServiceImpl.delete(id);
 	}
 }

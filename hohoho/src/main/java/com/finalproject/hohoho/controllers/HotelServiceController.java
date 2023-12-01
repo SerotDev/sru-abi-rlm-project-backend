@@ -16,44 +16,44 @@ public class HotelServiceController {
 
 	// Get all hotelServices
 	@GetMapping("/hotelServices")
-	public List<HotelService> listar() {
-		return hotelServiceServiceImpl.listar();
+	public List<HotelService> list() {
+		return hotelServiceServiceImpl.list();
 	}
 	
 	// Add new hotelService
 	@PostMapping("/hotelService/add")
-	public HotelService guardar(@RequestBody HotelService hotelService) {
-		return hotelServiceServiceImpl.guardar(hotelService);
+	public HotelService save(@RequestBody HotelService hotelService) {
+		return hotelServiceServiceImpl.save(hotelService);
 	}
 	
 	// Get hotelService by id
 	@GetMapping("/hotelService/{id}")
-	public HotelService porIdentificador(@PathVariable(name = "id") Integer id) {
+	public HotelService byId(@PathVariable(name = "id") Integer id) {
 		HotelService hotelServiceByID = new HotelService();
-		hotelServiceByID = hotelServiceServiceImpl.porIdentificador(id);
+		hotelServiceByID = hotelServiceServiceImpl.byId(id);
 		return hotelServiceByID;
 	}
 	
 	// Update hotelService by id
 	@PutMapping("/hotelService/update/{id}")
-	public HotelService actualizar(@PathVariable(name = "id") Integer id, @RequestBody HotelService hotelService) {
+	public HotelService update(@PathVariable(name = "id") Integer id, @RequestBody HotelService hotelService) {
 
 		HotelService hotelServiceSelected = new HotelService();
 		HotelService hotelServiceUpdated = new HotelService();
 
-		hotelServiceSelected = hotelServiceServiceImpl.porIdentificador(id);
+		hotelServiceSelected = hotelServiceServiceImpl.byId(id);
 		hotelServiceSelected.setId(id);
 		hotelServiceSelected.setHotel(hotelService.getHotel());
 		hotelServiceSelected.setService(hotelService.getService());
-		hotelServiceUpdated = hotelServiceServiceImpl.actualizar(hotelServiceSelected);
+		hotelServiceUpdated = hotelServiceServiceImpl.update(hotelServiceSelected);
 
 		return hotelServiceUpdated;
 	}
 	
 	// Delete hotelService by id
 	@DeleteMapping("/hotelService/delete/{id}")
-	public void eliminar(@PathVariable Integer id) {
-		hotelServiceServiceImpl.eliminar(id);
+	public void delete(@PathVariable Integer id) {
+		hotelServiceServiceImpl.delete(id);
 	}
 }
 

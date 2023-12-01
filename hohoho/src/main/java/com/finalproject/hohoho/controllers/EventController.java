@@ -16,32 +16,32 @@ public class EventController {
 
 	// Get all events
 	@GetMapping("/events")
-	public List<Event> listar() {
-		return eventServiceImpl.listar();
+	public List<Event> list() {
+		return eventServiceImpl.list();
 	}
 	
 	// Add new event
 	@PostMapping("/event/add")
-	public Event guardar(@RequestBody Event event) {
-		return eventServiceImpl.guardar(event);
+	public Event save(@RequestBody Event event) {
+		return eventServiceImpl.save(event);
 	}
 	
 	// Get event by id
 	@GetMapping("/event/{id}")
-	public Event porIdentificador(@PathVariable(name = "id") Integer id) {
+	public Event byId(@PathVariable(name = "id") Integer id) {
 		Event eventByID = new Event();
-		eventByID = eventServiceImpl.porIdentificador(id);
+		eventByID = eventServiceImpl.byId(id);
 		return eventByID;
 	}
 	
 	// Update event by id
 	@PutMapping("/event/update/{id}")
-	public Event actualizar(@PathVariable(name = "id") Integer id, @RequestBody Event event) {
+	public Event update(@PathVariable(name = "id") Integer id, @RequestBody Event event) {
 
 		Event eventSelected = new Event();
 		Event eventUpdated = new Event();
 
-		eventSelected = eventServiceImpl.porIdentificador(id);
+		eventSelected = eventServiceImpl.byId(id);
 		eventSelected.setId(id);
 		eventSelected.setTitle(event.getTitle());
 		eventSelected.setDescription(event.getDescription());
@@ -52,15 +52,15 @@ public class EventController {
 		eventSelected.setLatitude(event.getLatitude());
 		eventSelected.setLongitude(event.getLongitude());
 		eventSelected.setHotel(event.getHotel());
-		eventUpdated = eventServiceImpl.actualizar(eventSelected);
+		eventUpdated = eventServiceImpl.update(eventSelected);
 
 		return eventUpdated;
 	}
 	
 	// Delete event by id
 	@DeleteMapping("/event/delete/{id}")
-	public void eliminar(@PathVariable Integer id) {
-		eventServiceImpl.eliminar(id);
+	public void delete(@PathVariable Integer id) {
+		eventServiceImpl.delete(id);
 	}
 }
 

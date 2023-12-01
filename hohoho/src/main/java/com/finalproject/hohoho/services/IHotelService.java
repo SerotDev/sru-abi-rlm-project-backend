@@ -6,13 +6,13 @@ import com.finalproject.hohoho.dto.Hotel;
 
 public interface IHotelService {
 	// CRUD models
-	public List<Hotel> listar(); // List All
+	public List<Hotel> list(); // List All
 
-	public Hotel guardar(Hotel hotel); // (CREATE)
+	public Hotel save(Hotel hotel); // (CREATE)
 
-	public Hotel porIdentificador(int id); // (READ)
+	public Hotel byId(int id); // (READ)
 
-	public Hotel actualizar(Hotel hotel); // (UPDATE)
+	public Hotel update(Hotel hotel); // (UPDATE)
 
-	public void eliminar(int id);// (DELETE)
+	public void delete(int id);// (DELETE)
 }

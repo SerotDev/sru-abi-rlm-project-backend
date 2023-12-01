@@ -16,42 +16,42 @@ public class ServiceController {
 
 	// Get all services
 	@GetMapping("/services")
-	public List<Services> listar() {
-		return serviceServiceImpl.listar();
+	public List<Services> list() {
+		return serviceServiceImpl.list();
 	}
 	
 	// Add new service
 	@PostMapping("/service/add")
-	public Services guardar(@RequestBody Services service) {
-		return serviceServiceImpl.guardar(service);
+	public Services save(@RequestBody Services service) {
+		return serviceServiceImpl.save(service);
 	}
 	
 	// Get service by id
 	@GetMapping("/service/{id}")
-	public Services porIdentificador(@PathVariable(name = "id") Integer id) {
+	public Services byId(@PathVariable(name = "id") Integer id) {
 		Services serviceByID = new Services();
-		serviceByID = serviceServiceImpl.porIdentificador(id);
+		serviceByID = serviceServiceImpl.byId(id);
 		return serviceByID;
 	}
 	
 	// Update service by id
 	@PutMapping("/service/update/{id}")
-	public Services actualizar(@PathVariable(name = "id") Integer id, @RequestBody Services service) {
+	public Services update(@PathVariable(name = "id") Integer id, @RequestBody Services service) {
 		Services serviceSelected = new Services();
 		Services serviceUpdated = new Services();
 
-		serviceSelected = serviceServiceImpl.porIdentificador(id);
+		serviceSelected = serviceServiceImpl.byId(id);
 		serviceSelected.setId(id);
 		serviceSelected.setName(service.getName());
-		serviceUpdated = serviceServiceImpl.actualizar(serviceSelected);
+		serviceUpdated = serviceServiceImpl.update(serviceSelected);
 
 		return serviceUpdated;
 	}
 	
 	// Delete service by id
 	@DeleteMapping("/service/delete/{id}")
-	public void eliminar(@PathVariable Integer id) {
-		serviceServiceImpl.eliminar(id);
+	public void delete(@PathVariable Integer id) {
+		serviceServiceImpl.delete(id);
 	}
 }
 

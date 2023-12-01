@@ -6,13 +6,13 @@ import com.finalproject.hohoho.dto.Services;
 
 public interface IServicesService {
 	// CRUD models
-	public List<Services> listar(); // List All
+	public List<Services> list(); // List All
 
-	public Services guardar(Services service); // (CREATE)
+	public Services save(Services service); // (CREATE)
 
-	public Services porIdentificador(int id); // (READ)
+	public Services byId(int id); // (READ)
 
-	public Services actualizar(Services service); // (UPDATE)
+	public Services update(Services service); // (UPDATE)
 
-	public void eliminar(int id);// (DELETE)
+	public void delete(int id);// (DELETE)
 }

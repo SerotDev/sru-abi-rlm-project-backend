@@ -14,31 +14,31 @@ public class HotelServiceImpl implements IHotelService{
 	IHotelDAO iHotelDAO;
 
 	@Override
-	public List<Hotel> listar() {
+	public List<Hotel> list() {
 		return iHotelDAO.findAll();
 
 	}
 
 	@Override
-	public Hotel guardar(Hotel hotel) {
+	public Hotel save(Hotel hotel) {
 		return iHotelDAO.save(hotel);
 
 	}
 
 	@Override
-	public Hotel porIdentificador(int id) {
+	public Hotel byId(int id) {
 		return iHotelDAO.findById(id).get();
 
 	}
 
 	@Override
-	public Hotel actualizar(Hotel hotel) {
+	public Hotel update(Hotel hotel) {
 		return iHotelDAO.save(hotel);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
+	public void delete(int id) {
 		iHotelDAO.deleteById(id);				
 		
 	}

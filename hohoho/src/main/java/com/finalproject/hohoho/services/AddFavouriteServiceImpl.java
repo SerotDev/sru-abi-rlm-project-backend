@@ -14,31 +14,31 @@ public class AddFavouriteServiceImpl implements IAddFavouriteService{
 	IAddFavouriteDAO iAddFavouriteDAO;
 
 	@Override
-	public List<AddFavourite> listar() {
+	public List<AddFavourite> list() {
 		return iAddFavouriteDAO.findAll();
 
 	}
 
 	@Override
-	public AddFavourite guardar(AddFavourite addFavourite) {
+	public AddFavourite save(AddFavourite addFavourite) {
 		return iAddFavouriteDAO.save(addFavourite);
 
 	}
 
 	@Override
-	public AddFavourite porIdentificador(int id) {
+	public AddFavourite byId(int id) {
 		return iAddFavouriteDAO.findById(id).get();
 
 	}
 
 	@Override
-	public AddFavourite actualizar(AddFavourite addFavourite) {
+	public AddFavourite update(AddFavourite addFavourite) {
 		return iAddFavouriteDAO.save(addFavourite);
 
 	}
 
 	@Override
-	public void eliminar(int id) {
+	public void delete(int id) {
 		iAddFavouriteDAO.deleteById(id);				
 		
 	}

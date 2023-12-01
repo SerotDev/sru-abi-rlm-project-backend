@@ -6,13 +6,13 @@ import com.finalproject.hohoho.dto.AddFavourite;
 
 public interface IAddFavouriteService {
 	//CRUD models
-	public List<AddFavourite> listar(); // List All
+	public List<AddFavourite> list(); // List All
 
-	public AddFavourite guardar(AddFavourite addFavourite); // (CREATE)
+	public AddFavourite save(AddFavourite addFavourite); // (CREATE)
 
-	public AddFavourite porIdentificador(int id); // (READ)
+	public AddFavourite byId(int id); // (READ)
 
-	public AddFavourite actualizar(AddFavourite addFavourite); // (UPDATE)
+	public AddFavourite update(AddFavourite addFavourite); // (UPDATE)
 
-	public void eliminar(int id);// (DELETE)
+	public void delete(int id);// (DELETE)
 }
