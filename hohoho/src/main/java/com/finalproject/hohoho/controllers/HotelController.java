@@ -1,11 +1,24 @@
 package com.finalproject.hohoho.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Hotel;
+import com.finalproject.hohoho.dto.Town;
 import com.finalproject.hohoho.services.HotelServiceImpl;
+import org.springframework.data.domain.Pageable;
+
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api")
@@ -14,18 +27,25 @@ public class HotelController {
 	@Autowired
 	HotelServiceImpl hotelServiceImpl;
 
-	// Get all hotels
-	@GetMapping("/hotels")
-	public List<Hotel> list() {
-		return hotelServiceImpl.list();
+	@GetMapping("/pageable")
+	public ResponseEntity<Map<String, Object>> pageAllHotels(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Hotel> hotelPage = hotelServiceImpl.getPaginatedHotels(pageable);
+		Map<String, Object> response = new HashMap<>();
+		response.put("currentPage", hotelPage.getNumber());
+		response.put("totalItems", hotelPage.getTotalElements());
+		response.put("totalPages", hotelPage.getTotalPages());
+		response.put("Hotels", hotelPage.getContent());
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
+
 	// Add new hotel
 	@PostMapping("/hotel/add")
 	public Hotel save(@RequestBody Hotel hotel) {
 		return hotelServiceImpl.save(hotel);
 	}
-	
+
 	// Get hotel by id
 	@GetMapping("/hotel/{id}")
 	public Hotel byId(@PathVariable(name = "id") Integer id) {
@@ -33,7 +53,7 @@ public class HotelController {
 		hotelByID = hotelServiceImpl.byId(id);
 		return hotelByID;
 	}
-	
+
 	// Update hotel by id
 	@PutMapping("/hotel/update/{id}")
 	public Hotel update(@PathVariable(name = "id") Integer id, @RequestBody Hotel hotel) {
@@ -59,7 +79,7 @@ public class HotelController {
 
 		return hotelUpdated;
 	}
-	
+
 	// Delete hotel by id
 	@DeleteMapping("/hotel/delete/{id}")
 	public void delete(@PathVariable Integer id) {
