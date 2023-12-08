@@ -1,6 +1,8 @@
 package com.finalproject.hohoho.services;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +43,16 @@ public class RoleServiceImpl implements IRoleService {
 		public void delete(int id) {
 			iRoleDAO.deleteById(id);				
 			
+		}
+		
+		public boolean isValidRole(String role) {
+			String[] roleValid = {"VISITOR", "HOTEL", "ADMIN"};
+			 return Arrays.asList(roleValid).contains(role);
+		}
+
+		@Override
+		public Optional<Role> findByName(String User) {
+			return iRoleDAO.findByName(User);
 		}
 		
 	}

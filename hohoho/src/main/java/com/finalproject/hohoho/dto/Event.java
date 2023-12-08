@@ -1,9 +1,6 @@
 package com.finalproject.hohoho.dto;
 
 import java.sql.Date;
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 
