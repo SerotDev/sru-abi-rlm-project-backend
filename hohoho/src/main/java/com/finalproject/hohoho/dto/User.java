@@ -1,6 +1,6 @@
 package com.finalproject.hohoho.dto;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,7 +28,7 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	@Column(name = "registration_date")
-	private Date registration_date;
+	private LocalDateTime registration_date;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_role")
@@ -46,7 +46,7 @@ public class User {
 	}
 
 	public User(int id, String name, String surname, String phone, String prof_img_url, String email, String password,
-			Date registration_date, Role role, List<Hotel> hotel, List<AddFavourite> addFavourite) {
+			LocalDateTime registration_date, Role role, List<Hotel> hotel, List<AddFavourite> addFavourite) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
@@ -116,11 +116,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Date getRegistration_date() {
+	public LocalDateTime getRegistration_date() {
 		return registration_date;
 	}
 
-	public void setRegistration_date(Date registration_date) {
+	public void setRegistration_date(LocalDateTime registration_date) {
 		this.registration_date = registration_date;
 	}
 	

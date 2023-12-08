@@ -1,6 +1,7 @@
 package com.finalproject.hohoho.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.finalproject.hohoho.dto.Role;
 
@@ -15,4 +16,6 @@ public interface IRoleService {
 	public Role update(Role role); // (UPDATE)
 
 	public void delete(int id);// (DELETE)
+
+	Optional<Role> findByName(String User);
 }
