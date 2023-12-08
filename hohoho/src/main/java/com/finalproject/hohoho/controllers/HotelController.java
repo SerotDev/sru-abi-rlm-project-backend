@@ -1,13 +1,24 @@
 package com.finalproject.hohoho.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.Town;
 import com.finalproject.hohoho.services.HotelServiceImpl;
+import org.springframework.data.domain.Pageable;
+
+import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api")
@@ -16,20 +27,17 @@ public class HotelController {
 	@Autowired
 	HotelServiceImpl hotelServiceImpl;
 
-	// Get paginated all hotels from location
-	@GetMapping("/hotels/{idTown}")
-	public List<Hotel> list(@RequestParam(name = "idTown", required = false) Integer idTown,
-			@RequestParam(name = "minStarRatingAvg", required = false) Integer minStarRatingAvg,
-			@RequestParam(name = "numberRooms", required = false) Integer numberRooms,
-			@RequestParam(name = "minPrice", required = false) Integer minPrice,
-			@RequestParam(name = "maxPrice", required = false) Integer maxPrice,
-			@RequestParam(name = "idService", required = false) List<Integer> idService) {
-
-		// Data declaration
-		List<Hotel> allHotels = new ArrayList<Hotel>();
-		boolean isFiltered = false;
-
-		return hotelServiceImpl.list();
+	@GetMapping("/pageable")
+	public ResponseEntity<Map<String, Object>> pageAllHotels(@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Hotel> hotelPage = hotelServiceImpl.getPaginatedHotels(pageable);
+		Map<String, Object> response = new HashMap<>();
+		response.put("currentPage", hotelPage.getNumber());
+		response.put("totalItems", hotelPage.getTotalElements());
+		response.put("totalPages", hotelPage.getTotalPages());
+		response.put("Hotels", hotelPage.getContent());
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	// Add new hotel
