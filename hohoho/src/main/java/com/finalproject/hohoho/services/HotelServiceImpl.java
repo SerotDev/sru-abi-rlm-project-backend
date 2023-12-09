@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.finalproject.hohoho.dao.IHotelDAO;
 import com.finalproject.hohoho.dto.Hotel;
+import com.finalproject.hohoho.dto.Services;
+import com.finalproject.hohoho.dto.Town;
 
 @Service
 public class HotelServiceImpl implements IHotelService{
@@ -21,10 +23,70 @@ public class HotelServiceImpl implements IHotelService{
 
 	}
 	
+	/**
+	 * List all hotels paginated
+	 */
 	@Override
-	public Page<Hotel> getPaginatedHotels(Pageable pageable) {
-		// TODO Auto-generated method stub
+	public Page<Hotel> listPageHotels(Pageable pageable) {
 		return iHotelDAO.findAll(pageable);
+	}
+	
+	/**
+	 * List hotels by town paginated
+	 */
+	@Override
+	public Page<Hotel> listPageHotelsByTown(Pageable pageable, Town town) {
+		return iHotelDAO.findByTown(pageable, town);
+	}
+	
+	/**
+	 * List hotels by name search paginated
+	 */
+	@Override
+	public Page<Hotel> listPageHotelsBySearch(Pageable pageable, String search) {
+		return iHotelDAO.findByNameContainingIgnoreCase(pageable, search);
+	}
+
+	/**
+	 * List hotels by minimum StarRating Average paginated
+	 */
+	@Override
+	public Page<Hotel> listPageHotelsByStarRatingAvg(Pageable pageable, Integer minStarRatingAvg) {
+		//return iHotelDAO.findByMinStarRatingAvg(pageable, minStarRatingAvg);
+		return null;
+	}
+
+	/**
+	 *  List hotels by minNumberRooms paginated
+	 */
+	@Override
+	public Page<Hotel> listPageHotelsByMinNumberRooms(Pageable pageable, Integer minNumberRooms) {
+		return iHotelDAO.findByNumberRoomsGreaterThanEqual(pageable, minNumberRooms);
+	}
+
+	/**
+	 * List hotels by min price paginated
+	 */
+	@Override
+	public Page<Hotel> listPageHotelsByPrice(Pageable pageable, Integer minPrice) {
+		return iHotelDAO.findByPriceGreaterThanEqual(pageable, minPrice);
+	}
+
+	/**
+	 * List hotels by price range paginated
+	 */
+	@Override
+	public Page<Hotel> listPageHotelsByPrice(Pageable pageable, Integer minPrice, Integer maxPrice) {
+		return iHotelDAO.findByPriceGreaterThanEqualAndPriceLessThanEqual(pageable, minPrice, maxPrice);
+	}
+
+	/**
+	 * List hotels by services paginated
+	 */
+	@Override
+	public Page<Hotel> listPageHotelsByServices(Pageable pageable, List<Services> services) {
+		//return iHotelDAO.findByServices(pageable, services);
+		return null;
 	}
 
 	@Override

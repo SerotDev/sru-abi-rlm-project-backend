@@ -27,9 +27,9 @@ public class Hotel {
 	@Column(name = "web")
 	private String web;
 	@Column(name = "number_rooms")
-	private Integer number_rooms;
+	private Integer numberRooms;
 	@Column(name = "imgs_url")
-	private String imgs_url;
+	private String imgsUrl;
 	@Column(name = "price")
 	private Double price;
 	@Column(name = "latitude")
@@ -53,7 +53,7 @@ public class Hotel {
 	}
 
 	public Hotel(int id, String name, String description, String phone, String address, String email, String web,
-			Integer number_rooms, String imgs_url, Double price, Double latitude, Double longitude,
+			Integer numberRooms, String imgsUrl, Double price, Double latitude, Double longitude,
 			List<HotelService> hotelService, Town town, User user) {
 		this.id = id;
 		this.name = name;
@@ -62,8 +62,8 @@ public class Hotel {
 		this.address = address;
 		this.email = email;
 		this.web = web;
-		this.number_rooms = number_rooms;
-		this.imgs_url = imgs_url;
+		this.numberRooms = numberRooms;
+		this.imgsUrl = imgsUrl;
 		this.price = price;
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -128,20 +128,20 @@ public class Hotel {
 		this.web = web;
 	}
 
-	public Integer getNumber_rooms() {
-		return number_rooms;
+	public Integer getNumberRooms() {
+		return numberRooms;
 	}
 
-	public void setNumber_rooms(Integer number_rooms) {
-		this.number_rooms = number_rooms;
+	public void setNumberRooms(Integer numberRooms) {
+		this.numberRooms = numberRooms;
 	}
 
-	public String getImgs_url() {
-		return imgs_url;
+	public String getImgsUrl() {
+		return imgsUrl;
 	}
 
-	public void setImgs_url(String imgs_url) {
-		this.imgs_url = imgs_url;
+	public void setImgsUrl(String imgsUrl) {
+		this.imgsUrl = imgsUrl;
 	}
 
 	public Double getPrice() {
