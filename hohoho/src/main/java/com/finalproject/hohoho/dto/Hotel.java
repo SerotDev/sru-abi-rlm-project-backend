@@ -2,7 +2,10 @@ package com.finalproject.hohoho.dto;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
@@ -36,10 +39,16 @@ public class Hotel {
 	private Double latitude;
 	@Column(name = "longitude")
 	private Double longitude;
-
-	@OneToMany
-	@JoinColumn(name = "id_hotel")
-	private List<HotelService> hotelService;
+	
+	
+	@ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "hotel_services",
+        joinColumns = { @JoinColumn(name = "id_hotel") },
+        inverseJoinColumns = { @JoinColumn(name = "id_service")}
+    )	
+    @JsonIgnoreProperties("hotels")
+	private List<Services> hotelServices;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_town")
@@ -54,7 +63,7 @@ public class Hotel {
 
 	public Hotel(int id, String name, String description, String phone, String address, String email, String web,
 			Integer numberRooms, String imgsUrl, Double price, Double latitude, Double longitude,
-			List<HotelService> hotelService, Town town, User user) {
+			List<Services> hotelServices, Town town, User user) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -67,7 +76,7 @@ public class Hotel {
 		this.price = price;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.hotelService = hotelService;
+		this.hotelServices = hotelServices;
 		this.town = town;
 		this.user = user;
 	}
@@ -168,14 +177,12 @@ public class Hotel {
 		this.longitude = longitude;
 	}
 
-	@JsonIgnore
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "HotelService")
-	public List<HotelService> getHotelService() {
-		return hotelService;
+	public List<Services> getHotelServices() {
+		return hotelServices;
 	}
 
-	public void setHotelService(List<HotelService> hotelService) {
-		this.hotelService = hotelService;
+	public void setHotelServices(List<Services> hotelServices) {
+		this.hotelServices = hotelServices;
 	}
 
 	public Town getTown() {

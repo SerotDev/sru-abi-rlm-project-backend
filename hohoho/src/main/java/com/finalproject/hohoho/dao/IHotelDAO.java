@@ -18,5 +18,5 @@ public interface IHotelDAO extends JpaRepository <Hotel, Integer> {
 	Page<Hotel> findByNumberRoomsGreaterThanEqual(Pageable pageable, Integer minNumberRooms);
 	Page<Hotel> findByPriceGreaterThanEqual(Pageable pageable, Integer minPrice);
 	Page<Hotel> findByPriceGreaterThanEqualAndPriceLessThanEqual(Pageable pageable, Integer minPrice, Integer maxPrice);
-	//Page<Hotel> findByServices(Pageable pageable, List<Services> services);
+	Page<Hotel> findByHotelServicesIn(Pageable pageable, List<Services> services);
 }

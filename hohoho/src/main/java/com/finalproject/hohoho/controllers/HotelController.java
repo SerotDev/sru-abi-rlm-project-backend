@@ -19,6 +19,7 @@ import com.finalproject.hohoho.dto.Town;
 import com.finalproject.hohoho.dto.Services;
 import com.finalproject.hohoho.services.HotelServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceServiceImpl;
+import com.finalproject.hohoho.services.ServicesServiceImpl;
 import com.finalproject.hohoho.services.TownServiceImpl;
 
 import org.springframework.data.domain.Pageable;
@@ -37,7 +38,7 @@ public class HotelController {
 	TownServiceImpl townServiceImpl;
 
 	@Autowired
-	HotelServiceServiceImpl hotelServiceServiceImpl;
+	ServicesServiceImpl servicesServiceImpl;
 
 	// FILTROS - MIRAR DE PAGINAR CUANDO HAY MULTIPLES RESULTADOS
 	@GetMapping("/filter/{params}")
@@ -109,8 +110,8 @@ public class HotelController {
 				if (filterCounter > 0) {
 					// <- TODO: add hotels by search not paginated HERE
 				}
-			// Endpoint have only max price parameter
-			} else if(minPrice == null && maxPrice != null) {
+				// Endpoint have only max price parameter
+			} else if (minPrice == null && maxPrice != null) {
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByPrice(pageable, 0, maxPrice);
 					filterCounter++;
@@ -119,10 +120,26 @@ public class HotelController {
 				if (filterCounter > 0) {
 					// <- TODO: add hotels by search not paginated HERE
 				}
-			// Endpoint have minPrice and maxPrice parameters
-			} else if(minPrice != null && maxPrice != null){
+				// Endpoint have minPrice and maxPrice parameters
+			} else if (minPrice != null && maxPrice != null) {
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByPrice(pageable, minPrice, maxPrice);
+					filterCounter++;
+				}
+				// if some filter is applied, gets data without pagination
+				if (filterCounter > 0) {
+					// <- TODO: add hotels by search not paginated HERE
+				}
+			}
+
+			// Endpoint have idServices parameters
+			if (idServices != null) {
+				List<Services> services = null;
+				for (int i = 0; i < idServices.size(); i++) {
+					 //services.add(servicesServiceImpl.byId(idServices.get(i)));
+				}
+				if (filterCounter == 0) {
+					pageHotels = hotelServiceImpl.listPageHotelsByServices(pageable, services);
 					filterCounter++;
 				}
 				// if some filter is applied, gets data without pagination

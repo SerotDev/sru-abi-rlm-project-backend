@@ -85,8 +85,7 @@ public class HotelServiceImpl implements IHotelService{
 	 */
 	@Override
 	public Page<Hotel> listPageHotelsByServices(Pageable pageable, List<Services> services) {
-		//return iHotelDAO.findByServices(pageable, services);
-		return null;
+		return iHotelDAO.findByHotelServicesIn(pageable, services);
 	}
 
 	@Override
