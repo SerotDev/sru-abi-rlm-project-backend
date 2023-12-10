@@ -2,6 +2,7 @@ package com.finalproject.hohoho.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.HotelService;
@@ -21,6 +22,7 @@ public class HotelServiceController {
 	}
 	
 	// Add new hotelService
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PostMapping("/hotelService/add")
 	public HotelService save(@RequestBody HotelService hotelService) {
 		return hotelServiceServiceImpl.save(hotelService);
@@ -35,6 +37,7 @@ public class HotelServiceController {
 	}
 	
 	// Update hotelService by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PutMapping("/hotelService/update/{id}")
 	public HotelService update(@PathVariable(name = "id") Integer id, @RequestBody HotelService hotelService) {
 
@@ -51,6 +54,7 @@ public class HotelServiceController {
 	}
 	
 	// Delete hotelService by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@DeleteMapping("/hotelService/delete/{id}")
 	public void delete(@PathVariable Integer id) {
 		hotelServiceServiceImpl.delete(id);

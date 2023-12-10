@@ -2,6 +2,7 @@ package com.finalproject.hohoho.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.User;
@@ -15,18 +16,21 @@ public class UserController {
 	UserServiceImpl userServiceImpl;
 
 	// Get all users
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/users")
 	public List<User> list() {
 		return userServiceImpl.list();
 	}
 	
 	// Add new user
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/user/add")
 	public User save(@RequestBody User user) {
 		return userServiceImpl.save(user);
 	}
 	
 	// Get user by id
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/user/{id}")
 	public User byId(@PathVariable(name = "id") Integer id) {
 		User userByID = new User();
@@ -35,6 +39,7 @@ public class UserController {
 	}
 	
 	// Update user by id
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/user/update/{id}")
 	public User update(@PathVariable(name = "id") Integer id, @RequestBody User user) {
 
