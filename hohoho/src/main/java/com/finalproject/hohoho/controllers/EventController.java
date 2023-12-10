@@ -2,6 +2,7 @@ package com.finalproject.hohoho.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Event;
@@ -21,6 +22,7 @@ public class EventController {
 	}
 	
 	// Add new event
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PostMapping("/event/add")
 	public Event save(@RequestBody Event event) {
 		return eventServiceImpl.save(event);
@@ -35,6 +37,7 @@ public class EventController {
 	}
 	
 	// Update event by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PutMapping("/event/update/{id}")
 	public Event update(@PathVariable(name = "id") Integer id, @RequestBody Event event) {
 
@@ -58,6 +61,7 @@ public class EventController {
 	}
 	
 	// Delete event by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@DeleteMapping("/event/delete/{id}")
 	public void delete(@PathVariable Integer id) {
 		eventServiceImpl.delete(id);

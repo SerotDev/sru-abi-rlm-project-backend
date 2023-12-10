@@ -2,6 +2,7 @@ package com.finalproject.hohoho.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.AddFavourite;
@@ -15,18 +16,21 @@ public class AddFavouriteController {
 	AddFavouriteServiceImpl addFavouriteServiceImpl;
 
 	// Get all addFavourites
+	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
 	@GetMapping("/addFavourites")
 	public List<AddFavourite> list() {
 		return addFavouriteServiceImpl.list();
 	}
 	
 	// Add new favourite
+	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
 	@PostMapping("/addFavourite/add")
 	public AddFavourite save(@RequestBody AddFavourite addFavourite) {
 		return addFavouriteServiceImpl.save(addFavourite);
 	}
 	
 	// Get favourite relation by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
 	@GetMapping("/addFavourite/{id}")
 	public AddFavourite byId(@PathVariable(name = "id") Integer id) {
 		AddFavourite addFavouriteByID = new AddFavourite();
@@ -35,6 +39,7 @@ public class AddFavouriteController {
 	}
 	
 	// Update favourite by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
 	@PutMapping("/addFavourite/update/{id}")
 	public AddFavourite update(@PathVariable(name = "id") Integer id, @RequestBody AddFavourite addFavourite) {
 
@@ -52,6 +57,7 @@ public class AddFavouriteController {
 	}
 	
 	// Delete favourite by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
 	@DeleteMapping("/addFavourite/delete/{id}")
 	public void delete(@PathVariable Integer id) {
 		addFavouriteServiceImpl.delete(id);

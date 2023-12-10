@@ -1,30 +1,24 @@
 package com.finalproject.hohoho.controllers;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.Town;
-import com.finalproject.hohoho.dto.Services;
 import com.finalproject.hohoho.services.HotelServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceServiceImpl;
 import com.finalproject.hohoho.services.TownServiceImpl;
 
 import org.springframework.data.domain.Pageable;
-
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api")
@@ -169,6 +163,7 @@ public class HotelController {
 	}
 
 	// Add new hotel
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PostMapping("/hotel/add")
 	public Hotel save(@RequestBody Hotel hotel) {
 		return hotelServiceImpl.save(hotel);
@@ -183,6 +178,7 @@ public class HotelController {
 	}
 
 	// Update hotel by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PutMapping("/hotel/update/{id}")
 	public Hotel update(@PathVariable(name = "id") Integer id, @RequestBody Hotel hotel) {
 
@@ -207,7 +203,8 @@ public class HotelController {
 
 		return hotelUpdated;
 	}
-
+	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	// Delete hotel by id
 	@DeleteMapping("/hotel/delete/{id}")
 	public void delete(@PathVariable Integer id) {
