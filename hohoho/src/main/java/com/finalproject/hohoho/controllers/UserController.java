@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.User;
+import com.finalproject.hohoho.services.HotelServiceImpl;
 import com.finalproject.hohoho.services.UserServiceImpl;
 
 @RestController
@@ -14,6 +15,9 @@ public class UserController {
 
 	@Autowired
 	UserServiceImpl userServiceImpl;
+	
+	@Autowired
+	HotelServiceImpl hotelServiceImpl;
 
 	// Get all users
 	@PreAuthorize("hasRole('ADMIN')")
@@ -61,10 +65,13 @@ public class UserController {
 		return userUpdated;
 	}
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	// Delete user by id
 	@DeleteMapping("/user/delete/{id}")
 	public void delete(@PathVariable Integer id) {
 		userServiceImpl.delete(id);
 	}
+	
+
 }
 
