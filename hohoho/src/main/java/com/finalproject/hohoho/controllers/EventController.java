@@ -6,7 +6,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Event;
+import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.services.EventServiceImpl;
+import com.finalproject.hohoho.services.HotelServiceImpl;
 
 @RestController
 @RequestMapping("/api")
@@ -14,6 +16,8 @@ public class EventController {
 
 	@Autowired
 	EventServiceImpl eventServiceImpl;
+	@Autowired
+	HotelServiceImpl hotelServiceImpl;
 
 	// Get all events
 	@GetMapping("/events")
@@ -26,6 +30,12 @@ public class EventController {
 	@PostMapping("/event/add")
 	public Event save(@RequestBody Event event) {
 		return eventServiceImpl.save(event);
+	}
+	//Get event private by id Hotel
+	@GetMapping("/event-private/{id}")
+	public List<Event> findByIsPublicFalseAndIdHotel(@PathVariable(name = "id")Integer idHotel){
+		Hotel hotel = hotelServiceImpl.byId(idHotel);
+		return eventServiceImpl.privateEventByIdHotel(hotel);
 	}
 	
 	// Get event by id

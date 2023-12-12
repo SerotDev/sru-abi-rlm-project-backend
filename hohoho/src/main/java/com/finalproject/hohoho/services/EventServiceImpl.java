@@ -7,11 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.finalproject.hohoho.dao.IEventDAO;
 import com.finalproject.hohoho.dto.Event;
+import com.finalproject.hohoho.dto.Hotel;
 
 @Service
 public class EventServiceImpl implements IEventService{
 	@Autowired
-	IEventDAO iEventDAO;
+IEventDAO iEventDAO;
 
 	@Override
 	public List<Event> list() {
@@ -41,6 +42,11 @@ public class EventServiceImpl implements IEventService{
 	public void delete(int id) {
 		iEventDAO.deleteById(id);				
 		
+	}
+
+	@Override
+	public List<Event> privateEventByIdHotel(Hotel hotel) {
+		return iEventDAO.findByIsPublicFalseAndHotel(hotel);
 	}
 	
 }
