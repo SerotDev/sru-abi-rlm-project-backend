@@ -92,11 +92,11 @@ public class User {
 		this.phone = phone;
 	}
 
-	public String getProf_img_url() {
+	public String getProfImgUrl() {
 		return profImgUrl;
 	}
 
-	public void setProf_img_url(String profImgUrl) {
+	public void setProfImgUrl(String profImgUrl) {
 		this.profImgUrl = profImgUrl;
 	}
 
@@ -116,7 +116,7 @@ public class User {
 		this.password = password;
 	}
 
-	public LocalDateTime getRegistration_date() {
+	public LocalDateTime getRegistrationDate() {
 		return registrationDate;
 	}
 

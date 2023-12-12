@@ -49,7 +49,7 @@ public class TownController {
 		townSelected = townServiceImpl.byId(id);
 		townSelected.setId(id);
 		townSelected.setName(town.getName());
-		townSelected.setPostal_code(town.getPostal_code());
+		townSelected.setPostalCode(town.getPostalCode());
 		townSelected.setLatitude(town.getLatitude());
 		townSelected.setLongitude(town.getLongitude());
 		townUpdated = townServiceImpl.update(townSelected);

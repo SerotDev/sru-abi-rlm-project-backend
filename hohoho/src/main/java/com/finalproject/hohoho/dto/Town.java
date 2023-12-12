@@ -55,11 +55,11 @@ public class Town {
 		this.name = name;
 	}
 
-	public String getPostal_code() {
+	public String getPostalCode() {
 		return postalCode;
 	}
 
-	public void setPostal_code(String postalCode) {
+	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
 

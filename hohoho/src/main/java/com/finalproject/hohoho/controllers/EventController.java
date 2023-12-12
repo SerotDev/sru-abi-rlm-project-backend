@@ -48,10 +48,10 @@ public class EventController {
 		eventSelected.setId(id);
 		eventSelected.setTitle(event.getTitle());
 		eventSelected.setDescription(event.getDescription());
-		eventSelected.setImg_url(event.getImg_url());
-		eventSelected.setStart_date(event.getStart_date());
-		eventSelected.setEntry_price(event.getEntry_price());
-		eventSelected.setIs_public(event.getIs_public());
+		eventSelected.setImgUrl(event.getImgUrl());
+		eventSelected.setStartDate(event.getStartDate());
+		eventSelected.setEntryPrice(event.getEntryPrice());
+		eventSelected.setIsPublic(event.getIsPublic());
 		eventSelected.setLatitude(event.getLatitude());
 		eventSelected.setLongitude(event.getLongitude());
 		eventSelected.setHotel(event.getHotel());

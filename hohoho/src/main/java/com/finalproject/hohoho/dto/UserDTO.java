@@ -18,7 +18,7 @@ public class UserDTO {
 		this.registrationDate = builder.registration_date;
 	}
 	
-	public LocalDateTime getRegistration_date() {
+	public LocalDateTime getRegistrationDate() {
 		return registrationDate;
 	}
 

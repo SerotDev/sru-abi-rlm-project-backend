@@ -79,43 +79,43 @@ public class Event {
 		this.description = description;
 	}
 
-	public String getImg_url() {
+	public String getImgUrl() {
 		return imgUrl;
 	}
 
-	public void setImg_url(String imgUrl) {
+	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
 
-	public Date getStart_date() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public void setStart_date(Date startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public Date getEnd_date() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEnd_date(Date endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 
-	public Double getEntry_price() {
+	public Double getEntryPrice() {
 		return entryPrice;
 	}
 
-	public void setEntry_price(Double entryPrice) {
+	public void setEntryPrice(Double entryPrice) {
 		this.entryPrice = entryPrice;
 	}
 	
-	public Boolean getIs_public() {
+	public Boolean getIsPublic() {
 		return isPublic;
 	}
 
-	public void setIs_public(Boolean isPublic) {
+	public void setIsPublic(Boolean isPublic) {
 		this.isPublic = isPublic;
 	}
 

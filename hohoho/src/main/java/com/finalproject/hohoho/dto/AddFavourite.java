@@ -55,11 +55,11 @@ public class AddFavourite {
 		this.user = user;
 	}
 
-	public int getStar_rating() {
+	public int getStarRating() {
 		return starRating;
 	}
 
-	public void setStar_rating(int starRating) {
+	public void setStarRating(int starRating) {
 		this.starRating = starRating;
 	}
 
