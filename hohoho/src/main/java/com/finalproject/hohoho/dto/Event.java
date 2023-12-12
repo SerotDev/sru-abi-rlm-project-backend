@@ -17,15 +17,15 @@ public class Event {
 	@Column(name = "description")
 	private String description;
 	@Column(name = "img_url")
-	private String img_url;
+	private String imgUrl;
 	@Column(name = "start_date")
-	private Date start_date;
+	private Date startDate;
 	@Column(name = "end_date")
-	private Date end_date;
+	private Date endDate;
 	@Column(name = "is_public")
-	private Boolean is_public;
+	private Boolean isPublic;
 	@Column(name = "entry_price")
-	private Double entry_price;
+	private Double entryPrice;
 	@Column(name = "latitude")
 	private Double latitude;
 	@Column(name = "longitude")
@@ -39,16 +39,16 @@ public class Event {
 	public Event() {
 	}
 
-	public Event(int id, String title, String description, String img_url, Date start_date, Date end_date,
-			Double entry_price, Boolean is_public, Double latitude, Double longitude, Hotel hotel) {
+	public Event(int id, String title, String description, String imgUrl, Date startDate, Date endDate,
+			Double entryPrice, Boolean isPublic, Double latitude, Double longitude, Hotel hotel) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
-		this.img_url = img_url;
-		this.start_date = start_date;
-		this.end_date = end_date;
-		this.entry_price = entry_price;
-		this.is_public = is_public;
+		this.imgUrl = imgUrl;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.entryPrice = entryPrice;
+		this.isPublic = isPublic;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.hotel = hotel;
@@ -80,43 +80,43 @@ public class Event {
 	}
 
 	public String getImg_url() {
-		return img_url;
+		return imgUrl;
 	}
 
-	public void setImg_url(String img_url) {
-		this.img_url = img_url;
+	public void setImg_url(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	public Date getStart_date() {
-		return start_date;
+		return startDate;
 	}
 
-	public void setStart_date(Date start_date) {
-		this.start_date = start_date;
+	public void setStart_date(Date startDate) {
+		this.startDate = startDate;
 	}
 
 	public Date getEnd_date() {
-		return end_date;
+		return endDate;
 	}
 
-	public void setEnd_date(Date end_date) {
-		this.end_date = end_date;
+	public void setEnd_date(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public Double getEntry_price() {
-		return entry_price;
+		return entryPrice;
 	}
 
-	public void setEntry_price(Double entry_price) {
-		this.entry_price = entry_price;
+	public void setEntry_price(Double entryPrice) {
+		this.entryPrice = entryPrice;
 	}
 	
 	public Boolean getIs_public() {
-		return is_public;
+		return isPublic;
 	}
 
-	public void setIs_public(Boolean is_public) {
-		this.is_public = is_public;
+	public void setIs_public(Boolean isPublic) {
+		this.isPublic = isPublic;
 	}
 
 	public Double getLatitude() {

@@ -17,7 +17,7 @@ public class Town {
 	@Column(name = "name")
 	private String name;
 	@Column(name = "postal_code")
-	private String postal_code;
+	private String postalCode;
 	@Column(name = "latitude")
 	private Double latitude;
 	@Column(name = "longitude")
@@ -30,10 +30,10 @@ public class Town {
 	public Town() {
 	}
 
-	public Town(int id, String name, String postal_code, Double latitude, Double longitude, List<Hotel> hotel) {
+	public Town(int id, String name, String postalCode, Double latitude, Double longitude, List<Hotel> hotel) {
 		this.id = id;
 		this.name = name;
-		this.postal_code = postal_code;
+		this.postalCode = postalCode;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.hotel = hotel;
@@ -56,11 +56,11 @@ public class Town {
 	}
 
 	public String getPostal_code() {
-		return postal_code;
+		return postalCode;
 	}
 
-	public void setPostal_code(String postal_code) {
-		this.postal_code = postal_code;
+	public void setPostal_code(String postalCode) {
+		this.postalCode = postalCode;
 	}
 
 	public Double getLatitude() {
