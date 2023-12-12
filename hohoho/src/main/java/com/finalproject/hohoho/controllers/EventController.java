@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Event;
 import com.finalproject.hohoho.dto.Hotel;
+import com.finalproject.hohoho.dto.Town;
 import com.finalproject.hohoho.services.EventServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceImpl;
+import com.finalproject.hohoho.services.TownServiceImpl;
 
 @RestController
 @RequestMapping("/api")
@@ -18,6 +20,8 @@ public class EventController {
 	EventServiceImpl eventServiceImpl;
 	@Autowired
 	HotelServiceImpl hotelServiceImpl;
+	@Autowired
+	TownServiceImpl townServiceImpl;
 
 	// Get all events
 	@GetMapping("/events")
@@ -32,10 +36,16 @@ public class EventController {
 		return eventServiceImpl.save(event);
 	}
 	//Get event private by id Hotel
-	@GetMapping("/event-private/{id}")
-	public List<Event> findByIsPublicFalseAndIdHotel(@PathVariable(name = "id")Integer idHotel){
+	@GetMapping("/events-private/{id}")
+	public List<Event> findByIsPublicFalseAndHotel(@PathVariable(name = "id")Integer idHotel){
 		Hotel hotel = hotelServiceImpl.byId(idHotel);
 		return eventServiceImpl.privateEventByIdHotel(hotel);
+	}
+	//Get event public by id Town
+	@GetMapping("/events-public/{id}")
+	public List<Event> findByIsPublicTrueAndTown(@PathVariable(name = "id")Integer idTown){
+		Town town = townServiceImpl.byId(idTown);
+		return eventServiceImpl.publicEventByIdTown(town);
 	}
 	
 	// Get event by id
