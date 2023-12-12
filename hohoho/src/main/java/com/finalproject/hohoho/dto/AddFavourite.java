@@ -19,16 +19,16 @@ public class AddFavourite {
 	private Hotel hotel;
 	
 	@Column(name = "star_rating")
-	private int star_rating;
+	private int starRating;
 
 	public AddFavourite() {
 	}
 
-	public AddFavourite(int id, Hotel hotel, User user, int star_rating) {
+	public AddFavourite(int id, Hotel hotel, User user, int starRating) {
 		this.id = id;
 		this.hotel = hotel;
 		this.user = user;
-		this.star_rating = star_rating;
+		this.starRating = starRating;
 	}
 
 	public int getId() {
@@ -55,12 +55,12 @@ public class AddFavourite {
 		this.user = user;
 	}
 
-	public int getStar_rating() {
-		return star_rating;
+	public int getStarRating() {
+		return starRating;
 	}
 
-	public void setStar_rating(int star_rating) {
-		this.star_rating = star_rating;
+	public void setStarRating(int starRating) {
+		this.starRating = starRating;
 	}
 
 }

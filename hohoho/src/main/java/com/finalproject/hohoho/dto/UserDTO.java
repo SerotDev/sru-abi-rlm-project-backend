@@ -8,18 +8,18 @@ public class UserDTO {
 	private String email;
 	private String username;
 	private Role role;
-    private LocalDateTime registration_date;
+    private LocalDateTime registrationDate;
 
 	private UserDTO(Builder builder) {
 		this.id = builder.id;
 		this.email = builder.email;
 		this.username = builder.username;
 		this.role = builder.role;
-		this.registration_date = builder.registration_date;
+		this.registrationDate = builder.registration_date;
 	}
 	
-	public LocalDateTime getRegistration_date() {
-		return registration_date;
+	public LocalDateTime getRegistrationDate() {
+		return registrationDate;
 	}
 
 	public Long getId() {
@@ -48,8 +48,8 @@ public class UserDTO {
 		public Builder() {
 		}
 		
-		public Builder setRegistration_date(LocalDateTime registration_date) {
-			this.registration_date = registration_date;
+		public Builder setRegistration_date(LocalDateTime registrationDate) {
+			this.registration_date = registrationDate;
 			return this;
 		}
 		

@@ -53,7 +53,7 @@ public class AddFavouriteController {
 		addFavouriteSelected.setId(id);
 		addFavouriteSelected.setUser(addFavourite.getUser());
 		addFavouriteSelected.setHotel(addFavourite.getHotel());
-		addFavouriteSelected.setStar_rating(addFavourite.getStar_rating());
+		addFavouriteSelected.setStarRating(addFavourite.getStarRating());
 		addFavouriteUpdated = addFavouriteServiceImpl.update(addFavouriteSelected);
 
 		return addFavouriteUpdated;

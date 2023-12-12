@@ -55,10 +55,10 @@ public class UserController {
 		userSelected.setName(user.getName());
 		userSelected.setSurname(user.getSurname());
 		userSelected.setPhone(user.getPhone());
-		userSelected.setProf_img_url(user.getProf_img_url());
+		userSelected.setProfImgUrl(user.getProfImgUrl());
 		userSelected.setEmail(user.getEmail());
 		userSelected.setPassword(user.getPassword());
-		userSelected.setRegistration_date(user.getRegistration_date());
+		userSelected.setRegistration_date(user.getRegistrationDate());
 		userSelected.setRole(user.getRole());
 		userUpdated = userServiceImpl.update(userSelected);
 

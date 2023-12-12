@@ -22,13 +22,13 @@ public class User {
 	@Column(name = "phone")
 	private String phone;
 	@Column(name = "prof_img_url")
-	private String prof_img_url;
+	private String profImgUrl;
 	@Column(name = "email")
 	private String email;
 	@Column(name = "password")
 	private String password;
 	@Column(name = "registration_date")
-	private LocalDateTime registration_date;
+	private LocalDateTime registrationDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_role")
@@ -45,16 +45,16 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, String name, String surname, String phone, String prof_img_url, String email, String password,
-			LocalDateTime registration_date, Role role, List<Hotel> hotel, List<AddFavourite> addFavourite) {
+	public User(int id, String name, String surname, String phone, String profImgUrl, String email, String password,
+			LocalDateTime registrationDate, Role role, List<Hotel> hotel, List<AddFavourite> addFavourite) {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.phone = phone;
-		this.prof_img_url = prof_img_url;
+		this.profImgUrl = profImgUrl;
 		this.email = email;
 		this.password = password;
-		this.registration_date = registration_date;
+		this.registrationDate = registrationDate;
 		this.role = role;
 		this.hotel = hotel;
 		this.addFavourite = addFavourite;
@@ -92,12 +92,12 @@ public class User {
 		this.phone = phone;
 	}
 
-	public String getProf_img_url() {
-		return prof_img_url;
+	public String getProfImgUrl() {
+		return profImgUrl;
 	}
 
-	public void setProf_img_url(String prof_img_url) {
-		this.prof_img_url = prof_img_url;
+	public void setProfImgUrl(String profImgUrl) {
+		this.profImgUrl = profImgUrl;
 	}
 
 	public String getEmail() {
@@ -116,12 +116,12 @@ public class User {
 		this.password = password;
 	}
 
-	public LocalDateTime getRegistration_date() {
-		return registration_date;
+	public LocalDateTime getRegistrationDate() {
+		return registrationDate;
 	}
 
-	public void setRegistration_date(LocalDateTime registration_date) {
-		this.registration_date = registration_date;
+	public void setRegistration_date(LocalDateTime registrationDate) {
+		this.registrationDate = registrationDate;
 	}
 	
 	public Role getRole() {
