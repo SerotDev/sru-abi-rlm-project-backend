@@ -54,6 +54,11 @@ IEventDAO iEventDAO;
 	public List<Event> publicEventByIdTown(Hotel hotel) {
 		return iEventDAO.findByIsPublicTrueAndHotel(hotel);
 	}
+
+	@Override
+	public List<Event> eventsByHotelId(Hotel hotel) {
+		return iEventDAO.findByHotel(hotel);
+	}
 	
 }
 

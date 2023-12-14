@@ -15,6 +15,7 @@ import com.finalproject.hohoho.dao.IHotelDAO;
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.Services;
 import com.finalproject.hohoho.dto.Town;
+import com.finalproject.hohoho.dto.User;
 
 @Service
 public class HotelServiceImpl implements IHotelService {
@@ -143,6 +144,12 @@ public class HotelServiceImpl implements IHotelService {
 	public void delete(int id) {
 		iHotelDAO.deleteById(id);
 
+	}
+
+	@Override
+	public List<Hotel> listHotelsbyUser(User user) {
+		
+		return iHotelDAO.findByUser(user);
 	}
 
 }
