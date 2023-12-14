@@ -9,4 +9,5 @@ import com.finalproject.hohoho.dto.Hotel;
 
 public interface IEventDAO extends JpaRepository <Event, Integer> {
 public List <Event> findByIsPublicFalseAndHotel(Hotel hotel);
+public List <Event> findByIsPublicTrueAndHotel(Hotel hotel);
 }

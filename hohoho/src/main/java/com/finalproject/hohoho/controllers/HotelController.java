@@ -33,7 +33,7 @@ public class HotelController {
 	@Autowired
 	HotelServiceServiceImpl hotelServiceServiceImpl;
 
-	// FILTROS - MIRAR DE PAGINAR CUANDO HAY MULTIPLES RESULTADOS
+	// FILTROS - LOOK PAGINATION WHEN HAVE TO MULTIPLES RESULTS 
 	@GetMapping("/filter/{params}")
 	public ResponseEntity<Map<String, Object>> filterHotels(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size,
@@ -148,7 +148,7 @@ public class HotelController {
 		}
 	}
 
-// PLANTILLA BASE DE PAGINATION, BORRAR DESPUÉS
+// TEMPLATE BASE OF PAGINATION - LATER DROP
 	@GetMapping("/pageable")
 	public ResponseEntity<Map<String, Object>> pageAllHotels(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {

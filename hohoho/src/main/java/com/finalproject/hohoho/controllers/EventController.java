@@ -1,14 +1,29 @@
 package com.finalproject.hohoho.controllers;
 
+
+import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.hohoho.dto.Event;
 import com.finalproject.hohoho.dto.Hotel;
+import com.finalproject.hohoho.dto.Town;
 import com.finalproject.hohoho.services.EventServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceImpl;
+import com.finalproject.hohoho.services.TownServiceImpl;
 
 @RestController
 @RequestMapping("/api")
@@ -18,6 +33,8 @@ public class EventController {
 	EventServiceImpl eventServiceImpl;
 	@Autowired
 	HotelServiceImpl hotelServiceImpl;
+	@Autowired
+	TownServiceImpl townServiceImpl;
 
 	// Get all events
 	@GetMapping("/events")
@@ -32,10 +49,27 @@ public class EventController {
 		return eventServiceImpl.save(event);
 	}
 	//Get event private by id Hotel
-	@GetMapping("/event-private/{id}")
-	public List<Event> findByIsPublicFalseAndIdHotel(@PathVariable(name = "id")Integer idHotel){
+	@GetMapping("/events-private/{idHotel}")
+	public List<Event> privateEventByIdHotel(@PathVariable(name = "idHotel")Integer idHotel){
 		Hotel hotel = hotelServiceImpl.byId(idHotel);
 		return eventServiceImpl.privateEventByIdHotel(hotel);
+	}
+	//Get event public by id Town
+	@GetMapping("/events-public/{idTown}")
+	public List<Event> publicEventByIdTown(@PathVariable(name = "idTown")Integer idTown){
+		Town town = townServiceImpl.byId(idTown);
+		Pageable wholePages = Pageable.unpaged();
+		Page <Hotel> pageHotels = hotelServiceImpl.listPageHotelsByTown(wholePages, town);
+		List<Hotel> hotels = pageHotels.getContent();
+		// Declaration of public events by town
+		List<Event> events = new ArrayList <Event>();
+		for (int i = 0; i < hotels.size(); i++) {
+			List <Event> hotelPublicEvents = eventServiceImpl.publicEventByIdTown(hotels.get(i));
+			for (int j = 0; j < hotelPublicEvents.size(); j++) {
+				events.add(hotelPublicEvents.get(j));
+			}
+		}
+		return events;
 	}
 	
 	// Get event by id
