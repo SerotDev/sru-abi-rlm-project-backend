@@ -12,7 +12,7 @@ public interface IEventService {
 	
 	public List<Event> privateEventByIdHotel (Hotel hotel);
 	
-	public List<Event> publicEventByIdTown(Town town);
+	public List<Event> publicEventByIdTown(Hotel hotel);
 
 	public Event save(Event event); // (CREATE)
 
