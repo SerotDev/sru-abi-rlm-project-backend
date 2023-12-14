@@ -5,7 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.finalproject.hohoho.dto.Event;
+import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.User;
+import com.finalproject.hohoho.services.EventServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceImpl;
 import com.finalproject.hohoho.services.UserServiceImpl;
 
@@ -18,6 +21,9 @@ public class UserController {
 	
 	@Autowired
 	HotelServiceImpl hotelServiceImpl;
+	
+	@Autowired
+	EventServiceImpl eventServiceImpl;
 
 	// Get all users
 	@PreAuthorize("hasRole('ADMIN')")
@@ -40,6 +46,22 @@ public class UserController {
 		User userByID = new User();
 		userByID = userServiceImpl.byId(id);
 		return userByID;
+	}
+	// Get hotel by user id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
+	@GetMapping("/user/hotels/{userHotel}")
+	public List <Hotel> listHotelsbyUser(@PathVariable(name = "userHotel")Integer userHotel){
+		User user = userServiceImpl.byId(userHotel);
+		return hotelServiceImpl.listHotelsbyUser(user);		
+	}
+	
+	//Get events by hotel id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
+	@GetMapping("/user/events/{userHotel}")
+	public List <Event> eventsByHotelId(@PathVariable(name = "userHotel")Integer userHotel){
+		Hotel hotel = hotelServiceImpl.byId(userHotel);
+		return eventServiceImpl.eventsByHotelId(hotel);
+		
 	}
 	
 	// Update user by id

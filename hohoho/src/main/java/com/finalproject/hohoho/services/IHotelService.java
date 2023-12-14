@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.Services;
 import com.finalproject.hohoho.dto.Town;
+import com.finalproject.hohoho.dto.User;
 
 public interface IHotelService {
 	// CRUD models
@@ -22,6 +23,8 @@ public interface IHotelService {
 	public Page<Hotel> listPageHotelsByPrice(Pageable pageable, Integer minPrice,  Integer maxPrice); // List hotels by price range paginated
 	public Page<Hotel> listPageHotelsByServices(Pageable pageable, List<Services> services); // List hotels by services paginated
 	
+	public List<Hotel> listHotelsbyUser(User user);//List of Hotels by user id
+
 	public Hotel save(Hotel hotel); // (CREATE)
 
 	public Hotel byId(int id); // (READ)
