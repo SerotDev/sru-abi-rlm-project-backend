@@ -1,6 +1,8 @@
 package com.finalproject.hohoho.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +15,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Hotel;
+import com.finalproject.hohoho.dto.Services;
 import com.finalproject.hohoho.dto.Town;
 import com.finalproject.hohoho.services.HotelServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceServiceImpl;
+import com.finalproject.hohoho.services.ServicesServiceImpl;
 import com.finalproject.hohoho.services.TownServiceImpl;
 
 import org.springframework.data.domain.Pageable;
@@ -31,7 +35,7 @@ public class HotelController {
 	TownServiceImpl townServiceImpl;
 
 	@Autowired
-	HotelServiceServiceImpl hotelServiceServiceImpl;
+	ServicesServiceImpl servicesServiceImpl;
 
 	// FILTROS - LOOK PAGINATION WHEN HAVE TO MULTIPLES RESULTS 
 	@GetMapping("/filter/{params}")
@@ -43,7 +47,7 @@ public class HotelController {
 			@RequestParam(name = "minNumberRooms", required = false) Integer minNumberRooms,
 			@RequestParam(name = "minPrice", required = false) Integer minPrice,
 			@RequestParam(name = "maxPrice", required = false) Integer maxPrice,
-			@RequestParam(name = "idServices", required = false) List<Integer> idServices) {
+			@RequestParam(name = "idServices", required = false) Integer[] idServices) {
 
 		try {
 			Pageable pageable = PageRequest.of(page, size);
@@ -117,6 +121,22 @@ public class HotelController {
 			} else if(minPrice != null && maxPrice != null){
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByPrice(pageable, minPrice, maxPrice);
+					filterCounter++;
+				}
+				// if some filter is applied, gets data without pagination
+				if (filterCounter > 0) {
+					// <- TODO: add hotels by search not paginated HERE
+				}
+			}
+			
+			// Endpoint have idServices parameters
+			if (idServices != null) {
+				List <Services> hotelServices = new ArrayList <Services>();
+				for (int i = 0; i < idServices.length; i++) {
+					hotelServices.add(servicesServiceImpl.byId(idServices[i]));
+				}
+				if (filterCounter == 0) {
+					pageHotels = hotelServiceImpl.listPageHotelsByServices(pageable, hotelServices);
 					filterCounter++;
 				}
 				// if some filter is applied, gets data without pagination
