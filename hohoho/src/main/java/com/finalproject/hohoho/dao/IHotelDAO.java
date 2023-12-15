@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.Town;
+import com.finalproject.hohoho.dto.User;
 import com.finalproject.hohoho.dto.Services;
 
 public interface IHotelDAO extends JpaRepository <Hotel, Integer> {
@@ -19,4 +20,6 @@ public interface IHotelDAO extends JpaRepository <Hotel, Integer> {
 	Page<Hotel> findByPriceGreaterThanEqual(Pageable pageable, Integer minPrice);
 	Page<Hotel> findByPriceGreaterThanEqualAndPriceLessThanEqual(Pageable pageable, Integer minPrice, Integer maxPrice);
 	List<Hotel> findByHotelServices(Services services);
+	List<Hotel> findByUser(User user); //Get hotels by user id
+
 }

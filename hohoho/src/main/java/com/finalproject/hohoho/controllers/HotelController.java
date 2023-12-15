@@ -157,6 +157,22 @@ public class HotelController {
 					// <- TODO: add hotels by search not paginated HERE
 				}
 			}
+			
+			// Endpoint have idServices parameters
+			if (idServices != null) {
+				List <Services> hotelServices = new ArrayList <Services>();
+				for (int i = 0; i < idServices.length; i++) {
+					hotelServices.add(servicesServiceImpl.byId(idServices[i]));
+				}
+				if (filterCounter == 0) {
+					pageHotels = hotelServiceImpl.listPageHotelsByServices(pageable, hotelServices);
+					filterCounter++;
+				}
+				// if some filter is applied, gets data without pagination
+				if (filterCounter > 0) {
+					// <- TODO: add hotels by search not paginated HERE
+				}
+			}
 
 			// Endpoint have idServices parameters
 			if (idServices != null) {
