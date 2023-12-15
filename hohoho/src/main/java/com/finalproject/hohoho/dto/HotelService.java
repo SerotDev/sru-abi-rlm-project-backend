@@ -9,14 +9,14 @@ public class HotelService {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-
-	@ManyToOne
-	@JoinColumn(name = "id_service")
-	private Services services;
 	
 	@ManyToOne
 	@JoinColumn(name = "id_hotel")
 	private Hotel hotel;
+	
+	@ManyToOne
+	@JoinColumn(name = "id_service")
+	private Services services;
 	
 
 	public HotelService() {
@@ -24,8 +24,8 @@ public class HotelService {
 
 	public HotelService(int id, Services services, Hotel hotel) {
 		this.id = id;
-		this.services = services;
 		this.hotel = hotel;
+		this.services = services;
 	}
 
 	public int getId() {

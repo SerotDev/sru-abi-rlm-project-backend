@@ -17,7 +17,6 @@ public interface IHotelService {
 	public Page<Hotel> listPageHotels(Pageable pageable); // List all hotels paginated
 	public Page<Hotel> listPageHotelsByTown(Pageable pageable, Town town); // List hotels by town paginated
 	public Page<Hotel> listPageHotelsBySearch(Pageable pageable, String search); // List hotels by search paginated
-	public Page<Hotel> listPageHotelsByStarRatingAvg(Pageable pageable, Integer minStarRatingAvg); // List hotels by minimum StarRating Average paginated
 	public Page<Hotel> listPageHotelsByMinNumberRooms(Pageable pageable, Integer minNumberRooms); // List hotels by minNumberRooms paginated
 	public Page<Hotel> listPageHotelsByPrice(Pageable pageable, Integer minPrice); // List hotels by min price paginated
 	public Page<Hotel> listPageHotelsByPrice(Pageable pageable, Integer minPrice,  Integer maxPrice); // List hotels by price range paginated

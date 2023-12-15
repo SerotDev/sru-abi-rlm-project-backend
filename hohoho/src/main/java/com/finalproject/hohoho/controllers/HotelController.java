@@ -8,15 +8,18 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.finalproject.hohoho.dto.AddFavourite;
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.Services;
 import com.finalproject.hohoho.dto.Town;
+import com.finalproject.hohoho.services.AddFavouriteServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceServiceImpl;
 import com.finalproject.hohoho.services.ServicesServiceImpl;
@@ -37,8 +40,11 @@ public class HotelController {
 	@Autowired
 	ServicesServiceImpl servicesServiceImpl;
 
-	// FILTROS - LOOK PAGINATION WHEN HAVE TO MULTIPLES RESULTS 
-	@GetMapping("/filter/{params}")
+	@Autowired
+	AddFavouriteServiceImpl addFavouriteServiceImpl;
+
+	// FILTROS - LOOK PAGINATION WHEN HAVE TO MULTIPLES RESULTS
+	@GetMapping("/hotels/{page}{size}{idTown}{search}{minStarRatingAvg}{minNumberRooms}{minPrice}{maxPrice}{idServices}")
 	public ResponseEntity<Map<String, Object>> filterHotels(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size,
 			@RequestParam(name = "idTown", required = false) Integer idTown,
@@ -83,7 +89,30 @@ public class HotelController {
 				}
 			}
 
-			// TODO: SEARCH BY STAR RATING AVG
+			// Endpoint have minStarRatingAvg parameter
+			if (minStarRatingAvg != null) {
+				if (filterCounter == 0) {
+					List<Hotel> hotelsAchieveRating = new ArrayList<Hotel>();
+					List<Hotel> allHotels = hotelServiceImpl.list();
+					// Compare if each hotel rating average is equals or greather than the field
+					for (int i = 0; i < allHotels.size(); i++) {
+						int hotelRatingAvg = getStarRatingAvgByHotelId(allHotels.get(i).getId());
+						if (hotelRatingAvg >= minStarRatingAvg) {
+							hotelsAchieveRating.add(allHotels.get(i));
+						}
+					}
+					//Paginate the hotels list that achieve the rating
+					int start = (int)pageable.getOffset();
+					int end = Math.min((start + pageable.getPageSize()), hotelsAchieveRating.size());
+					pageHotels = new PageImpl<>(hotelsAchieveRating.subList(start, end), pageable, hotelsAchieveRating.size());
+					
+					filterCounter++;
+				}
+				// if some filter is applied, gets data without pagination
+				if (filterCounter > 0) {
+					// <- TODO: add hotels by search not paginated HERE
+				}
+			}
 
 			// Endpoint have minNumberRooms parameter
 			if (minNumberRooms != null) {
@@ -107,8 +136,8 @@ public class HotelController {
 				if (filterCounter > 0) {
 					// <- TODO: add hotels by search not paginated HERE
 				}
-			// Endpoint have only max price parameter
-			} else if(minPrice == null && maxPrice != null) {
+				// Endpoint have only max price parameter
+			} else if (minPrice == null && maxPrice != null) {
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByPrice(pageable, 0, maxPrice);
 					filterCounter++;
@@ -117,8 +146,8 @@ public class HotelController {
 				if (filterCounter > 0) {
 					// <- TODO: add hotels by search not paginated HERE
 				}
-			// Endpoint have minPrice and maxPrice parameters
-			} else if(minPrice != null && maxPrice != null){
+				// Endpoint have minPrice and maxPrice parameters
+			} else if (minPrice != null && maxPrice != null) {
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByPrice(pageable, minPrice, maxPrice);
 					filterCounter++;
@@ -132,6 +161,22 @@ public class HotelController {
 			// Endpoint have idServices parameters
 			if (idServices != null) {
 				List <Services> hotelServices = new ArrayList <Services>();
+				for (int i = 0; i < idServices.length; i++) {
+					hotelServices.add(servicesServiceImpl.byId(idServices[i]));
+				}
+				if (filterCounter == 0) {
+					pageHotels = hotelServiceImpl.listPageHotelsByServices(pageable, hotelServices);
+					filterCounter++;
+				}
+				// if some filter is applied, gets data without pagination
+				if (filterCounter > 0) {
+					// <- TODO: add hotels by search not paginated HERE
+				}
+			}
+
+			// Endpoint have idServices parameters
+			if (idServices != null) {
+				List<Services> hotelServices = new ArrayList<Services>();
 				for (int i = 0; i < idServices.length; i++) {
 					hotelServices.add(servicesServiceImpl.byId(idServices[i]));
 				}
@@ -168,18 +213,17 @@ public class HotelController {
 		}
 	}
 
-// TEMPLATE BASE OF PAGINATION - LATER DROP
-	@GetMapping("/pageable")
-	public ResponseEntity<Map<String, Object>> pageAllHotels(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size) {
-		Pageable pageable = PageRequest.of(page, size);
-		Page<Hotel> hotelPage = hotelServiceImpl.listPageHotels(pageable);
-		Map<String, Object> response = new HashMap<>();
-		response.put("currentPage", hotelPage.getNumber());
-		response.put("totalItems", hotelPage.getTotalElements());
-		response.put("totalPages", hotelPage.getTotalPages());
-		response.put("Hotels", hotelPage.getContent());
-		return new ResponseEntity<>(response, HttpStatus.OK);
+	@GetMapping("/hotel/starRatingAvg/{hotelId}")
+	public int getStarRatingAvgByHotelId(@RequestParam(name = "hotelId", required = false) Integer hotelId) {
+		Hotel hotel = hotelServiceImpl.byId(hotelId);
+		List<AddFavourite> favourites = addFavouriteServiceImpl.listByHotel(hotel);
+		int counter = 0;
+		int sumStarRating = 0;
+		for (int i = 0; i < favourites.size(); i++) {
+			sumStarRating += favourites.get(i).getStarRating();
+			counter++;
+		}
+		return (int) ((float) sumStarRating / (float) counter);
 	}
 
 	// Add new hotel
@@ -223,7 +267,7 @@ public class HotelController {
 
 		return hotelUpdated;
 	}
-	
+
 	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	// Delete hotel by id
 	@DeleteMapping("/hotel/delete/{id}")

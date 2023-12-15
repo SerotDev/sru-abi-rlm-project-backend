@@ -3,6 +3,7 @@ package com.finalproject.hohoho.dto;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
@@ -17,17 +18,17 @@ public class Services {
 	@Column(name = "name")
 	private String name;
 
-	@OneToMany
-	@JoinColumn(name = "id_service")
-	private List<HotelService> hotelService;
+	@ManyToMany(mappedBy = "hotelServices")
+	@JsonIgnoreProperties("hotelServices")
+	private List<Hotel> hotelServices;
 
 	public Services() {
 	}
 
-	public Services(int id, String name, List<HotelService> hotelService) {
+	public Services(int id, String name, List<Hotel> hotelServices) {
 		this.id = id;
 		this.name = name;
-		this.hotelService = hotelService;
+		this.hotelServices = hotelServices;
 	}
 
 	public int getId() {
@@ -48,11 +49,11 @@ public class Services {
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "HotelService")
-	public List<HotelService> getHotelService() {
-		return hotelService;
+	public List<Hotel> getHotelServices() {
+		return hotelServices;
 	}
 
-	public void setHotelService(List<HotelService> hotelService) {
-		this.hotelService = hotelService;
+	public void setHotelServices(List<Hotel> hotelServices) {
+		this.hotelServices = hotelServices;
 	}
 }
