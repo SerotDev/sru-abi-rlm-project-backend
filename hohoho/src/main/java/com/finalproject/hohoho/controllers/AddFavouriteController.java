@@ -1,5 +1,6 @@
 package com.finalproject.hohoho.controllers;
 
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.finalproject.hohoho.dto.AddFavourite;
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.services.AddFavouriteServiceImpl;
+import com.finalproject.hohoho.services.HotelServiceImpl;
 
 @RestController
 @RequestMapping("/api")
@@ -17,6 +19,9 @@ public class AddFavouriteController {
 
 	@Autowired
 	AddFavouriteServiceImpl addFavouriteServiceImpl;
+	
+	@Autowired
+	HotelServiceImpl hotelServiceImpl;
 
 	// Get all addFavourites
 	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
@@ -67,7 +72,7 @@ public class AddFavouriteController {
 	}
 	
 	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
-    @GetMapping("/user/{userId}/favouriteHotels")
+    @GetMapping("/user/favouriteHotels/{userId}")
     public ResponseEntity<List<Hotel>> getFavouriteHotelsByUserId(@PathVariable Integer userId) {
         List<Hotel> favouriteHotels = addFavouriteServiceImpl.getFavouriteHotelsByUserId(userId);
 

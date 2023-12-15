@@ -24,7 +24,6 @@ public class HotelServiceImpl implements IHotelService {
 	@Override
 	public List<Hotel> list() {
 		return iHotelDAO.findAll();
-
 	}
 
 	/**
@@ -49,15 +48,6 @@ public class HotelServiceImpl implements IHotelService {
 	@Override
 	public Page<Hotel> listPageHotelsBySearch(Pageable pageable, String search) {
 		return iHotelDAO.findByNameContainingIgnoreCase(pageable, search);
-	}
-
-	/**
-	 * List hotels by minimum StarRating Average paginated
-	 */
-	@Override
-	public Page<Hotel> listPageHotelsByStarRatingAvg(Pageable pageable, Integer minStarRatingAvg) {
-		// return iHotelDAO.findByMinStarRatingAvg(pageable, minStarRatingAvg);
-		return null;
 	}
 
 	/**

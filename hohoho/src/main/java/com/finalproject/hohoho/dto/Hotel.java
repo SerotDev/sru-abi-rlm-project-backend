@@ -2,8 +2,11 @@ package com.finalproject.hohoho.dto;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.finalproject.hohoho.dao.IHotelDAO;
 
 import jakarta.persistence.*;
 
@@ -37,7 +40,7 @@ public class Hotel {
 	private Double latitude;
 	@Column(name = "longitude")
 	private Double longitude;
-
+	
 	@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "hotel_services",
