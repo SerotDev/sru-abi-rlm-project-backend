@@ -2,9 +2,11 @@ package com.finalproject.hohoho.controllers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +23,6 @@ import com.finalproject.hohoho.dto.Services;
 import com.finalproject.hohoho.dto.Town;
 import com.finalproject.hohoho.services.AddFavouriteServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceImpl;
-import com.finalproject.hohoho.services.HotelServiceServiceImpl;
 import com.finalproject.hohoho.services.ServicesServiceImpl;
 import com.finalproject.hohoho.services.TownServiceImpl;
 
@@ -60,117 +61,145 @@ public class HotelController {
 
 			// TODO: List<Hotel> hotels = new ArrayList<Hotel>();
 			Page<Hotel> pageHotels = null;
+			List<Hotel> listHotels = new ArrayList<Hotel>();
 
 			int filterCounter = 0;
-
 			// Endpoint have town parameter
 			if (idTown != null) {
+				Town town = townServiceImpl.byId(idTown);
 				// If its the first filter gets data paginated
 				if (filterCounter == 0) {
-					Town town = townServiceImpl.byId(idTown);
 					pageHotels = hotelServiceImpl.listPageHotelsByTown(pageable, town);
-					filterCounter++;
 				}
+				filterCounter++;
 				// if some filter is applied, gets data without pagination
 				if (filterCounter > 0) {
-					// <- TODO: add hotels by town not paginated HERE
+					// Unpage the results and add it to the hotels list
+					Pageable wholePages = Pageable.unpaged();
+					List<Hotel> hotelsUnpaged = hotelServiceImpl.listPageHotelsByTown(wholePages, town).getContent();
+					for (int i = 0; i < hotelsUnpaged.size(); i++) {
+						listHotels.add(hotelsUnpaged.get(i));
+					}
 				}
 			}
 
 			// Endpoint have search parameter
 			if (search != null) {
+				// If its the first filter gets data paginated
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsBySearch(pageable, search);
-					filterCounter++;
 				}
+				filterCounter++;
 				// if some filter is applied, gets data without pagination
 				if (filterCounter > 0) {
-					// <- TODO: add hotels by search not paginated HERE
+					// Unpage the results and add it to the hotels list
+					Pageable wholePages = Pageable.unpaged();
+					List<Hotel> hotelsUnpaged = hotelServiceImpl.listPageHotelsBySearch(wholePages, search)
+							.getContent();
+					for (int i = 0; i < hotelsUnpaged.size(); i++) {
+						listHotels.add(hotelsUnpaged.get(i));
+					}
 				}
 			}
 
 			// Endpoint have minStarRatingAvg parameter
 			if (minStarRatingAvg != null) {
-				if (filterCounter == 0) {
-					List<Hotel> hotelsAchieveRating = new ArrayList<Hotel>();
-					List<Hotel> allHotels = hotelServiceImpl.list();
-					// Compare if each hotel rating average is equals or greather than the field
-					for (int i = 0; i < allHotels.size(); i++) {
-						int hotelRatingAvg = getStarRatingAvgByHotelId(allHotels.get(i).getId());
-						if (hotelRatingAvg >= minStarRatingAvg) {
-							hotelsAchieveRating.add(allHotels.get(i));
-						}
+				// Compare if each hotel rating average is equals or greather than the field
+				List<Hotel> hotelsAchieveRating = new ArrayList<Hotel>();
+				List<Hotel> allHotels = hotelServiceImpl.list();
+				for (int i = 0; i < allHotels.size(); i++) {
+					int hotelRatingAvg = getStarRatingAvgByHotelId(allHotels.get(i).getId());
+					if (hotelRatingAvg >= minStarRatingAvg) {
+						hotelsAchieveRating.add(allHotels.get(i));
 					}
-					//Paginate the hotels list that achieve the rating
-					int start = (int)pageable.getOffset();
-					int end = Math.min((start + pageable.getPageSize()), hotelsAchieveRating.size());
-					pageHotels = new PageImpl<>(hotelsAchieveRating.subList(start, end), pageable, hotelsAchieveRating.size());
-					
-					filterCounter++;
 				}
+				// If its the first filter gets data paginated
+				if (filterCounter == 0) {
+					// Paginate the hotels list that achieve the rating
+					int start = (int) pageable.getOffset();
+					int end = Math.min((start + pageable.getPageSize()), hotelsAchieveRating.size());
+					pageHotels = new PageImpl<>(hotelsAchieveRating.subList(start, end), pageable,
+							hotelsAchieveRating.size());
+				}
+				filterCounter++;
 				// if some filter is applied, gets data without pagination
 				if (filterCounter > 0) {
-					// <- TODO: add hotels by search not paginated HERE
+					// Add results to the hotels list
+					for (int i = 0; i < hotelsAchieveRating.size(); i++) {
+						listHotels.add(hotelsAchieveRating.get(i));
+					}
 				}
 			}
 
 			// Endpoint have minNumberRooms parameter
 			if (minNumberRooms != null) {
+				// If its the first filter gets data paginated
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByMinNumberRooms(pageable, minNumberRooms);
-					filterCounter++;
 				}
+				filterCounter++;
 				// if some filter is applied, gets data without pagination
 				if (filterCounter > 0) {
-					// <- TODO: add hotels by search not paginated HERE
+					// Unpage the results and add it to the hotels list
+					Pageable wholePages = Pageable.unpaged();
+					List<Hotel> hotelsUnpaged = hotelServiceImpl
+							.listPageHotelsByMinNumberRooms(wholePages, minNumberRooms).getContent();
+					for (int i = 0; i < hotelsUnpaged.size(); i++) {
+						listHotels.add(hotelsUnpaged.get(i));
+					}
 				}
 			}
 
 			// Endpoint have only min price parameter
 			if (minPrice != null && maxPrice == null) {
+				// If its the first filter gets data paginated
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByPrice(pageable, minPrice);
-					filterCounter++;
 				}
+				filterCounter++;
 				// if some filter is applied, gets data without pagination
 				if (filterCounter > 0) {
-					// <- TODO: add hotels by search not paginated HERE
+					// Unpage the results and add it to the hotels list
+					Pageable wholePages = Pageable.unpaged();
+					List<Hotel> hotelsUnpaged = hotelServiceImpl.listPageHotelsByPrice(wholePages, minPrice)
+							.getContent();
+					for (int i = 0; i < hotelsUnpaged.size(); i++) {
+						listHotels.add(hotelsUnpaged.get(i));
+					}
 				}
 				// Endpoint have only max price parameter
 			} else if (minPrice == null && maxPrice != null) {
+				// If its the first filter gets data paginated
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByPrice(pageable, 0, maxPrice);
-					filterCounter++;
 				}
+				filterCounter++;
 				// if some filter is applied, gets data without pagination
 				if (filterCounter > 0) {
-					// <- TODO: add hotels by search not paginated HERE
+					// Unpage the results and add it to the hotels list
+					Pageable wholePages = Pageable.unpaged();
+					List<Hotel> hotelsUnpaged = hotelServiceImpl.listPageHotelsByPrice(wholePages, 0, maxPrice)
+							.getContent();
+					for (int i = 0; i < hotelsUnpaged.size(); i++) {
+						listHotels.add(hotelsUnpaged.get(i));
+					}
 				}
 				// Endpoint have minPrice and maxPrice parameters
 			} else if (minPrice != null && maxPrice != null) {
+				// If its the first filter gets data paginated
 				if (filterCounter == 0) {
 					pageHotels = hotelServiceImpl.listPageHotelsByPrice(pageable, minPrice, maxPrice);
-					filterCounter++;
 				}
+				filterCounter++;
 				// if some filter is applied, gets data without pagination
 				if (filterCounter > 0) {
-					// <- TODO: add hotels by search not paginated HERE
-				}
-			}
-			
-			// Endpoint have idServices parameters
-			if (idServices != null) {
-				List <Services> hotelServices = new ArrayList <Services>();
-				for (int i = 0; i < idServices.length; i++) {
-					hotelServices.add(servicesServiceImpl.byId(idServices[i]));
-				}
-				if (filterCounter == 0) {
-					pageHotels = hotelServiceImpl.listPageHotelsByServices(pageable, hotelServices);
-					filterCounter++;
-				}
-				// if some filter is applied, gets data without pagination
-				if (filterCounter > 0) {
-					// <- TODO: add hotels by search not paginated HERE
+					// Unpage the results and add it to the hotels list
+					Pageable wholePages = Pageable.unpaged();
+					List<Hotel> hotelsUnpaged = hotelServiceImpl.listPageHotelsByPrice(wholePages, minPrice, maxPrice)
+							.getContent();
+					for (int i = 0; i < hotelsUnpaged.size(); i++) {
+						listHotels.add(hotelsUnpaged.get(i));
+					}
 				}
 			}
 
@@ -180,33 +209,56 @@ public class HotelController {
 				for (int i = 0; i < idServices.length; i++) {
 					hotelServices.add(servicesServiceImpl.byId(idServices[i]));
 				}
+				List<Hotel> hotelsFiltredByServices = hotelServiceImpl.listPageHotelsByServices(hotelServices);
+				// If its the first filter gets data paginated
 				if (filterCounter == 0) {
-					pageHotels = hotelServiceImpl.listPageHotelsByServices(pageable, hotelServices);
-					filterCounter++;
+					// Paginate the hotels list that achieve the rating
+					int start = (int) pageable.getOffset();
+					int end = Math.min((start + pageable.getPageSize()), hotelsFiltredByServices.size());
+					pageHotels = new PageImpl<>(hotelsFiltredByServices.subList(start, end), pageable, hotelsFiltredByServices.size());
 				}
+				filterCounter++;
 				// if some filter is applied, gets data without pagination
 				if (filterCounter > 0) {
-					// <- TODO: add hotels by search not paginated HERE
+					// Add hotels to the list
+					for (int i = 0; i < hotelsFiltredByServices.size(); i++) {
+						listHotels.add(hotelsFiltredByServices.get(i));
+					}
 				}
 			}
 
+			Page<Hotel> returnPage = null;
+
 			// if there are no filters get all hotels paginated
 			if (filterCounter == 0) {
-				pageHotels = hotelServiceImpl.listPageHotels(pageable);
-				// if there are more than one filter convert list to page and save it in
-				// pageHotels
+				returnPage = hotelServiceImpl.listPageHotels(pageable);
+				// if there is only one filter applied
+			} else if (filterCounter == 1) {
+				returnPage = pageHotels;
+				// if there are more than one filter applied
 			} else if (filterCounter > 1) {
-				// <- HERE TODO: cleans duplicated items and convert list into page for save it
-				// in pageHotels
-				// TODO: new PageImpl<Hotel>(listOfHotels, pageable, listOfHotels.size());
+				// filter to get only the repeated hotels
+				Set<Hotel> set = new HashSet<>();
+				List<Hotel> duplicatedHotels = new ArrayList<>();
+				for (Hotel i : listHotels) {
+					if (set.contains(i)) {
+						duplicatedHotels.add(i);
+					} else {
+						set.add(i);
+					}
+				}
+				// Paginate the duplicatedHotels list and add it to the return hotels page
+				int start = (int) pageable.getOffset();
+				int end = Math.min((start + pageable.getPageSize()), duplicatedHotels.size());
+				returnPage = new PageImpl<>(duplicatedHotels.subList(start, end), pageable, duplicatedHotels.size());
 			}
 
 			// get data from page and return it as response.
 			Map<String, Object> response = new HashMap<>();
-			response.put("currentPage", pageHotels.getNumber());
-			response.put("totalItems", pageHotels.getTotalElements());
-			response.put("totalPages", pageHotels.getTotalPages());
-			response.put("Hotels", pageHotels.getContent());
+			response.put("currentPage", returnPage.getNumber());
+			response.put("totalItems", returnPage.getTotalElements());
+			response.put("totalPages", returnPage.getTotalPages());
+			response.put("Hotels", returnPage.getContent());
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
