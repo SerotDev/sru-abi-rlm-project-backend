@@ -20,10 +20,10 @@ public interface IHotelService {
 	public Page<Hotel> listPageHotelsByMinNumberRooms(Pageable pageable, Integer minNumberRooms); // List hotels by minNumberRooms paginated
 	public Page<Hotel> listPageHotelsByPrice(Pageable pageable, Integer minPrice); // List hotels by min price paginated
 	public Page<Hotel> listPageHotelsByPrice(Pageable pageable, Integer minPrice,  Integer maxPrice); // List hotels by price range paginated
-	public Page<Hotel> listPageHotelsByServices(Pageable pageable, List<Services> services); // List hotels by services paginated
+	public List<Hotel> listPageHotelsByServices(List<Services> services); // List hotels by services paginated
 	
 	public List<Hotel> listHotelsbyUser(User user);//List of Hotels by user id
-
+	
 	public Hotel save(Hotel hotel); // (CREATE)
 
 	public Hotel byId(int id); // (READ)

@@ -2,6 +2,7 @@ package com.finalproject.hohoho.services;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ public class HotelServiceImpl implements IHotelService {
 	@Override
 	public List<Hotel> list() {
 		return iHotelDAO.findAll();
+
 	}
 
 	/**
@@ -79,7 +81,7 @@ public class HotelServiceImpl implements IHotelService {
 	 * List hotels by services paginated
 	 */
 	@Override
-	public Page<Hotel> listPageHotelsByServices(Pageable pageable, List<Services> services) {
+	public List<Hotel> listPageHotelsByServices(List<Services> services) {
 		// get all hotels by each service
 		List<Hotel> hotels = new ArrayList<Hotel>();
 		for (int i = 0; i < services.size(); i++) {
@@ -92,24 +94,19 @@ public class HotelServiceImpl implements IHotelService {
 		// filter to get only the repeated hotels
 		List<Hotel> duplicatedHotels = new ArrayList<>();
 		if (services.size() > 1) {
-			Set<Hotel> set = new HashSet<>();
+			Set<Hotel> setDupHotels = new HashSet<>();
 			for (Hotel i : hotels) {
-				if (set.contains(i)) {
+				if (setDupHotels.contains(i)) {
 					duplicatedHotels.add(i);
 				} else {
-					set.add(i);
+					setDupHotels.add(i);
 				}
 			}
 		} else {
 			duplicatedHotels.addAll(hotels);
 		}
-		
-		//Paginate the duplicatedHotels list
-		int start = (int)pageable.getOffset();
-		int end = Math.min((start + pageable.getPageSize()), duplicatedHotels.size());
-		Page<Hotel> hotelsPage = new PageImpl<>(duplicatedHotels.subList(start, end), pageable, duplicatedHotels.size());
 
-		return hotelsPage;
+		return duplicatedHotels;
 	}
 
 	@Override
@@ -133,11 +130,13 @@ public class HotelServiceImpl implements IHotelService {
 	@Override
 	public void delete(int id) {
 		iHotelDAO.deleteById(id);
-	}
 
+	}
+	
 	@Override
 	public List<Hotel> listHotelsbyUser(User user) {
 		return iHotelDAO.findByUser(user);
 	}
+
 
 }
