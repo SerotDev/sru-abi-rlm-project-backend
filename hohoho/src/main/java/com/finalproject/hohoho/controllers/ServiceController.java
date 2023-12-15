@@ -22,7 +22,7 @@ public class ServiceController {
 	}
 	
 	// Add new service
-	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/service/add")
 	public Services save(@RequestBody Services service) {
 		return serviceServiceImpl.save(service);
@@ -37,7 +37,7 @@ public class ServiceController {
 	}
 	
 	// Update service by id
-	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/service/update/{id}")
 	public Services update(@PathVariable(name = "id") Integer id, @RequestBody Services service) {
 		Services serviceSelected = new Services();
@@ -52,7 +52,7 @@ public class ServiceController {
 	}
 	
 	// Delete service by id
-	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/service/delete/{id}")
 	public void delete(@PathVariable Integer id) {
 		serviceServiceImpl.delete(id);

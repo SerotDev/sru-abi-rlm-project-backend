@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.finalproject.hohoho.dao.IEventDAO;
 import com.finalproject.hohoho.dto.Event;
 import com.finalproject.hohoho.dto.Hotel;
-import com.finalproject.hohoho.dto.Town;
 
 @Service
 public class EventServiceImpl implements IEventService{

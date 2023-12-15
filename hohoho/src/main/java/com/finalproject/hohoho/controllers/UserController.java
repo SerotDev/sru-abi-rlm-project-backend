@@ -69,6 +69,7 @@ public class UserController {
 		return eventServiceImpl.eventsByHotelId(hotel);	
 	}
 	
+	//Get favourite hotels by user id
 	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
     @GetMapping("/user/favouriteHotels/{userId}")
     public ResponseEntity<List<Hotel>> getFavouriteHotelsByUserId(@PathVariable Integer userId) {

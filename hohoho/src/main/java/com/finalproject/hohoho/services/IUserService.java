@@ -2,7 +2,6 @@ package com.finalproject.hohoho.services;
 
 import java.util.List;
 
-import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.User;
 
 public interface IUserService {
