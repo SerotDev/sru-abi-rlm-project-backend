@@ -2,12 +2,15 @@ package com.finalproject.hohoho.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Event;
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.User;
+import com.finalproject.hohoho.services.AddFavouriteServiceImpl;
 import com.finalproject.hohoho.services.EventServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceImpl;
 import com.finalproject.hohoho.services.UserServiceImpl;
@@ -24,6 +27,9 @@ public class UserController {
 	
 	@Autowired
 	EventServiceImpl eventServiceImpl;
+	
+	@Autowired
+	AddFavouriteServiceImpl addFavouriteServiceImpl;
 
 	// Get all users
 	@PreAuthorize("hasRole('ADMIN')")
@@ -49,20 +55,31 @@ public class UserController {
 	}
 	// Get hotel by user id
 	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
-	@GetMapping("/user/hotels/{userHotel}")
-	public List <Hotel> listHotelsbyUser(@PathVariable(name = "userHotel")Integer userHotel){
-		User user = userServiceImpl.byId(userHotel);
+	@GetMapping("/user/hotels/{idUser}")
+	public List <Hotel> listHotelsbyUser(@PathVariable(name = "idUser")Integer idUser){
+		User user = userServiceImpl.byId(idUser);
 		return hotelServiceImpl.listHotelsbyUser(user);		
 	}
 	
 	//Get events by hotel id
 	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
-	@GetMapping("/user/events/{userHotel}")
-	public List <Event> eventsByHotelId(@PathVariable(name = "userHotel")Integer userHotel){
-		Hotel hotel = hotelServiceImpl.byId(userHotel);
-		return eventServiceImpl.eventsByHotelId(hotel);
-		
+	@GetMapping("/user/events/{idHotel}")
+	public List <Event> eventsByHotelId(@PathVariable(name = "idHotel")Integer idHotel){
+		Hotel hotel = hotelServiceImpl.byId(idHotel);
+		return eventServiceImpl.eventsByHotelId(hotel);	
 	}
+	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
+    @GetMapping("/user/favouriteHotels/{userId}")
+    public ResponseEntity<List<Hotel>> getFavouriteHotelsByUserId(@PathVariable Integer userId) {
+        List<Hotel> favouriteHotels = addFavouriteServiceImpl.getFavouriteHotelsByUserId(userId);
+
+        if (favouriteHotels == null || favouriteHotels.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        return ResponseEntity.ok(favouriteHotels);
+    }
 	
 	// Update user by id
 	@PreAuthorize("hasRole('ADMIN')")

@@ -70,17 +70,5 @@ public class AddFavouriteController {
 	public void delete(@PathVariable Integer id) {
 		addFavouriteServiceImpl.delete(id);
 	}
-	
-	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
-    @GetMapping("/user/favouriteHotels/{userId}")
-    public ResponseEntity<List<Hotel>> getFavouriteHotelsByUserId(@PathVariable Integer userId) {
-        List<Hotel> favouriteHotels = addFavouriteServiceImpl.getFavouriteHotelsByUserId(userId);
 
-        if (favouriteHotels == null || favouriteHotels.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        return ResponseEntity.ok(favouriteHotels);
-    }
-	
 }
