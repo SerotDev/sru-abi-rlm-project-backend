@@ -1,12 +1,15 @@
 package com.finalproject.hohoho.services;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.finalproject.hohoho.dao.IAddFavouriteDAO;
 import com.finalproject.hohoho.dto.AddFavourite;
+import com.finalproject.hohoho.dto.Hotel;
 
 @Service
 public class AddFavouriteServiceImpl implements IAddFavouriteService{
@@ -42,6 +45,18 @@ public class AddFavouriteServiceImpl implements IAddFavouriteService{
 		iAddFavouriteDAO.deleteById(id);				
 		
 	}
+	
+	public List<Hotel> getFavouriteHotelsByUserId(Integer userId) {
+		List<AddFavourite> addFavourites = iAddFavouriteDAO.findByUserId(userId);
+
+        if (addFavourites == null || addFavourites.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return addFavourites.stream()
+            .map(AddFavourite::getHotel)
+            .collect(Collectors.toList());
+    }
 	
 }
 

@@ -42,7 +42,7 @@ public class AuthenticationController {
     @Autowired
 	private PasswordEncoder encoder;
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> generateToken(@RequestBody LoginRequest loginRequest) throws Exception {
         try{
             autenticate(loginRequest.getName(),loginRequest.getPassword());
@@ -71,7 +71,7 @@ public class AuthenticationController {
         return (User) this.userDetailsService.loadUserByUsername(principal.getName());
     }
     
-    @PostMapping("/signup")
+    @PostMapping("/register")
 	public ResponseEntity<?> registerUser(@RequestBody LoginRequest signUpRequest){
 		Map<String, Object> responseData = new HashMap<String, Object>();
 		   String name = signUpRequest.getName();

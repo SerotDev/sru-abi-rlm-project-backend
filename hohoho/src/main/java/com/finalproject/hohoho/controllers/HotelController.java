@@ -1,31 +1,25 @@
 package com.finalproject.hohoho.controllers;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Hotel;
 import com.finalproject.hohoho.dto.Town;
-import com.finalproject.hohoho.dto.Services;
 import com.finalproject.hohoho.services.HotelServiceImpl;
 import com.finalproject.hohoho.services.HotelServiceServiceImpl;
 import com.finalproject.hohoho.services.ServicesServiceImpl;
 import com.finalproject.hohoho.services.TownServiceImpl;
 
 import org.springframework.data.domain.Pageable;
-
-import jakarta.persistence.EntityManager;
-import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping("/api")
@@ -40,7 +34,7 @@ public class HotelController {
 	@Autowired
 	ServicesServiceImpl servicesServiceImpl;
 
-	// FILTROS - MIRAR DE PAGINAR CUANDO HAY MULTIPLES RESULTADOS
+	// FILTROS - LOOK PAGINATION WHEN HAVE TO MULTIPLES RESULTS 
 	@GetMapping("/filter/{params}")
 	public ResponseEntity<Map<String, Object>> filterHotels(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size,
@@ -171,7 +165,7 @@ public class HotelController {
 		}
 	}
 
-// PLANTILLA BASE DE PAGINATION, BORRAR DESPUÉS
+// TEMPLATE BASE OF PAGINATION - LATER DROP
 	@GetMapping("/pageable")
 	public ResponseEntity<Map<String, Object>> pageAllHotels(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size) {
@@ -186,6 +180,7 @@ public class HotelController {
 	}
 
 	// Add new hotel
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PostMapping("/hotel/add")
 	public Hotel save(@RequestBody Hotel hotel) {
 		return hotelServiceImpl.save(hotel);
@@ -200,6 +195,7 @@ public class HotelController {
 	}
 
 	// Update hotel by id
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PutMapping("/hotel/update/{id}")
 	public Hotel update(@PathVariable(name = "id") Integer id, @RequestBody Hotel hotel) {
 
@@ -224,7 +220,8 @@ public class HotelController {
 
 		return hotelUpdated;
 	}
-
+	
+	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	// Delete hotel by id
 	@DeleteMapping("/hotel/delete/{id}")
 	public void delete(@PathVariable Integer id) {

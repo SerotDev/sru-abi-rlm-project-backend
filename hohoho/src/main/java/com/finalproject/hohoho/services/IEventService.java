@@ -3,10 +3,16 @@ package com.finalproject.hohoho.services;
 import java.util.List;
 
 import com.finalproject.hohoho.dto.Event;
+import com.finalproject.hohoho.dto.Hotel;
+import com.finalproject.hohoho.dto.Town;
 
 public interface IEventService {
 	// CRUD models
 	public List<Event> list(); // List All
+	
+	public List<Event> privateEventByIdHotel (Hotel hotel);
+	
+	public List<Event> publicEventByIdTown(Hotel hotel);
 
 	public Event save(Event event); // (CREATE)
 
