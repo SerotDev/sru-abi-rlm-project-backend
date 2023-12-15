@@ -2,10 +2,11 @@ package com.finalproject.hohoho.dto;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.finalproject.hohoho.dao.IHotelDAO;
 
 import jakarta.persistence.*;
 
@@ -40,13 +41,12 @@ public class Hotel {
 	@Column(name = "longitude")
 	private Double longitude;
 	
-	
 	@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "hotel_services",
         joinColumns = { @JoinColumn(name = "id_hotel") },
         inverseJoinColumns = { @JoinColumn(name = "id_service")}
-    )	
+    )
     @JsonIgnoreProperties("hotels")
 	private List<Services> hotelServices;
 	

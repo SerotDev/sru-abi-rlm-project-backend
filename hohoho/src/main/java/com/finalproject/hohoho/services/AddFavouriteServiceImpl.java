@@ -57,6 +57,11 @@ public class AddFavouriteServiceImpl implements IAddFavouriteService{
             .map(AddFavourite::getHotel)
             .collect(Collectors.toList());
     }
+
+	@Override
+	public List<AddFavourite> listByHotel(Hotel hotel) {
+		return iAddFavouriteDAO.findByHotel(hotel);
+	}
 	
 }
 
