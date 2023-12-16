@@ -81,8 +81,13 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
 			<version>0.11.2</version>
-		</dependency>	
-		
+		</dependency>
+
+		<dependency>
+			<groupId>com</groupId>
+			<artifactId>TA27-3</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

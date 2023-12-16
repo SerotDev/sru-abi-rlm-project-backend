@@ -105,8 +105,8 @@ public class UserController {
 		return userUpdated;
 	}
 	
-	@PreAuthorize("hasRole('ADMIN')")
 	// Delete user by id
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/user/delete/{id}")
 	public void delete(@PathVariable Integer id) {
 		userServiceImpl.delete(id);
