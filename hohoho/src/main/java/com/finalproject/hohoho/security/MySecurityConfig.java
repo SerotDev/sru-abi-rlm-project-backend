@@ -74,8 +74,8 @@ public class MySecurityConfig {
 			};
 
     private static final String[] ALLOW_GET_URLs = {
-            "/api/hotels/*",
-            "/api/hotel/*",
+            "/api/hotels/{page}{size}{idTown}{search}{minStarRatingAvg}{minNumberRooms}{minPrice}{maxPrice}{idServices}",
+            "/api/hotel/{id}",
             "/api/hotel/starRatingAvg/{hotelId}",
             "/api/events",
             "/api/events-private/{idHotel}",
