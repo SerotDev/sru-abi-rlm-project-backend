@@ -22,6 +22,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.finalproject.hohoho.security.service.UserDetailsServiceImpl;
 
@@ -94,6 +96,9 @@ public class MySecurityConfig {
 
     @Autowired
     private UserDetailsServiceImpl userDetailsService;
+    
+    @Autowired
+	private JwtAuthenticationEntryPoint unauthorizedHandler;
 
 	@Bean
 	JwtAuthenticationFilter authorizationJwtTokenFilter() {
@@ -117,39 +122,71 @@ public class MySecurityConfig {
 	authProvider.setPasswordEncoder(passwordEncoder());
 	return authProvider;	
     }
-	
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
-    }
     
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    private final String AUTH_ORIGINS = Arrays.asList(
+	        "http://myfood.up.railway.app/",
+	        "https://myfood.up.railway.app/",
+	        "http://localhost:4200",
+	        "http://localhost:3000"
+	        
+	).toString();
+	
+	
+	
+	@Bean
+	WebMvcConfigurer corsConfig() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("*").allowedHeaders("*").allowedMethods("*");
 
-         CorsConfiguration configuration = new CorsConfiguration();
-         configuration.addAllowedOrigin("https://sru-abi-rlm-project-backend-production.up.railway.app/swagger-ui/index.html#/**");
-         configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));
-         configuration.addAllowedHeader("*");
-         configuration.setAllowCredentials(true);
-         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-         source.registerCorsConfiguration("/**", configuration);
-         return source;
-     }
+			}
+		};
+	}
+    
 
-	 @Bean
-	 SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	        return http.csrf(csrf -> csrf.disable())
-	        		.cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth-> auth
-	        				.requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
-	                        .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
-	                        .requestMatchers(USER_SECURED_URLs).hasAuthority("ADMIN, VISITOR")
-	                        .requestMatchers(HOTEL_SECURED_URLs).hasAuthority("ADMIN, HOTEL")
-	                        .requestMatchers(ADMIN_SECURED_URLs).hasAuthority("ADMIN")
-	                        .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
-	                        )
-	                .sessionManagement(management -> management
-	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	                .authenticationProvider(authenticationProvider())
-	                .addFilterBefore(authorizationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-	                .build();
+    // Security Filter Chain
+	@Bean
+	SecurityFilterChain securityFilterChain(HttpSecurity http ,  AuthenticationManager authenticationManager) throws Exception {
+
+      return  http.cors(cors -> corsConfig())                            
+        .csrf(csrf -> csrf.disable())                                                            
+        .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler))
+        .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests( auth -> auth
+        	
+        	.requestMatchers(AUTH_WHITELIST)
+        	.permitAll()
+        	.anyRequest().authenticated()
+        )
+        	.authenticationProvider(authenticationProvider())
+            .addFilterBefore(authorizationJwtTokenFilter(),UsernamePasswordAuthenticationFilter.class)
+            .build();
+	}
+	
+
+	 protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	        auth.inMemoryAuthentication()
+	                .withUser("Victor")
+	                .password(passwordEncoder().encode("password"))
+	                .authorities("ADMIN");
 	    }
+	
+	private final String[] AUTH_WHITELIST = {
+			"/auth/**",
+	        "/swagger-resources",
+	        "/swagger-resources/**",
+	        "/configuration/ui",
+	        "/configuration/security",
+	        "/swagger-ui.html",
+	        "/v3/api-docs/**",
+	        "/swagger-ui/**",
+	        "/sru-abi-rlm-project-backend-production.up.railway.app/"        
+	};
+	
+	
+	
+	
+    
+    
 }
