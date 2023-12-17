@@ -31,63 +31,63 @@ import com.finalproject.hohoho.security.service.UserDetailsServiceImpl;
 public class MySecurityConfig {
 	
 	private static final String[] USER_SECURED_URLs = {
-			"/api/user/favouriteHotels/{userId}", 
+			"/api/user/favouriteHotels/**", 
 			"/api/addFavourites", "/api/addFavourite/add", 
-			"/api/addFavourite/{id}", 
-			"/api/addFavourite/update/{id}", 
-			"/api/addFavourite/delete/{id}"
+			"/api/addFavourite/**", 
+			"/api/addFavourite/update/**", 
+			"/api/addFavourite/delete/**"
 			};
 	
 	private static final String[] HOTEL_SECURED_URLs = {
-			"/api/user/hotels/{idUser}",
-			"/api/user/events/{idHotel}", 
+			"/api/user/hotels/**",
+			"/api/user/events/**", 
 			"/api/event/add",
-			"/api/event/update/{id}",
-			"/api/event/delete/{id}",
+			"/api/event/update/**",
+			"/api/event/delete/**",
 			"/api/hotel/add",
-			"/api/hotel/update/{id}",
-			"/api/hotel/delete/{id}",
+			"/api/hotel/update/**",
+			"/api/hotel/delete/**",
 			"/api/hotelService/add",
-			"/api/hotelService/update/{id}",
-			"/api/hotelService/delete/{id}"
+			"/api/hotelService/update/**",
+			"/api/hotelService/delete/**"
 			};
 	
 	private static final String[] ADMIN_SECURED_URLs = {
 			"/api/users", 
 			"/api/user/add", 
-			"/api/user/{id}", 
-			"/api/user/update/{id}",
+			"/api/user/**", 
+			"/api/user/update/**",
 			"/api/roles",
 			"/api/role/add",
-			"/api/role/{id}",
-			"/api/role/update/{id}",
-			"/api/role/delete/{id}",
+			"/api/role/**",
+			"/api/role/update/**",
+			"/api/role/delete/**",
 			"/api/service/add",
-			"/api/service/update/{id}",
-			"/api/service/delete/{id}",
+			"/api/service/update/**",
+			"/api/service/delete/**",
 			"/api/towns",
 			"/api/town/add",
-			"/api/town/{id}",
-			"/api/town/update/{id}",
-			"/api/town/delete/{id}",
-    		"/api/user/delete/{id}"
+			"/api/town/**",
+			"/api/town/update/**",
+			"/api/town/delete/**",
+    		"/api/user/delete/**"
 			};
 
     private static final String[] ALLOW_GET_URLs = {
-            "/api/hotels/{page}{size}{idTown}{search}{minStarRatingAvg}{minNumberRooms}{minPrice}{maxPrice}{idServices}",
-            "/api/hotel/{id}",
-            "/api/hotel/starRatingAvg/{hotelId}",
+            "/api/hotels/*",
+            "/api/hotel/**",
+            "/api/hotel/starRatingAvg/**",
             "/api/events",
-            "/api/events-private/{idHotel}",
-            "/api/events-public/{idTown}",
-            "/api/event/{id}",
+            "/api/events-private/**",
+            "/api/events-public/**",
+            "/api/event/**",
             "/api/hotelServices",
-            "/api/hotelServices/{id}",         
+            "/api/hotelServices/**",         
             "/swagger-ui/**",
             "/swagger-resources/*",
             "/v3/api-docs/**",
             "/api/services",
-            "/api/service/{id}"
+            "/api/service/**"
     };
 
     public static final String[] ALLOW_POST_URLs = {"/login" ,"/register"};
