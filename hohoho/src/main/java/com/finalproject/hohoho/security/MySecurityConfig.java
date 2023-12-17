@@ -83,9 +83,9 @@ public class MySecurityConfig {
             "/api/event/{id}",
             "/api/hotelServices",
             "/api/hotelServices/{id}",         
-            "/api/swagger-ui/**",
-            "/api/swagger-resources/*",
-            "/api/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-resources/*",
+            "/v3/api-docs/**",
             "/api/services",
             "/api/service/{id}"
     };
