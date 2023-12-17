@@ -41,7 +41,7 @@ public class MySecurityConfig {
 	private static final String[] HOTEL_SECURED_URLs = {
 			"/api/user/hotels/{idUser}",
 			"/api/user/events/{idHotel}", 
-			"/api/event/add}",
+			"/api/event/add",
 			"/api/event/update/{id}",
 			"/api/event/delete/{id}",
 			"/api/hotel/add",
