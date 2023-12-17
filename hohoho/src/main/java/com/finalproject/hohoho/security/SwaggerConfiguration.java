@@ -18,7 +18,7 @@ public class SwaggerConfiguration {
     public OpenAPI openAPI() {
     	OpenAPI openApi = new OpenAPI().addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
             .components(new Components().addSecuritySchemes("Bearer Authentication", createAPIKeyScheme()))
-            .info(new Info().title("Hamaca")
+            .info(new Info().title("HoHoHotel")
                 .description("description of API.")
                 .version("1.0")
                 .license(new License().name("License of API")
