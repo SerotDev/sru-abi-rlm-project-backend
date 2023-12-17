@@ -145,6 +145,7 @@ public class MySecurityConfig {
 	                        .requestMatchers(HOTEL_SECURED_URLs).hasAnyAuthority("ROLE_ADMIN", "ROLE_HOTEL")
 	                        .requestMatchers(ADMIN_SECURED_URLs).hasAuthority("ROLE_ADMIN")
 	                        .requestMatchers(HttpMethod.POST).hasAuthority("ROLE_ADMIN")
+	                        
 	                        )
 	                .sessionManagement(management -> management
 	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
