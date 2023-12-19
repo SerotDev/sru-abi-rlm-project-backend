@@ -33,14 +33,14 @@ public class Event {
 	
 	@ManyToOne
 	@JoinColumn(name = "id_hotel")
-	private Hotel hotel;
+	private Hotel[] hotel;
 
 
 	public Event() {
 	}
 
 	public Event(int id, String title, String description, String imgUrl, Date startDate, Date endDate,
-			Double entryPrice, Boolean isPublic, Double latitude, Double longitude, Hotel hotel) {
+			Double entryPrice, Boolean isPublic, Double latitude, Double longitude, Hotel[] hotel) {
 		this.id = id;
 		this.title = title;
 		this.description = description;
@@ -135,11 +135,11 @@ public class Event {
 		this.longitude = longitude;
 	}
 	
-	public Hotel getHotel() {
+	public Hotel[] getHotel() {
 		return hotel;
 	}
 
-	public void setHotel(Hotel hotel) {
+	public void setHotel(Hotel[] hotel) {
 		this.hotel = hotel;
 	}
 	
