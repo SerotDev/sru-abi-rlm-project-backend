@@ -91,7 +91,7 @@ public class MySecurityConfig {
             "/api/service/**"
     };
 
-    public static final String[] ALLOW_POST_URLs = {"/login" ,"/register", "/api/events"};
+    public static final String[] ALLOW_POST_URLs = {"/login" ,"/register"};
 
     @Autowired
     private JwtAuthenticationFilter authenticationFilter;

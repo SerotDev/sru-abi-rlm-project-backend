@@ -34,7 +34,7 @@ public class EventController {
 	TownServiceImpl townServiceImpl;
 
 	// Get all events
-	@PostMapping("/events")
+	@GetMapping("/events")
 	public List<Event> list() {
 		return eventServiceImpl.list();
 	}
