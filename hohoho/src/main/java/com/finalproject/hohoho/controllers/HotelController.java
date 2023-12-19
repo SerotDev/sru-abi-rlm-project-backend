@@ -302,6 +302,7 @@ public class HotelController {
 
 		hotelSelected = hotelServiceImpl.byId(id);
 		hotelSelected.setId(id);
+		hotelSelected.setName(hotel.getName());
 		hotelSelected.setDescription(hotel.getDescription());
 		hotelSelected.setPhone(hotel.getPhone());
 		hotelSelected.setAddress(hotel.getAddress());
