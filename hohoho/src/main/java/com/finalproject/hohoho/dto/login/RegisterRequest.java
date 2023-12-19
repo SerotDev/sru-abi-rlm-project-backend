@@ -1,17 +1,19 @@
 package com.finalproject.hohoho.dto.login;
 
-public class LoginRequest {
+public class RegisterRequest {
 
     private String name;
     private String password;
+    private String email;
 
-    public LoginRequest(){
+    public RegisterRequest(){
 
     }
 
-    public LoginRequest(String name, String password) {
+    public RegisterRequest(String name, String password, String email) {
         this.name = name;
         this.password = password;
+        this.email = email;
     }
 
     public String getName() {
@@ -29,5 +31,13 @@ public class LoginRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
     
 }

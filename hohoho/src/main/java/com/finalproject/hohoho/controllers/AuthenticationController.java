@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import com.finalproject.hohoho.dto.User;
 import com.finalproject.hohoho.dto.login.LoginRequest;
 import com.finalproject.hohoho.dto.login.LoginResponse;
+import com.finalproject.hohoho.dto.login.RegisterRequest;
 import com.finalproject.hohoho.security.JwtUtils;
 import com.finalproject.hohoho.security.service.UserDetailsServiceImpl;
 import com.finalproject.hohoho.services.RoleServiceImpl;
@@ -72,7 +73,7 @@ public class AuthenticationController {
     }
     
     @PostMapping("/register")
-	public ResponseEntity<?> registerUser(@RequestBody LoginRequest signUpRequest){
+	public ResponseEntity<?> registerUser(@RequestBody RegisterRequest signUpRequest){
 		Map<String, Object> responseData = new HashMap<String, Object>();
 		   String name = signUpRequest.getName();
 	
