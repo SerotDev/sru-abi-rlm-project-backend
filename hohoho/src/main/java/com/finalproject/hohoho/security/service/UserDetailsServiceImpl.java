@@ -4,32 +4,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.finalproject.hohoho.dao.IUserDAO;
 import com.finalproject.hohoho.dto.User;
 
-@Service
+/**
+ * @author Jose Marin
+ */
+
+@Component
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private IUserDAO iUserDAO;
+    @Autowired
+    private IUserDAO usuarioDAO;
 
-	@Override
-	public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-		var userEntity = this.iUserDAO.findByName(name);
-		if (userEntity ==null) {
-			throw new UsernameNotFoundException("User Not Found with user: " + name);
-		}
-		return UserDetailsImpl.build(userEntity);
-	}
-	
-	public User createUser(User entity) {
-		return iUserDAO.save(entity);
-	}
-	
-    public User getUserByName(String name) {
-        return iUserDAO.findByName(name);
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return usuarioDAO.findByName(username)
+                .map(UserDetailsImpl::new)
+                .orElseThrow(() -> new UsernameNotFoundException("No user found"));
     }
-
+    
+    public User createUser(User entity) {
+		return usuarioDAO.save(entity);
+	}
 }

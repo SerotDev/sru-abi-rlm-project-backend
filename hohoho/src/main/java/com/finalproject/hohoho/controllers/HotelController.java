@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.AddFavourite;
@@ -278,7 +277,6 @@ public class HotelController {
 	}
 
 	// Add new hotel
-	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PostMapping("/hotel/add")
 	public Hotel save(@RequestBody Hotel hotel) {
 		return hotelServiceImpl.save(hotel);
@@ -293,7 +291,6 @@ public class HotelController {
 	}
 
 	// Update hotel by id
-	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@PutMapping("/hotel/update/{id}")
 	public Hotel update(@PathVariable(name = "id") Integer id, @RequestBody Hotel hotel) {
 
@@ -320,7 +317,6 @@ public class HotelController {
 		return hotelUpdated;
 	}
 
-	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	// Delete hotel by id
 	@DeleteMapping("/hotel/delete/{id}")
 	public void delete(@PathVariable Integer id) {

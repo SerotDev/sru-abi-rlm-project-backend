@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Event;
@@ -32,21 +31,18 @@ public class UserController {
 	AddFavouriteServiceImpl addFavouriteServiceImpl;
 
 	// Get all users
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/users")
 	public List<User> list() {
 		return userServiceImpl.list();
 	}
 	
 	// Add new user
-	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/user/add")
 	public User save(@RequestBody User user) {
 		return userServiceImpl.save(user);
 	}
 	
 	// Get user by id
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/user/{id}")
 	public User byId(@PathVariable(name = "id") Integer id) {
 		User userByID = new User();
@@ -54,7 +50,6 @@ public class UserController {
 		return userByID;
 	}
 	// Get hotel by user id
-	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@GetMapping("/user/hotels/{idUser}")
 	public List <Hotel> listHotelsbyUser(@PathVariable(name = "idUser")Integer idUser){
 		User user = userServiceImpl.byId(idUser);
@@ -62,7 +57,6 @@ public class UserController {
 	}
 	
 	//Get events by hotel id
-	@PreAuthorize("hasRole('ADMIN') or hasRole('HOTEL')")
 	@GetMapping("/user/events/{idHotel}")
 	public List <Event> eventsByHotelId(@PathVariable(name = "idHotel")Integer idHotel){
 		Hotel hotel = hotelServiceImpl.byId(idHotel);
@@ -70,7 +64,6 @@ public class UserController {
 	}
 	
 	//Get favourite hotels by user id
-	@PreAuthorize("hasRole('ADMIN') or hasRole('VISITOR')")
     @GetMapping("/user/favouriteHotels/{userId}")
     public ResponseEntity<List<Hotel>> getFavouriteHotelsByUserId(@PathVariable Integer userId) {
         List<Hotel> favouriteHotels = addFavouriteServiceImpl.getFavouriteHotelsByUserId(userId);
@@ -83,7 +76,6 @@ public class UserController {
     }
 	
 	// Update user by id
-	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/user/update/{id}")
 	public User update(@PathVariable(name = "id") Integer id, @RequestBody User user) {
 
@@ -106,7 +98,6 @@ public class UserController {
 	}
 	
 	// Delete user by id
-	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/user/delete/{id}")
 	public void delete(@PathVariable Integer id) {
 		userServiceImpl.delete(id);

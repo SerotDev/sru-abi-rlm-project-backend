@@ -9,7 +9,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,6 +22,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.finalproject.hohoho.jwt.JwtAuthenticationFilter;
 import com.finalproject.hohoho.security.service.UserDetailsServiceImpl;
 
 @Configuration
@@ -32,7 +32,8 @@ public class MySecurityConfig {
 	
 	private static final String[] USER_SECURED_URLs = {
 			"/api/user/favouriteHotels/**", 
-			"/api/addFavourites", "/api/addFavourite/add", 
+			"/api/addFavourites", 
+			"/api/addFavourite/add", 
 			"/api/addFavourite/**", 
 			"/api/addFavourite/update/**", 
 			"/api/addFavourite/delete/**"
@@ -93,64 +94,59 @@ public class MySecurityConfig {
     public static final String[] ALLOW_POST_URLs = {"/login" ,"/register"};
 
     @Autowired
+    private JwtAuthenticationFilter authenticationFilter;
+
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
-	@Bean
-	JwtAuthenticationFilter authorizationJwtTokenFilter() {
-		return new JwtAuthenticationFilter();
-	}
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
     @Bean
-    AuthenticationManager authenticationManagerBean(AuthenticationConfiguration authConfig) throws Exception {
-    	return authConfig.getAuthenticationManager();
+    public AuthenticationProvider authenticationProvider(){
+        var authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+       return authenticationProvider;
     }
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
-
-	@Bean
-	AuthenticationProvider authenticationProvider() {
-	DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-	authProvider.setUserDetailsService(userDetailsService);
-	authProvider.setPasswordEncoder(passwordEncoder());
-	return authProvider;	
-    }
-	
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(this.userDetailsService).passwordEncoder(passwordEncoder());
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http.csrf(csrf -> csrf.disable())
+        		.cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth-> auth
+        				.requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
+                        .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
+                        .requestMatchers(USER_SECURED_URLs).hasAnyAuthority("ADMIN", "VISITOR")
+                        .requestMatchers(HOTEL_SECURED_URLs).hasAnyAuthority("ADMIN", "HOTEL")
+                        .requestMatchers(ADMIN_SECURED_URLs).hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
+                        )
+                .sessionManagement(management -> management
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
     
+    
+ // CORS Configuration Bean
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
 
-         CorsConfiguration configuration = new CorsConfiguration();
-         configuration.addAllowedOrigin("https://sru-abi-rlm-project-backend-production.up.railway.app/swagger-ui/index.html#/**");
-         configuration.setAllowedMethods(Arrays.asList("GET","POST","DELETE","PUT"));
-         configuration.addAllowedHeader("*");
-         configuration.setAllowCredentials(true);
-         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-         source.registerCorsConfiguration("/**", configuration);
-         return source;
+    	CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
      }
+    
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+        return authConfig.getAuthenticationManager();
+    }
 
-	 @Bean
-	 SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-	        return http.csrf(csrf -> csrf.disable())
-	        		.cors(cors -> cors.configurationSource(corsConfigurationSource())).authorizeHttpRequests(auth-> auth
-	        				.requestMatchers(HttpMethod.GET, ALLOW_GET_URLs).permitAll()
-	                        .requestMatchers(HttpMethod.POST,ALLOW_POST_URLs).permitAll()
-	                        .requestMatchers(USER_SECURED_URLs).hasAnyAuthority("ADMIN", "VISITOR")
-	                        .requestMatchers(HOTEL_SECURED_URLs).hasAnyAuthority("ADMIN", "HOTEL")
-	                        .requestMatchers(ADMIN_SECURED_URLs).hasAuthority("ADMIN")
-	                        .requestMatchers(HttpMethod.POST).hasAuthority("ADMIN")
-	                        
-	                        )
-	                .sessionManagement(management -> management
-	                .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-	                .authenticationProvider(authenticationProvider())
-	                .addFilterBefore(authorizationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class)
-	                .build();
-	    }
 }

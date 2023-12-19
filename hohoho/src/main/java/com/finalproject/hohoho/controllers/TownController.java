@@ -2,7 +2,6 @@ package com.finalproject.hohoho.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Town;
@@ -16,21 +15,18 @@ public class TownController {
 	TownServiceImpl townServiceImpl;
 
 	// Get all towns
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/towns")
 	public List<Town> list() {
 		return townServiceImpl.list();
 	}
 	
 	// Add new town
-	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/town/add")
 	public Town save(@RequestBody Town town) {
 		return townServiceImpl.save(town);
 	}
 	
 	// Get town by id
-	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/town/{id}")
 	public Town byId(@PathVariable(name = "id") Integer id) {
 		Town townByID = new Town();
@@ -39,7 +35,6 @@ public class TownController {
 	}
 	
 	// Update town by id
-	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/town/update/{id}")
 	public Town update(@PathVariable(name = "id") Integer id, @RequestBody Town town) {
 
@@ -58,7 +53,6 @@ public class TownController {
 	}
 	
 	// Delete town by id
-	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/town/delete/{id}")
 	public void delete(@PathVariable Integer id) {
 		townServiceImpl.delete(id);
