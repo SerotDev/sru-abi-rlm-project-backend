@@ -1,5 +1,7 @@
 package com.finalproject.hohoho.security.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -7,7 +9,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.finalproject.hohoho.dao.IUserDAO;
-import com.finalproject.hohoho.dto.User;
 
 /**
  * @author Jose Marin
@@ -21,12 +22,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    	if(usuarioDAO.findByName(username).equals(Optional.empty())) 
+    	{
+    		return null;
+    	}
         return usuarioDAO.findByName(username)
                 .map(UserDetailsImpl::new)
                 .orElseThrow(() -> new UsernameNotFoundException("No user found"));
     }
-    
-    public User createUser(User entity) {
-		return usuarioDAO.save(entity);
-	}
 }

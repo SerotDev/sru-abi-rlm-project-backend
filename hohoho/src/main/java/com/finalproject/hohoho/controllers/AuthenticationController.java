@@ -9,6 +9,7 @@ import com.finalproject.hohoho.dto.User;
 import com.finalproject.hohoho.dto.login.RegisterRequest;
 import com.finalproject.hohoho.security.service.UserDetailsServiceImpl;
 import com.finalproject.hohoho.services.RoleServiceImpl;
+import com.finalproject.hohoho.services.UserServiceImpl;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -24,6 +25,9 @@ public class AuthenticationController {
     private UserDetailsServiceImpl userDetailsService;
     
     @Autowired
+    private UserServiceImpl userService;
+    
+    @Autowired
 	private RoleServiceImpl roleServ;
     
     @Autowired
@@ -37,21 +41,22 @@ public class AuthenticationController {
     @PostMapping("/register")
 	public ResponseEntity<?> registerUser(@RequestBody RegisterRequest signUpRequest){
 		Map<String, Object> responseData = new HashMap<String, Object>();
-		   String name = signUpRequest.getName();
-	
-		if(userDetailsService.loadUserByUsername(name) != null) {
+		
+		String username = signUpRequest.getUsername();
+		
+		if(userDetailsService.loadUserByUsername(username) != null) {
 	    responseData.put("Error", "Error: Username is already taken!");
 		return ResponseEntity.badRequest().body(responseData);
 		}
 
 		ZoneId madridZone = ZoneId.of("Europe/Madrid");
 		User user = new User();		
-		user.setName(signUpRequest.getName());
+		user.setName(signUpRequest.getUsername());
 		user.setPassword(this.encoder.encode(signUpRequest.getPassword()));
 		user.setRole(this.roleServ.findByName("VISITOR").orElseThrow(() -> new RuntimeException("Not found"))); 
 		user.setEmail(signUpRequest.getEmail());
 		user.setRegistration_date(LocalDateTime.now(madridZone));
-		this.userDetailsService.createUser(user);
+		this.userService.save(user);
 		
 		return ResponseEntity.ok("User created!");
 	}

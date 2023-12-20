@@ -35,20 +35,25 @@ public class JWTController {
 
     @PostMapping
     public Object getTokenForAuthenticatedUser(@RequestBody JWTAuthenticationRequest authRequest){
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-        if (authentication.isAuthenticated()){
-            String token =  jwtService.generateToken(authRequest.getUsername());
-            UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
+    	try {
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        	if (authentication.isAuthenticated()){
+                String token =  jwtService.generateToken(authRequest.getUsername());
+                UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("token",token);
+                jsonObject.put("username",authRequest.getUsername());
+                jsonObject.put("rol",userDetails.getAuthorities());
+                return jsonObject.toMap();//devuelve token por body
+            }
+            else {
+                throw new UserNotFoundException("Invalid user credentials");
+            }
+		} catch (Exception e) {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("token",token);
-            jsonObject.put("username",authRequest.getUsername());
-            jsonObject.put("rol",userDetails.getAuthorities());
+            jsonObject.put("error", "Invalid user credentials");
             return jsonObject.toMap();//devuelve token por body
-        }
-        else {
-        	System.out.println("Fallo");
-            throw new UserNotFoundException("Invalid user credentials");
-        }
+		}
     }
 }
