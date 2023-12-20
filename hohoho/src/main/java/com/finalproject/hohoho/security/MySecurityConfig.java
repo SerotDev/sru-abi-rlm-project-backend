@@ -66,9 +66,7 @@ public class MySecurityConfig {
 			"/api/service/add",
 			"/api/service/update/**",
 			"/api/service/delete/**",
-			"/api/towns",
 			"/api/town/add",
-			"/api/town/**",
 			"/api/town/update/**",
 			"/api/town/delete/**",
     		"/api/user/delete/**"
@@ -82,6 +80,8 @@ public class MySecurityConfig {
             "/api/events-private/**",
             "/api/events-public/**",
             "/api/event/**",
+            "/api/towns",
+            "/api/town/**",
             "/api/hotelServices",
             "/api/hotelServices/**",         
             "/swagger-ui/**",

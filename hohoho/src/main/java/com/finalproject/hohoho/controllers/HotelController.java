@@ -43,7 +43,7 @@ public class HotelController {
 	AddFavouriteServiceImpl addFavouriteServiceImpl;
 
 	// FILTROS - LOOK PAGINATION WHEN HAVE TO MULTIPLES RESULTS
-	@GetMapping("/hotels?page={page}&size={size}&idTown={idTown}&search={search}&minStarRatingAvg={minStarRatingAvg}&minNumberRooms={minNumberRooms}&minPrice={minPrice}&maxPrice={maxPrice}&idServices={idServices}")
+	@GetMapping("/hotels/{page}{size}{idTown}{search}{minStarRatingAvg}{minNumberRooms}{minPrice}{maxPrice}{idServices}")
 	public ResponseEntity<Map<String, Object>> filterHotels(@RequestParam(defaultValue = "0") int page,
 			@RequestParam(defaultValue = "10") int size,
 			@RequestParam(name = "idTown", required = false) Integer idTown,
