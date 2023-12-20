@@ -43,9 +43,15 @@ public class AuthenticationController {
 		Map<String, Object> responseData = new HashMap<String, Object>();
 		
 		String username = signUpRequest.getUsername();
+		String email = signUpRequest.getEmail();
 		
 		if(userDetailsService.loadUserByUsername(username) != null) {
-	    responseData.put("Error", "Error: Username is already taken!");
+	    responseData.put("Error", "Username is already taken!");
+		return ResponseEntity.badRequest().body(responseData);
+		}
+		
+		if(userDetailsService.loadUserByEmail(email) != null) {
+	    responseData.put("Error", "Email is already taken!");
 		return ResponseEntity.badRequest().body(responseData);
 		}
 
@@ -58,6 +64,8 @@ public class AuthenticationController {
 		user.setRegistration_date(LocalDateTime.now(madridZone));
 		this.userService.save(user);
 		
-		return ResponseEntity.ok("User created!");
+		responseData.put("OK", "User created!");
+		
+		return ResponseEntity.ok().body(responseData);
 	}
 }

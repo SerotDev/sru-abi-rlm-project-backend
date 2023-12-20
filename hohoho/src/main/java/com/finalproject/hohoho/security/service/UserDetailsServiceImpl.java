@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import com.finalproject.hohoho.dao.IUserDAO;
+import com.finalproject.hohoho.dto.User;
 
 /**
  * @author Jose Marin
@@ -29,5 +30,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return usuarioDAO.findByName(username)
                 .map(UserDetailsImpl::new)
                 .orElseThrow(() -> new UsernameNotFoundException("No user found"));
+    }
+
+    public Optional<User> loadUserByEmail(String email) {
+    	if(usuarioDAO.findByEmail(email).equals(Optional.empty())) 
+    	{
+    		return null;
+    	}
+        return usuarioDAO.findByEmail(email);
     }
 }
