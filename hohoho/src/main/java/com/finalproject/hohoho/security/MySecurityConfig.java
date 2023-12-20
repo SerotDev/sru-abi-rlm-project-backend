@@ -83,7 +83,7 @@ public class MySecurityConfig {
             "/api/towns",
             "/api/town/**",
             "/api/hotelServices",
-            "/api/hotelServices/**",         
+            "/api/hotelService/**",         
             "/swagger-ui/**",
             "/swagger-resources/*",
             "/v3/api-docs/**",
