@@ -42,5 +42,10 @@ public class UserServiceImpl implements IUserService{
 		iUserDAO.deleteById(id);				
 		
 	}
+
+	@Override
+	public User byUserName(String username) {
+		return iUserDAO.findByName(username).get();
+	}
 	
 }

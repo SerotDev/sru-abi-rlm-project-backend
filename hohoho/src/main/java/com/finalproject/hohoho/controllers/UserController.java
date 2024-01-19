@@ -4,6 +4,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import com.finalproject.hohoho.dto.Event;
@@ -49,6 +52,15 @@ public class UserController {
 		userByID = userServiceImpl.byId(id);
 		return userByID;
 	}
+	//Get user myUser
+	@GetMapping("/user/myUser")
+	public User myUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails =(UserDetails)auth.getPrincipal();
+        User user = userServiceImpl.byUserName(userDetails.getUsername());
+        return user;
+	}
+	
 	// Get hotel by user id
 	@GetMapping("/user/hotels/{idUser}")
 	public List <Hotel> listHotelsbyUser(@PathVariable(name = "idUser")Integer idUser){
