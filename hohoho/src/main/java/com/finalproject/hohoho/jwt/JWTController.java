@@ -17,11 +17,6 @@ import com.finalproject.hohoho.security.service.UserDetailsServiceImpl;
 
 import org.json.JSONObject;
 
-/**
- * @author Samson Effes
- */
-
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/login")
@@ -45,7 +40,7 @@ public class JWTController {
                 jsonObject.put("token",token);
                 jsonObject.put("username",authRequest.getUsername());
                 jsonObject.put("rol",userDetails.getAuthorities());
-                return jsonObject.toMap();//devuelve token por body
+                return jsonObject.toMap();//return token by body
             }
             else {
                 throw new UserNotFoundException("Invalid user credentials");
@@ -53,7 +48,7 @@ public class JWTController {
 		} catch (Exception e) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("error", "Invalid user credentials");
-            return jsonObject.toMap();//devuelve token por body
+            return jsonObject.toMap();//return token by body
 		}
     }
 }
