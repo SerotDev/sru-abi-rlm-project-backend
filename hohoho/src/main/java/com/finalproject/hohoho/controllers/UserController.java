@@ -52,14 +52,14 @@ public class UserController {
 		userByID = userServiceImpl.byId(id);
 		return userByID;
 	}
-	//Get user myUser
+	/*Get user myUser
 	@GetMapping("/user/myUser")
 	public User myUser() {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails =(UserDetails)auth.getPrincipal();
         User user = userServiceImpl.byUserName(userDetails.getUsername());
         return user;
-	}
+	}*/
 	
 	// Get hotel by user id
 	@GetMapping("/user/hotels/{idUser}")

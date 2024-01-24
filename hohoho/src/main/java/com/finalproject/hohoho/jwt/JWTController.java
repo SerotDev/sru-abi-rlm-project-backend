@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.finalproject.hohoho.exceptions.UserNotFoundException;
 import com.finalproject.hohoho.security.service.UserDetailsServiceImpl;
+import com.finalproject.hohoho.services.UserServiceImpl;
 
 import org.json.JSONObject;
 
@@ -27,6 +28,8 @@ public class JWTController {
     private AuthenticationManager authenticationManager;
 	@Autowired
     private UserDetailsServiceImpl userDetailsService;
+	@Autowired
+	private UserServiceImpl userServiceImpl;
 
     @PostMapping
     public Object getTokenForAuthenticatedUser(@RequestBody JWTAuthenticationRequest authRequest){
@@ -40,6 +43,7 @@ public class JWTController {
                 jsonObject.put("token",token);
                 jsonObject.put("username",authRequest.getUsername());
                 jsonObject.put("rol",userDetails.getAuthorities());
+                jsonObject.put("id", userServiceImpl.byUserName(authRequest.getUsername()));
                 return jsonObject.toMap();//return token by body
             }
             else {
