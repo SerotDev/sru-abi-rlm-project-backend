@@ -43,7 +43,7 @@ public class JWTController {
                 jsonObject.put("token",token);
                 jsonObject.put("username",authRequest.getUsername());
                 jsonObject.put("rol",userDetails.getAuthorities());
-                jsonObject.put("id", userServiceImpl.byUserName(authRequest.getUsername()));
+                jsonObject.put("id", userServiceImpl.byUserName(authRequest.getUsername()).getId());
                 return jsonObject.toMap();//return token by body
             }
             else {
